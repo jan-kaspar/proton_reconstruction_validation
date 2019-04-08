@@ -1,0 +1,117 @@
+#!/bin/bash
+
+function SubmitOneDir()
+{
+	local buf="$tag"
+
+	fill=${buf#fill}
+	fill=${fill%%_*}
+
+	buf=${buf#*_}
+	xangle=${buf%%_*}
+	xangle=${xangle#xangle}
+
+	buf=${buf#*_}
+	beta=${buf%%_*}
+	beta=${beta#beta}
+
+	buf=${buf#*_}
+	stream=${buf%%.*}
+
+	echo "* $fill, $xangle, $beta, $stream"
+
+	# get input
+	input="process.source.fileNames.append(\"root://eostotem.cern.ch/${input_dir}/${tag}\")"
+
+	# make work directory
+	subdir="fill_$fill/xangle_${xangle}_beta_${beta}_stream_${stream}"
+	dir="$top_dir/$subdir"
+	mkdir -p "$dir"
+
+	# clean work directory
+	rm -rf "$dir/submitted"
+	rm -rf "$dir/finished"
+	rm -rf "$dir/success"
+	rm -rf "$dir/output.root"
+	rm -rf "$dir/log"
+
+	full_dir="`pwd -P`/$dir"
+
+	# make config with input files
+	cat "template_cfg.py" | sed -e "\
+			s|\$input|$input|g;\
+			s|\$year|$year|g;\
+			s|\$fill|$fill|g;\
+			s|\$xangle|$xangle|g;\
+			s|\$beta|$beta|g;\
+			s|\$output|output.root|g;\
+		" > "$dir/cfg.py"
+
+	# make job
+	cat "template_job" | sed "\
+			s|\$sw_dir|$sw_dir|g;\
+			s|\$job_dir|$full_dir|g;\
+		" > "$dir/job"
+	chmod u+x "$dir/job"
+
+	# add submission line
+	(
+		echo ""
+		echo "dir=$subdir"
+		echo "queue"
+	) >> "$condor_file_sub"
+
+	# local run
+	# TODO
+	#cd "$dir"
+	#cmsRun "cfg.py" &
+	#cd - &> /dev/null
+}
+
+#----------------------------------------------------------------------------------------------------
+
+function Submit()
+{
+	top_dir="data/$year/$version"
+
+	mkdir -p "$top_dir"
+
+	condor_file_sub="$top_dir/condor.sub"
+
+	# initiate submission script
+	(
+		local base_dir_full="$(pwd)/$top_dir"
+		echo "executable = $base_dir_full/\$(dir)/job"
+		echo "arguments = \$(ClusterId) \$(ProcId) \\\"\$(dir)\\\""
+		echo "output = $base_dir_full/\$(dir)/out"
+		echo "error = $base_dir_full/\$(dir)/err"
+		echo "log = $base_dir_full/condor_${selection}.log"
+
+		echo "+MaxRuntime = 7200"
+		#echo "+JobBatchName = \"$job_name\""
+		#echo "requirements = (OpSysAndVer =?= \"SLCern6\")"
+		echo "requirements = (OpSysAndVer =?= \"CentOS7\")"
+
+	) > "$condor_file_sub"
+
+	# loop over input files
+	for tag in `eos ls "$input_dir"|grep DoubleEG|grep .root|uniq`
+	do
+		SubmitOneDir
+
+		# TODO
+		#break
+	done
+
+	# submit
+	echo "In order to submit do:"
+	echo "    condor_submit \"$condor_file_sub"\"
+}
+
+#----------------------------------------------------------------------------------------------------
+
+year="2017"
+version="version1"
+input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at 0f7f0ddb8ca264f513f7a5d32e42f9202a9b3e3d
+Submit

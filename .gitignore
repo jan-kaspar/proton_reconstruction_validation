@@ -1,0 +1,7 @@
+*.log
+*.root
+*.pdf
+
+data
+
+do_fits
