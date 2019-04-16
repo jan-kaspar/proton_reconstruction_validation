@@ -32,6 +32,26 @@ process.GlobalTag = GlobalTag(process.GlobalTag, "105X_dataRun2_relval_v2")
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
 
+##  process.ctppsRPAlignmentCorrectionsDataESSourceXML.RealFiles = cms.vstring(
+##    #"CalibPPS/ESProducers/data/alignment/RPixGeometryCorrections_old.xml",
+##    "CalibPPS/ESProducers/data/alignment/RPixGeometryCorrections-2017-2018.xml",
+##    #"CalibPPS/ESProducers/data/alignment/alignment_export_2019_03_18.5.xml",
+##    "CalibPPS/ESProducers/data/alignment/alignment_export_2019_04_15.1.xml",
+##    "CalibPPS/ESProducers/data/alignment/timing_RP_2017_preTS2.xml",
+##    "CalibPPS/ESProducers/data/alignment/timing_RP_2017_postTS2.xml",
+##    "CalibPPS/ESProducers/data/alignment/timing_RP_2018.xml"
+##  )
+
+# reconstruction validator
+process.ctppsProtonReconstructionValidator = cms.EDAnalyzer("CTPPSProtonReconstructionValidator",
+    tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+    tagRecoProtons = cms.InputTag("ctppsProtons", "multiRP"),
+
+    chiSqCut = cms.double(2.),
+
+    outputFile = cms.string("output_validation.root")
+)
+
 # reconstruction plotter
 process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
     tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
@@ -69,5 +89,6 @@ process.path = cms.Path(
   * process.ctppsLocalTrackLiteProducer
 
   * process.ctppsProtons
+  #* process.ctppsProtonReconstructionValidator
   * process.ctppsProtonReconstructionPlotter
 )
