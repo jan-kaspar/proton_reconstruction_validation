@@ -12,7 +12,7 @@ xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
 
-yTicksDef = RightTicks(10., 5.);
+//yTicksDef = RightTicks(50., 10.);
 
 //----------------------------------------------------------------------------------------------------
 
@@ -26,6 +26,7 @@ for (int vi : versions.keys)
 
 AttachLegend();
 
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 {
@@ -33,7 +34,7 @@ for (int ai : arms.keys)
 
 	NewPadLabel(a_labels[ai]);
 
-	NewPad("fill", "mean of $\th^*_x\ung{\mu rad}$");
+	NewPad("fill", "mean of $\De^{F-N} \xi_{\rm single}$");
 
 	for (int vi : versions.keys)
 	{
@@ -42,17 +43,15 @@ for (int ai : arms.keys)
 
 		for (int fi : fills.keys)
 		{
-			write(fi);
-
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-			string on = "multiRPPlots/" + arms[ai] + "/p_th_x_vs_xi|ff";
+			string on = "armCorrelationPlots/" + arms[ai] + "/p_xi_si_diffNF_vs_xi_mu|ff";
 		
 			RootObject obj = RootGetObject(f, on, error=false);
 			if (!obj.valid)
 				continue;
 		
-			real d = obj.rExec("GetParameter", 0) * 1e6;
-			real d_unc = obj.rExec("GetParError", 0) * 1e6;
+			real d = obj.rExec("GetParameter", 0);
+			real d_unc = obj.rExec("GetParError", 0);
 
 			mark m = mCi+3pt;
 
@@ -62,11 +61,11 @@ for (int ai : arms.keys)
 		}
 	}
 
-	DrawFillMarkers(-50, +50);
+	DrawFillMarkers(-2.5e-3, +2.5e-3);
 
-	limits((-1, -50.), (fills.length, +50.), Crop);
+	limits((-1, -2.5e-3), (fills.length, +2.5e-3), Crop);
 
 	xaxis(YEquals(0., false), dashed);
 }
 
-GShipout("th_x_mean_vs_fill", hSkip=0mm, vSkip=0mm);
+GShipout("xi_si_diffNF_mean_vs_fill", hSkip=1mm, vSkip=0mm);

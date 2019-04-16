@@ -1,6 +1,10 @@
 string year = "2017";
 
 string version = "version1";
+string versions[] = {
+	"version1",
+	"version2",
+};
 
 string stream = "DoubleEG";
 
@@ -12,16 +16,30 @@ string xangles[] = {
 	"150",
 };
 
-string beta = "0.40";	// TODO: switch to ANY
+string beta = "AUTO";
+
+string GetBeta(string fill_str)
+{
+	if (beta != "AUTO")
+		return beta;
+
+	int fill = (int) fill_str;
+
+	if (fill >= 6230)
+		return "0.30";
+	else
+		return "0.40";
+}
+
 
 real xSizeDefFill = 80cm;
 
 string fills_short[] = {
 	"5839",
-	"6089",
-	"6193",
+	"6053",
+	"6192",
 	"6239",
-	"6287",
+	"6303",
 	"6371",
 };
 
@@ -247,3 +265,29 @@ string fills[] = {
 	"6370",
 	"6371",
 };
+
+void DrawFillMarkers(real y_min, real y_max)
+{
+	real b = 0;
+	for (int fi : fills.keys)
+	{
+		if (fills[fi] == "6230")
+		{
+			b = fi - 0.5;
+		}
+	}
+
+	draw((b, y_min)--(b, y_max), magenta+2pt);
+	label("post-TS2", (b, y_max), SE, magenta);
+}
+
+string TickLabels(real x)
+{
+	if (x >=0 && x < fills.length)
+	{
+		int ix = (int) x;
+		return fills[ix];
+	} else {
+		return "";
+	}
+}

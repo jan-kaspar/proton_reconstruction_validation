@@ -1,14 +1,9 @@
 import root;
 import pad_layout;
-include "../defaults.asy";
 
-string topDir = "../../data_eos/";
+include "../settings.asy";
 
-string datasets[] = def_datasets;
-
-string stream = def_stream;
-
-string alignment = def_alignment;
+string topDir = "../../../";
 
 string cols[], c_labels[], c_si_rps[];
 cols.push("arm0"); c_labels.push("sector 45 (L)"); c_si_rps.push("rp23");
@@ -20,28 +15,32 @@ yTicksDef = RightTicks(0.05, 0.01);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
-label("\vbox{\hbox{stream: " + stream + "}\hbox{alignment: " + replace(alignment, "_", "\_") + "}}");
+label("\vbox{\hbox{version: " + version + "}\hbox{stream: " + stream + "}\hbox{xangle: " + xangle + "}\hbox{beta: " + beta + "}}");
 
 for (int ci : cols.keys)
 	NewPadLabel(c_labels[ci]);
 
-for (int dsi : datasets.keys)
+for (int fi : fills_short.keys)
 {
+	string fill = fills_short[fi];
+
 	NewRow();
 
-	NewPadLabel(replace(datasets[dsi], "_", "\_"));
+	NewPadLabel("fill: " + fill);
 
 	for (int ci : cols.keys)
 	{
 		NewPad("$\xi_{\rm single}$", "$\xi_{\rm multi}$");
 
-		string f = topDir + datasets[dsi] + "/" + stream + "/alignment_" + alignment + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "singleMultiCorrelationPlots/si_" + c_si_rps[ci]  + "_mu_" + cols[ci] + "/h2_xi_mu_vs_xi_si";
 		
 		RootObject hist = RootGetObject(f, on, error=false);
 
 		if (!hist.valid)
 			continue;
+
+		hist.vExec("Rebin2D", 2, 2);
 		
 		draw(hist);
 
@@ -51,4 +50,4 @@ for (int dsi : datasets.keys)
 	}
 }
 
-GShipout("xi_si_vs_mu_cmp_fill", hSkip=1mm, vSkip=0mm);
+GShipout("xi_si_vs_mu_2D_cmp_fill", hSkip=1mm, vSkip=0mm);

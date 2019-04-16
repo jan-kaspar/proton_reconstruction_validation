@@ -30,7 +30,15 @@ yTicksDef = RightTicks(10., 5.);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
-label("\vbox{\hbox{version: " + version + "}\hbox{stream: " + stream + "}\hbox{xangle: " + xangle + "}\hbox{beta: " + beta + "}}");
+AddToLegend("stream: " + stream);
+AddToLegend("xangle: " + xangle);
+AddToLegend("beta: " + beta);
+
+for (int vi : versions.keys)
+	AddToLegend(versions[vi], mCi+3pt+StdPen(vi + 1));
+
+AttachLegend();
+
 
 for (int ai : arms.keys)
 {
@@ -40,28 +48,36 @@ for (int ai : arms.keys)
 
 	NewPad("fill", "mean of $\th^*_y\ung{\mu rad}$");
 
-	for (int fi : fills.keys)
+	for (int vi : versions.keys)
 	{
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + beta + "_stream_" + stream + "/do_fits.root";
+		pen p = StdPen(vi + 1);
+		string version = versions[vi];
 
-		string on = "multiRPPlots/" + arms[ai] + "/p_th_y_vs_xi|ff";
-	
-		RootObject obj = RootGetObject(f, on, error=false);
-		if (!obj.valid)
-			continue;
-	
-		real d = obj.rExec("GetParameter", 0) * 1e6;
-		real d_unc = obj.rExec("GetParError", 0) * 1e6;
+		for (int fi : fills.keys)
+		{
+			write(fi);
 
-		mark m = mCi;
-		pen p = red;
+			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
+			string on = "multiRPPlots/" + arms[ai] + "/p_th_y_vs_xi|ff";
+		
+			RootObject obj = RootGetObject(f, on, error=false);
+			if (!obj.valid)
+				continue;
+		
+			real d = obj.rExec("GetParameter", 0) * 1e6;
+			real d_unc = obj.rExec("GetParError", 0) * 1e6;
 
-		real x = fi;
-		draw((x, d), m+p);
-		draw((x, d-d_unc)--(x, d+d_unc), p);
+			mark m = mCi+3pt;
+
+			real x = fi;
+			draw((x, d), m+p);
+			draw((x, d-d_unc)--(x, d+d_unc), p);
+		}
 	}
 
-	limits((-1, -80.), (fills.length, +80.), Crop);
+	DrawFillMarkers(-50, +50);
+
+	limits((-1, -50.), (fills.length, +50.), Crop);
 
 	xaxis(YEquals(0., false), dashed);
 }
