@@ -36,7 +36,7 @@ for (int fi : fills_short.keys)
 		string on = "multiRPPlots/" + cols[ci] + "/p_th_x_vs_xi";
 
 		RootObject hist = RootGetObject(f, on, error=false);
-		RootObject fit = RootGetObject(f, on + "|ff", error=false);
+		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);
 		if (!hist.valid)
 			continue;
 

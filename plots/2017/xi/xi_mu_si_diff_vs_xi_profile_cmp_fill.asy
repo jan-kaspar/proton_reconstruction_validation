@@ -35,7 +35,7 @@ for (int fi : fills_short.keys)
 		string on = "singleMultiCorrelationPlots/si_" + c_si_rps[ci]  + "_mu_" + cols[ci] + "/p_xi_diff_si_mu_vs_xi_mu";
 		
 		RootObject hist = RootGetObject(f, on, error=false);
-		RootObject fit = RootGetObject(f, on + "|ff", error=false);
+		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);
 
 		if (!hist.valid || !fit.valid)
 			continue;

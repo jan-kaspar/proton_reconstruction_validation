@@ -37,11 +37,13 @@ for (int fi : fills_short.keys)
 		string on = "armCorrelationPlots/" + cols[ci] + "/p_xi_si_diffNF_vs_xi_mu";
 		
 		RootObject hist = RootGetObject(f, on, error=false);
+		RootObject fit = RootGetObject(f, on+"|ff_pol1", error=false);
 
 		if (!hist.valid)
 			continue;
 		
-		draw(hist, "eb,d0", red);
+		draw(hist, "eb,d0", blue);
+		draw(fit, "l", red+1pt);
 
 		limits((0., -0.02), (0.25, +0.02), Crop);
 	}

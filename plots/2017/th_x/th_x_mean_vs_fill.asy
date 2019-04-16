@@ -45,14 +45,20 @@ for (int ai : arms.keys)
 			write(fi);
 
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-			string on = "multiRPPlots/" + arms[ai] + "/p_th_x_vs_xi|ff";
+			string on = "multiRPPlots/" + arms[ai] + "/p_th_x_vs_xi|ff_pol1";
 		
-			RootObject obj = RootGetObject(f, on, error=false);
-			if (!obj.valid)
+			RootObject fit = RootGetObject(f, on, error=false);
+			if (!fit.valid)
 				continue;
 		
-			real d = obj.rExec("GetParameter", 0) * 1e6;
-			real d_unc = obj.rExec("GetParError", 0) * 1e6;
+			real x_min = fit.rExec("GetXmin");
+			real x_max = fit.rExec("GetXmax");
+
+			real f_min = fit.rExec("Eval", x_min);
+			real f_max = fit.rExec("Eval", x_max);
+
+			real d = (f_max + f_min)/2 * 1e6;
+			real d_unc = abs(f_max - f_min)/2 * 1e6;
 
 			mark m = mCi+3pt;
 

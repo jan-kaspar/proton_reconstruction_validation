@@ -45,14 +45,20 @@ for (int ci : cols.keys)
 		for (int fi : fills.keys)
 		{
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-			string on = "singleMultiCorrelationPlots/si_" + c_si_rps[ci]  + "_mu_" + cols[ci] + "/p_xi_diff_si_mu_vs_xi_mu|ff";
+			string on = "singleMultiCorrelationPlots/si_" + c_si_rps[ci]  + "_mu_" + cols[ci] + "/p_xi_diff_si_mu_vs_xi_mu|ff_pol1";
 		
-			RootObject obj = RootGetObject(f, on, error=false);
-			if (!obj.valid)
+			RootObject fit = RootGetObject(f, on, error=false);
+			if (!fit.valid)
 				continue;
 		
-			real d = obj.rExec("GetParameter", 0);
-			real d_unc = obj.rExec("GetParError", 0);
+			real x_min = fit.rExec("GetXmin");
+			real x_max = fit.rExec("GetXmax");
+
+			real f_min = fit.rExec("Eval", x_min);
+			real f_max = fit.rExec("Eval", x_max);
+
+			real d = (f_max + f_min)/2;
+			real d_unc = abs(f_max - f_min)/2;
 
 			mark m = mCi+3pt;
 

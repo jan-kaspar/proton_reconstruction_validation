@@ -8,19 +8,6 @@ string arms[], a_labels[];
 arms.push("arm0"); a_labels.push("sector 45 (L)");
 arms.push("arm1"); a_labels.push("sector 56 (R)");
 
-//----------------------------------------------------------------------------------------------------
-
-string TickLabels(real x)
-{
-	if (x >=0 && x < fills.length)
-	{
-		int ix = (int) x;
-		return fills[ix];
-	} else {
-		return "";
-	}
-}
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -55,17 +42,21 @@ for (int ai : arms.keys)
 
 		for (int fi : fills.keys)
 		{
-			write(fi);
-
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-			string on = "multiRPPlots/" + arms[ai] + "/p_th_y_vs_xi|ff";
+			string on = "multiRPPlots/" + arms[ai] + "/p_th_y_vs_xi|ff_pol1";
 		
-			RootObject obj = RootGetObject(f, on, error=false);
-			if (!obj.valid)
+			RootObject fit = RootGetObject(f, on, error=false);
+			if (!fit.valid)
 				continue;
 		
-			real d = obj.rExec("GetParameter", 0) * 1e6;
-			real d_unc = obj.rExec("GetParError", 0) * 1e6;
+			real x_min = fit.rExec("GetXmin");
+			real x_max = fit.rExec("GetXmax");
+
+			real f_min = fit.rExec("Eval", x_min);
+			real f_max = fit.rExec("Eval", x_max);
+
+			real d = (f_max + f_min)/2 * 1e6;
+			real d_unc = abs(f_max - f_min)/2 * 1e6;
 
 			mark m = mCi+3pt;
 

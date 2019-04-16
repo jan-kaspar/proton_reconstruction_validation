@@ -10,6 +10,8 @@ cols.push("arm1"); c_labels.push("sector 56 (R)");
 
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
+xTicksDef = LeftTicks(0.05, 0.01);
+
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
@@ -34,7 +36,7 @@ for (int fi : fills_short.keys)
 		string on = "multiRPPlots/" + cols[ci] + "/p_th_y_vs_xi";
 
 		RootObject hist = RootGetObject(f, on, error=false);
-		RootObject fit = RootGetObject(f, on + "|ff", error=false);
+		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);
 		if (!hist.valid)
 			continue;
 
