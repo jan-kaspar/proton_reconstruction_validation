@@ -20,15 +20,17 @@ for (int ci : cols.keys)
 
 for (int fi : fills_short.keys)
 {
+	string fill = fills_short[fi];
+
 	NewRow();
 
-	NewPadLabel("fill: " + fills_short[fi]);
+	NewPadLabel("fill: " + fill);
 
 	for (int ci : cols.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "mean of $\th^*_y\ung{\mu rad}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + beta + "_stream_" + stream + "/do_fits.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
 		string on = "multiRPPlots/" + cols[ci] + "/p_th_y_vs_xi";
 
 		RootObject hist = RootGetObject(f, on, error=false);

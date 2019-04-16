@@ -1,9 +1,9 @@
 string year = "2017";
 
-string version = "version1";
+string version = "version3";
 string versions[] = {
-	"version1",
-	"version2",
+	"version1-fix",
+	"version3",
 };
 
 string stream = "DoubleEG";

@@ -23,8 +23,6 @@ for (int fi : fills_short.keys)
 {
 	string fill = fills_short[fi];
 
-	write(fill);
-
 	NewRow();
 
 	NewPadLabel("fill: " + fill);
