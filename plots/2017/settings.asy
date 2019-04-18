@@ -1,20 +1,25 @@
 string year = "2017";
 
-string version = "version3";
+string version = "version4";
 string versions[] = {
-	"version1-fix",
-	"version3",
+	//"version1-fix",
+	"version4",
 };
 
 string stream = "DoubleEG";
 
-string xangle = "150";
+string xangle = "120";
 string xangles[] = {
 	"120",
 	"130",
 	"140",
 	"150",
 };
+
+string xangles_short[];
+mark xa_marks[];
+xangles_short.push("150"); xa_marks.push(mTU);
+xangles_short.push("120"); xa_marks.push(mTD);
 
 string beta = "AUTO";
 
@@ -35,10 +40,10 @@ string GetBeta(string fill_str)
 real xSizeDefFill = 80cm;
 
 string fills_short[] = {
-	"5839",
+	"5849",
 	"6053",
-	"6192",
-	"6239",
+	"6189",
+	"6240",
 	"6303",
 	"6371",
 };

@@ -18,15 +18,16 @@ xSizeDef = xSizeDefFill;
 
 NewPad(false);
 AddToLegend("stream: " + stream);
-AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
 
+for (int xai : xangles_short.keys)
+	AddToLegend("xangle = " + xangles_short[xai], xa_marks[xai] + 3pt);
+
 for (int vi : versions.keys)
-	AddToLegend(versions[vi], mCi+3pt+StdPen(vi + 1));
+	AddToLegend(versions[vi], StdPen(vi + 1)+1pt);
 
 AttachLegend();
 
-//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 {
@@ -41,29 +42,33 @@ for (int ai : arms.keys)
 		pen p = StdPen(vi + 1);
 		string version = versions[vi];
 
-		for (int fi : fills.keys)
+		for (int xai : xangles_short.keys)
 		{
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-			string on = "armCorrelationPlots/" + arms[ai] + "/p_xi_si_diffNF_vs_xi_mu|ff_pol1";
-		
-			RootObject fit = RootGetObject(f, on, error=false);
-			if (!fit.valid)
-				continue;
-		
-			real x_min = fit.rExec("GetXmin");
-			real x_max = fit.rExec("GetXmax");
+			string xangle = xangles_short[xai];
+			mark m = xa_marks[xai]+3pt;
 
-			real f_min = fit.rExec("Eval", x_min);
-			real f_max = fit.rExec("Eval", x_max);
+			for (int fi : fills.keys)
+			{
+				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
+				string on = "armCorrelationPlots/" + arms[ai] + "/p_xi_si_diffNF_vs_xi_mu|ff_pol1";
+			
+				RootObject fit = RootGetObject(f, on, error=false);
+				if (!fit.valid)
+					continue;
+			
+				real x_min = fit.rExec("GetXmin");
+				real x_max = fit.rExec("GetXmax");
 
-			real d = (f_max + f_min)/2;
-			real d_unc = abs(f_max - f_min)/2;
+				real f_min = fit.rExec("Eval", x_min);
+				real f_max = fit.rExec("Eval", x_max);
 
-			mark m = mCi+3pt;
+				real d = (f_max + f_min)/2;
+				real d_unc = abs(f_max - f_min)/2;
 
-			real x = fi;
-			draw((x, d), m+p);
-			draw((x, d-d_unc)--(x, d+d_unc), p);
+				real x = fi;
+				draw((x, d), m+p);
+				draw((x, d-d_unc)--(x, d+d_unc), p);
+			}
 		}
 	}
 
