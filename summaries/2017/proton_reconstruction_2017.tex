@@ -1,11 +1,45 @@
 \input slides.tex
-%\input utf8-t1
+\input utf8-t1
 
 \newpage %-------------------------------------------------------------------------------------------
 
-\def\author{J.~Kaspar}
+\def\author{J.~Kašpar}
 \def\caption{Proton reconstruction, data 2017}
-\def\date{22 Feb 2019}
+\def\date{30 Apr 2019}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Fit quality}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/quality/chi_sq_histogram_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Fit quality}
+
+\centerline{\fig[16cm]{../../plots/2017/quality/chi_sq_mean_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Validation}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/quality/delta_xy_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Validation}
+
+\centerline{\fig[16cm]{../../plots/2017/quality/delta_xy_rms_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Comparison of single-RP and multi-RP histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/xi/xi_histogram_cmp_fill.pdf}}
 
 
 \iffalse
@@ -54,6 +88,10 @@
 
 %====================================================================================================
 
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_x$}{Histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/th_x/th_x_histogram_cmp_fill.pdf}}
 
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\th^*_x$ vs.~$\xi$}{2D histograms}
@@ -80,6 +118,11 @@
 %====================================================================================================
 
 \newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_y$}{Histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/th_y/th_y_histogram_cmp_fill.pdf}}
+
+\newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\th^*_y$ vs.~$\xi$}{2D histograms}
 
 \centerline{\fig[,10.5cm]{../../plots/2017/th_y/th_y_vs_xi_2D_cmp_fill.pdf}}
@@ -99,6 +142,42 @@
 %\> mean $\th^*_y$ over safe $\xi$ range (red fits on the previous slide) plotted vs.~fill number
 
 \centerline{\fig[16cm]{../../plots/2017/th_y/th_y_mean_vs_fill.pdf}}
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$v^*$ vs.~$\xi$}{2D histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/vtx_y/vtx_y_vs_xi_2D_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$y^*$ vs.~$\xi$}{Profiles}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/vtx_y/vtx_y_vs_xi_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{mean $y^*$ vs.~fill}
+
+\centerline{\fig[16cm]{../../plots/2017/vtx_y/vtx_y_mean_vs_fill.pdf}}
+
+
+
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing information}{Number of timing RPs associated with reconstructed proton}
+
+\centerline{\fig[,10.5cm]{../../plots/2017/quality/timing_rps_n_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing information}{Fraction of reconstructed protons with associated timing}
+
+
+\centerline{\fig[16cm]{../../plots/2017/quality/timing_rps_fraction_vs_fill.pdf}}
 
 
 \vfil
