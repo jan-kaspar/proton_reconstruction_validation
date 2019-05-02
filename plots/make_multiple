@@ -1,0 +1,14 @@
+#!/bin/bash
+
+find $1 -type d|while read d;
+do
+	echo $d
+
+	rm -rf $d/*.pdf
+
+	cd "$d"
+
+	asy *.asy
+
+	cd - > /dev/null
+done
