@@ -21,7 +21,7 @@ function SubmitOneDir()
 	echo "* $fill, $xangle, $beta, $stream"
 
 	# get input
-	input="process.source.fileNames.append(\"root://eostotem.cern.ch/${input_dir}/${tag}\")"
+	input="process.source.fileNames.append(\"root://eoscms.cern.ch/${input_dir}/${tag}\")"
 
 	# make work directory
 	subdir="fill_$fill/xangle_${xangle}_beta_${beta}_stream_${stream}"
@@ -95,7 +95,7 @@ function Submit()
 	) > "$condor_file_sub"
 
 	# loop over input files
-	for tag in `eos ls "$input_dir"|grep DoubleEG|grep .root|uniq`
+	for tag in `eos ls "$input_dir"|grep "$stream"|grep .root|uniq`
 	do
 		SubmitOneDir
 
@@ -110,7 +110,18 @@ function Submit()
 
 #----------------------------------------------------------------------------------------------------
 
+year="2016"
+stream="SingleMuon"
+
+version="version1"
+input_dir="/eos/totem/data/ctpps/reconstruction/2016/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at d0ec5aa0d2b4c763188c4f3f37b28cb1ef35dbbb (all single-RP output saved)
+Submit
+
+#----------------------------------------------------------------------------------------------------
+
 year="2017"
+stream="DoubleEG"
 
 #version="version1"
 #input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
@@ -127,7 +138,37 @@ year="2017"
 #sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at fbd63215d928924b691c953f58afd4791f8fac06
 #Submit
 
-version="version3"
-input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
-sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at fc3ad052213d1077e5c7e3abfdac904e2fd09a1e
-Submit
+#version="version3"
+#input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at fc3ad052213d1077e5c7e3abfdac904e2fd09a1e
+#Submit
+
+#version="version4"
+#input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at 1198954cacd8dbad8df546dcfb658847f6321e70 (2017+2018 optics version 3)
+#Submit
+
+#version="version5"
+#input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at 4a9108a21ba75f2a98807360ddc0173e9da143d9 (updated 2017 alignment of tracking RPs)
+#Submit
+
+#version="version6"
+#input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at c393ef4902c9ccb8012f673d855e749ec4a2c494 (new timing-RP alignment for 2017)
+#Submit
+
+version="version7"
+input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-version2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at d0ec5aa0d2b4c763188c4f3f37b28cb1ef35dbbb (all single-RP output saved)
+#Submit
+
+#----------------------------------------------------------------------------------------------------
+
+year="2018"
+stream="SingleMuon"
+
+version="version1"
+input_dir="/eos/totem/data/ctpps/reconstruction/2018/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step2/CMSSW_10_6_0_pre2/src" # at d0ec5aa0d2b4c763188c4f3f37b28cb1ef35dbbb (all single-RP output saved)
+#Submit
