@@ -89,6 +89,6 @@ process.path = cms.Path(
   * process.ctppsLocalTrackLiteProducer
 
   * process.ctppsProtons
-  #* process.ctppsProtonReconstructionValidator
+  * process.ctppsProtonReconstructionValidator
   * process.ctppsProtonReconstructionPlotter
 )
