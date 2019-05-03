@@ -1,23 +1,24 @@
-string year = "2018";
+string year = "2016";
 
 string version = "version1";
 string versions[] = {
 	"version1",
 };
 
-string stream = "SingleMuon";
+//string stream = "SingleMuon";
+string stream = "ZeroBias";
 
-string xangle = "160";
+string xangle = "185";
 string xangles[] = {
-	"130",
-	"160",
+	"185",
+	"140",
 };
 
 string xangles_short[];
 mark xa_marks[];
 pen xa_pens[];
-xangles_short.push("160"); xa_marks.push(mTU); xa_pens.push(blue);
-xangles_short.push("130"); xa_marks.push(mTD); xa_pens.push(red);
+xangles_short.push("185"); xa_marks.push(mTU); xa_pens.push(blue);
+xangles_short.push("140"); xa_marks.push(mTD); xa_pens.push(red);
 
 string beta = "0.30";
 
@@ -29,8 +30,15 @@ string GetBeta(string fill_str)
 real xSizeDefFill = 80cm;
 
 string fills_short[] = {
-	// TODO: 3 + 3 representative fills
-	//"6371",
+	// pre-TS2
+	"4953",
+	"5052",
+	"5276",
+
+	// post-TS2
+	"5394",
+	"5427",
+	"5451",
 };
 
 string fills[] = {
@@ -149,31 +157,31 @@ string fills[] = {
 	"5288",
 
 	// post-TS2
-	"5451",
-	"5450",
-	"5448",
-	"5446",
-	"5443",
-	"5442",
-	"5441",
-	"5439",
-	"5437",
-	"5433",
-	"5427",
-	"5426",
-	"5424",
-	"5423",
-	"5422",
-	"5421",
-	"5418",
-	"5416",
-	"5412",
-	"5406",
-	"5405",
-	"5401",
-	"5395",
-	"5394",
 	"5393",
+	"5394",
+	"5395",
+	"5401",
+	"5405",
+	"5406",
+	"5412",
+	"5416",
+	"5418",
+	"5421",
+	"5422",
+	"5423",
+	"5424",
+	"5426",
+	"5427",
+	"5433",
+	"5437",
+	"5439",
+	"5441",
+	"5442",
+	"5443",
+	"5446",
+	"5448",
+	"5450",
+	"5451",
 };
 
 void DrawFillMarkers(real y_min, real y_max)
@@ -181,7 +189,7 @@ void DrawFillMarkers(real y_min, real y_max)
 	real b = 0;
 	for (int fi : fills.keys)
 	{
-		if (fills[fi] == "5451")
+		if (fills[fi] == "5393")
 		{
 			b = fi - 0.5;
 		}

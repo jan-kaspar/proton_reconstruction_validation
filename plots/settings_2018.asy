@@ -29,8 +29,13 @@ string GetBeta(string fill_str)
 real xSizeDefFill = 80cm;
 
 string fills_short[] = {
-	// TODO: 3 + 3 representative fills
-	//"6371",
+	"6617", 
+	"6923", 
+	"7145", 
+
+	"7211", 
+	"7309", 
+	"7334", 
 };
 
 string fills[] = {
@@ -231,6 +236,7 @@ string fills[] = {
 	"7142",
 	"7144",
 	"7145",
+
 	"7211",
 	"7212",
 	"7213",
@@ -274,8 +280,6 @@ string fills[] = {
 
 void DrawFillMarkers(real y_min, real y_max)
 {
-	// TODO
-	/*
 	real b = 0;
 	for (int fi : fills.keys)
 	{
@@ -286,8 +290,7 @@ void DrawFillMarkers(real y_min, real y_max)
 	}
 
 	draw((b, y_min)--(b, y_max), magenta+2pt);
-	label("post-TS2", (b, y_max), SE, magenta);
-	*/
+	label("post-TS2 ??", (b, y_max), SE, magenta);
 }
 
 string TickLabels(real x)
