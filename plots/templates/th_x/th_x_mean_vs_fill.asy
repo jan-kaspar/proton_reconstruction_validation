@@ -4,10 +4,6 @@ include "../settings.asy";
 
 string topDir = "../../../";
 
-string arms[], a_labels[];
-arms.push("arm0"); a_labels.push("sector 45 (L)");
-arms.push("arm1"); a_labels.push("sector 56 (R)");
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -17,6 +13,7 @@ yTicksDef = RightTicks(10., 5.);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
 AddToLegend("beta: " + beta);
 

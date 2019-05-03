@@ -4,10 +4,6 @@ include "../settings.asy";
 
 string topDir = "../../../";
 
-string arms[], a_labels[];
-arms.push("arm0"); a_labels.push("sector 45 (L)");
-arms.push("arm1"); a_labels.push("sector 56 (R)");
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -17,12 +13,15 @@ xSizeDef = xSizeDefFill;
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
-AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
 
+for (int xai : xangles_short.keys)
+	AddToLegend("xangle = " + xangles_short[xai], xa_marks[xai] + 3pt);
+
 for (int vi : versions.keys)
-	AddToLegend(versions[vi], mCi+3pt+StdPen(vi + 1));
+	AddToLegend(replace(versions[vi], "_", "\_"), StdPen(vi + 1)+1pt);
 
 AttachLegend();
 
@@ -40,26 +39,31 @@ for (int ai : arms.keys)
 		pen p = StdPen(vi + 1);
 		string version = versions[vi];
 
-		for (int fi : fills.keys)
+		for (int xai : xangles_short.keys)
 		{
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
-			string on = "multiRPPlots/" + arms[ai] + "/h_log_chi_sq";
-		
-			RootObject fit = RootGetObject(f, on, error=false);
-			if (!fit.valid)
-				continue;
-		
-			real mean = fit.rExec("GetMean");
-			real rms = fit.rExec("GetRMS");
+			string xangle = xangles_short[xai];
+			mark m = xa_marks[xai]+3pt;
 
-			if (rms == 0.)
-				continue;
+			for (int fi : fills.keys)
+			{
+				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
+				string on = "multiRPPlots/" + arms[ai] + "/h_log_chi_sq";
+			
+				RootObject fit = RootGetObject(f, on, error=false);
+				if (!fit.valid)
+					continue;
+			
+				real mean = fit.rExec("GetMean");
+				real rms = fit.rExec("GetRMS");
 
-			mark m = mCi+3pt;
+				if (rms == 0.)
+					continue;
 
-			real x = fi;
-			draw((x, mean), m+p);
-			draw((x, mean-rms)--(x, mean+rms), p);
+
+				real x = fi;
+				draw((x, mean), m+p);
+				draw((x, mean-rms)--(x, mean+rms), p);
+			}
 		}
 	}
 

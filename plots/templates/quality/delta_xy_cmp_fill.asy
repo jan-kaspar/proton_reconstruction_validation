@@ -4,12 +4,6 @@ include "../settings.asy";
 
 string topDir = "../../../";
 
-string rps[], rp_labels[];
-rps.push("23"); rp_labels.push("45-220-fr");
-rps.push("3"); rp_labels.push("45-210-fr");
-rps.push("103"); rp_labels.push("56-210-fr");
-rps.push("123"); rp_labels.push("56-220-fr");
-
 //xTicksDef = LeftTicks(0.05, 0.01);
 
 //----------------------------------------------------------------------------------------------------

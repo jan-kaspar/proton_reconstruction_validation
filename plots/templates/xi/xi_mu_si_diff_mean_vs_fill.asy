@@ -29,11 +29,11 @@ for (int vi : versions.keys)
 AttachLegend();
 
 
-for (int ci : cols.keys)
+for (int rpi : rps.keys)
 {
 	NewRow();
 
-	NewPadLabel(c_labels[ci]);
+	NewPadLabel(rp_labels[rpi]);
 
 	NewPad("fill", "mean of $\xi_{\rm single} - \xi_{\rm multi}$");
 
@@ -50,7 +50,7 @@ for (int ci : cols.keys)
 			for (int fi : fills.keys)
 			{
 				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-				string on = "singleMultiCorrelationPlots/si_" + c_si_rps[ci]  + "_mu_" + cols[ci] + "/p_xi_diff_si_mu_vs_xi_mu|ff_pol1";
+				string on = "singleMultiCorrelationPlots/si_rp" + rps[rpi]  + "_mu_" + rp_arms[rpi] + "/p_xi_diff_si_mu_vs_xi_mu|ff_pol1";
 			
 				RootObject fit = RootGetObject(f, on, error=false);
 				if (!fit.valid)
