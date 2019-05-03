@@ -1,0 +1,193 @@
+\def\today{%
+	\number\day
+	\space
+	\ifcase\month\or
+	January\or February\or March\or April\or May\or June\or
+	July\or August\or September\or October\or November\or December
+	\fi
+	\space
+	\number\year
+}
+
+\newpage %-------------------------------------------------------------------------------------------
+
+\def\author{J.~Kašpar}
+\def\caption{Proton reconstruction, data \DataYear}
+\def\date{\today}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Fit quality}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/quality/chi_sq_histogram_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Fit quality}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/quality/chi_sq_mean_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Validation}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/quality/delta_xy_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP reconstruction}{Validation}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/quality/delta_xy_rms_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Comparison of single-RP and multi-RP histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_histogram_cmp_fill.pdf}}
+
+
+\iffalse
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Single-RP, near-far correlation}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_si_F_vs_si_N_cmp_fill.pdf}}
+\fi
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Single-RP, near-far difference}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_si_diffNF_histogram_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Single-RP, near-far difference vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_si_diffNF_vs_mu_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Single-RP, ``mean'' near-far difference vs.~fill}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/xi/xi_si_diffNF_mean_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Correlation between single and multi-RP}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_si_vs_mu_2D_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Difference between single and multi-RP vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_mu_si_diff_vs_xi_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{``Mean'' difference between single and multi-RP vs.~fill}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/xi/xi_mu_si_diff_mean_vs_fill.pdf}}
+
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_x$}{Histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_histogram_cmp_fill.pdf}}
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_x$ vs.~$\xi$}{2D histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_vs_xi_2D_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_x$ vs.~$\xi$}{Profiles}
+
+%\> plots from previous slide represented as profile histogram
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_vs_xi_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{mean $\th^*_x$ vs.~fill}
+
+%\> mean $\th^*_x$ over safe $\xi$ range (red fits on the previous slide) plotted vs.~fill number
+
+\centerline{\fig[16cm]{../../plots/\DataYear/th_x/th_x_mean_vs_fill.pdf}}
+
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_y$}{Histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_histogram_cmp_fill.pdf}}
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_y$ vs.~$\xi$}{2D histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_vs_xi_2D_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\th^*_y$ vs.~$\xi$}{Profiles}
+
+%\> plots from previous slide represented as profile histogram
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_vs_xi_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{mean $\th^*_y$ vs.~fill}
+
+%\> mean $\th^*_y$ over safe $\xi$ range (red fits on the previous slide) plotted vs.~fill number
+
+\centerline{\fig[16cm]{../../plots/\DataYear/th_y/th_y_mean_vs_fill.pdf}}
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$v^*$ vs.~$\xi$}{2D histograms}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/vtx_y/vtx_y_vs_xi_2D_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$y^*$ vs.~$\xi$}{Profiles}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/vtx_y/vtx_y_vs_xi_profile_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{mean $y^*$ vs.~fill}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/vtx_y/vtx_y_mean_vs_fill.pdf}}
+
+
+
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing information}{Number of timing RPs associated with reconstructed proton}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/quality/timing_rps_n_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing information}{Fraction of reconstructed protons with associated timing}
+
+
+\centerline{\fig[16cm]{../../plots/\DataYear/quality/timing_rps_fraction_vs_fill.pdf}}
+
+
+\vfil
+\eject
+\bye
