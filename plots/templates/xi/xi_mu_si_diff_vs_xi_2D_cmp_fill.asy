@@ -43,7 +43,8 @@ for (int fi : fills_short.keys)
 		if (!hist.valid)
 			continue;
 
-		hist.vExec("Rebin2D", 2, 2);
+		if (rebin)
+			hist.vExec("Rebin2D", 2, 2);
 		
 		draw(hist);
 

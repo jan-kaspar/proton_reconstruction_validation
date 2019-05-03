@@ -40,7 +40,8 @@ for (int fi : fills_short.keys)
 		if (!obj.valid)
 			continue;
 
-		obj.vExec("Rebin2D", 2, 1);
+		if (rebin)
+			obj.vExec("Rebin2D", 2, 1);
 
 		draw(scale(1., 1e4), obj);
 
