@@ -59,4 +59,4 @@ for (int rpi : rps.keys)
 	limits((-1, 0), (fills.length, 5e-5), Crop);
 }
 
-GShipout("delta_xy_rms_vs_fill", hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=0mm, vSkip=0mm);

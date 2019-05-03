@@ -53,4 +53,4 @@ for (int fi : fills_short.keys)
 	}
 }
 
-GShipout("xi_si_vs_mu_2D_cmp_fill", hSkip=1mm, vSkip=0mm);
+GShipout(hSkip=1mm, vSkip=0mm);

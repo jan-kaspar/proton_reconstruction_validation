@@ -77,4 +77,4 @@ for (int ai : arms.keys)
 	xaxis(YEquals(0., false), dashed);
 }
 
-GShipout("th_y_mean_vs_fill", hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=0mm, vSkip=0mm);

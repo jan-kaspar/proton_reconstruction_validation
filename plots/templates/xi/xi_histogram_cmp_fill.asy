@@ -59,4 +59,4 @@ for (int fi : fills_short.keys)
 	}
 }
 
-GShipout("xi_histogram_cmp_fill.asy", hSkip=1mm, vSkip=0mm);
+GShipout(hSkip=1mm, vSkip=0mm);

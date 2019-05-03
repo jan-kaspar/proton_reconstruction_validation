@@ -77,4 +77,4 @@ for (int rpi : rps.keys)
 	xaxis(YEquals(0., false), dashed);
 }
 
-GShipout("xi_mu_si_diff_mean_vs_fill", hSkip=1mm, vSkip=0mm);
+GShipout(hSkip=1mm, vSkip=0mm);

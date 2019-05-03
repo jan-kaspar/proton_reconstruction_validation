@@ -50,4 +50,4 @@ for (int fi : fills_short.keys)
 	}
 }
 
-GShipout("th_x_vs_xi_profile_cmp_fill", hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=0mm, vSkip=0mm);

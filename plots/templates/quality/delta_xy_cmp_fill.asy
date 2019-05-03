@@ -53,4 +53,4 @@ for (int fi : fills_short.keys)
 	}
 }
 
-GShipout("delta_xy_cmp_fill", hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=0mm, vSkip=0mm);

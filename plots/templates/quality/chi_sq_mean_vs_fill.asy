@@ -73,4 +73,4 @@ for (int ai : arms.keys)
 	limits((-1, -15), (fills.length, -5), Crop);
 }
 
-GShipout("chi_sq_mean_vs_fill", hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=0mm, vSkip=0mm);
