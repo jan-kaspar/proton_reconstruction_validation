@@ -42,6 +42,10 @@ process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
 ##    "CalibPPS/ESProducers/data/alignment/timing_RP_2018.xml"
 ##  )
 
+if ($year == 2016):
+  process.ctppsLocalTrackLiteProducer.includeDiamonds = False
+  process.ctppsLocalTrackLiteProducer.includePixels = False
+
 # reconstruction validator
 process.ctppsProtonReconstructionValidator = cms.EDAnalyzer("CTPPSProtonReconstructionValidator",
     tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
@@ -77,18 +81,31 @@ else:
   process.ctppsProtonReconstructionPlotter.rpId_56_N = 103
   process.ctppsProtonReconstructionPlotter.rpId_56_F = 123
 
-process.path = cms.Path(
-  process.totemRPUVPatternFinder
-  * process.totemRPLocalTrackFitter
+# processing sequence
+if ($year == 2016):
+  process.path = cms.Path(
+    process.totemRPUVPatternFinder
+    * process.totemRPLocalTrackFitter
 
-  * process.ctppsDiamondRecHits
-  * process.ctppsDiamondLocalTracks
+    * process.ctppsLocalTrackLiteProducer
 
-  * process.ctppsPixelLocalTracks
+    * process.ctppsProtons
+    * process.ctppsProtonReconstructionValidator
+    * process.ctppsProtonReconstructionPlotter
+  )
+else:
+  process.path = cms.Path(
+    process.totemRPUVPatternFinder
+    * process.totemRPLocalTrackFitter
 
-  * process.ctppsLocalTrackLiteProducer
+    * process.ctppsDiamondRecHits
+    * process.ctppsDiamondLocalTracks
 
-  * process.ctppsProtons
-  * process.ctppsProtonReconstructionValidator
-  * process.ctppsProtonReconstructionPlotter
-)
+    * process.ctppsPixelLocalTracks
+
+    * process.ctppsLocalTrackLiteProducer
+
+    * process.ctppsProtons
+    * process.ctppsProtonReconstructionValidator
+    * process.ctppsProtonReconstructionPlotter
+  )
