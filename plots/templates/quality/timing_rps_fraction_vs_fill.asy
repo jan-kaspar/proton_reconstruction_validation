@@ -13,6 +13,7 @@ xSizeDef = xSizeDefFill;
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
 AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
@@ -22,6 +23,7 @@ for (int vi : versions.keys)
 
 AttachLegend();
 
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 {

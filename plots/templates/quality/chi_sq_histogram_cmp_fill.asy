@@ -11,7 +11,14 @@ TH2_palette = Gradient(blue, heavygreen, yellow, red);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
-label("\vbox{\hbox{version: " + version + "}\hbox{stream: " + stream + "}\hbox{xangle: " + xangle + "}\hbox{beta: " + beta + "}}");
+AddToLegend("year: " + year);
+AddToLegend("version: " + version);
+AddToLegend("stream: " + stream);
+AddToLegend("xangle: " + beta);
+AddToLegend("beta: " + beta);
+AttachLegend();
+
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 	NewPadLabel(a_labels[ai]);

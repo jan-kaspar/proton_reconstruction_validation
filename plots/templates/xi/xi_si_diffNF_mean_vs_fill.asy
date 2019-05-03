@@ -13,6 +13,7 @@ yTicksDef = RightTicks(0.0005, 0.0001);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
 AddToLegend("beta: " + beta);
 
@@ -24,6 +25,7 @@ for (int vi : versions.keys)
 
 AttachLegend();
 
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 {

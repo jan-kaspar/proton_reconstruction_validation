@@ -11,6 +11,7 @@ xTicksDef = LeftTicks(0.05, 0.01);
 
 NewPad(false);
 
+AddToLegend("year: " + year);
 AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
 AddToLegend("xangle: " + xangle);
@@ -21,6 +22,8 @@ AddToLegend("single-RP, ``far'' RP", heavygreen);
 AddToLegend("multi-RP", red);
 
 AttachLegend();
+
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 	NewPadLabel(a_labels[ai]);

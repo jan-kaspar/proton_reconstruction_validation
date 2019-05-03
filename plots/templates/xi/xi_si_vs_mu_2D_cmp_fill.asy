@@ -11,7 +11,14 @@ yTicksDef = RightTicks(0.05, 0.01);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
-label("\vbox{\hbox{version: " + version + "}\hbox{stream: " + stream + "}\hbox{xangle: " + xangle + "}\hbox{beta: " + beta + "}}");
+AddToLegend("year: " + year);
+AddToLegend("version: " + version);
+AddToLegend("stream: " + stream);
+AddToLegend("xangle: " + xangle);
+AddToLegend("beta: " + beta);
+AttachLegend();
+
+//----------------------------------------------------------------------------------------------------
 
 for (int rpi : rps.keys)
 	NewPadLabel(rp_labels[rpi]);

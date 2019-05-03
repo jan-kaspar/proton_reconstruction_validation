@@ -13,6 +13,7 @@ xSizeDef = xSizeDefFill;
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
 AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
@@ -23,6 +24,7 @@ AddToLegend("$\De y$", mCi+3pt+red);
 
 AttachLegend();
 
+//----------------------------------------------------------------------------------------------------
 
 for (int rpi : rps.keys)
 {

@@ -4,10 +4,6 @@ include "../settings.asy";
 
 string topDir = "../../../";
 
-string cols[], c_labels[], c_si_rps[];
-cols.push("arm0"); c_labels.push("sector 45 (L)"); c_si_rps.push("rp23");
-cols.push("arm1"); c_labels.push("sector 56 (R)"); c_si_rps.push("rp123");
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -17,6 +13,7 @@ xSizeDef = xSizeDefFill;
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("stream: " + stream);
 AddToLegend("beta: " + beta);
 
@@ -28,6 +25,7 @@ for (int vi : versions.keys)
 
 AttachLegend();
 
+//----------------------------------------------------------------------------------------------------
 
 for (int rpi : rps.keys)
 {

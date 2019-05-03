@@ -10,6 +10,7 @@ xTicksDef = LeftTicks(0.01, 0.005);
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
+AddToLegend("year: " + year);
 AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
 AddToLegend("beta: " + beta);
@@ -18,6 +19,8 @@ for (int xai : xangles_short.keys)
 	AddToLegend("xangle = " + xangles_short[xai], xa_pens[xai]);
 
 AttachLegend();
+
+//----------------------------------------------------------------------------------------------------
 
 for (int ai : arms.keys)
 	NewPadLabel(a_labels[ai]);
