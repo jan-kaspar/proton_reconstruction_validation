@@ -96,20 +96,20 @@ int main(int argc, char **argv)
 	// 2016
 	if (fill >= 4947 && fill <= 5393)
 	{
-		min_xi_diffNF[0] = 0.06; max_xi_diffNF[0] = 0.095;
-		min_xi_diffNF[1] = 0.08; max_xi_diffNF[1] = 0.12;
+		min_xi_diffNF[0] = 0.07; max_xi_diffNF[0] = 0.095;
+		min_xi_diffNF[1] = 0.07; max_xi_diffNF[1] = 0.11;
 
 		min_xi_diffSM[0] = 0.06; max_xi_diffSM[0] = 0.095;
-		min_xi_diffSM[1] = 0.08; max_xi_diffSM[1] = 0.12;
+		min_xi_diffSM[1] = 0.07; max_xi_diffSM[1] = 0.11;
 
-		min_th_x[0] = 0.06; max_th_x[0] = 0.10;
-		min_th_x[1] = 0.07; max_th_x[1] = 0.115;
+		min_th_x[0] = 0.065; max_th_x[0] = 0.095;
+		min_th_x[1] = 0.07; max_th_x[1] = 0.11;
 
-		min_th_y[0] = 0.07; max_th_y[0] = 0.14;
+		min_th_y[0] = 0.07; max_th_y[0] = 0.115;
 		min_th_y[1] = 0.07; max_th_y[1] = 0.14;
 
 		min_vtx_y[0] = 0.07; max_vtx_y[0] = 0.11;
-		min_vtx_y[1] = 0.06; max_vtx_y[1] = 0.17;
+		min_vtx_y[1] = 0.06; max_vtx_y[1] = 0.12;
 	}
 
 	// 2017
