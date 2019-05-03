@@ -29,13 +29,13 @@ string GetBeta(string fill_str)
 real xSizeDefFill = 80cm;
 
 string fills_short[] = {
-	"6617", 
-	"6923", 
-	"7145", 
+	"6617",
+	"6923",
+	"7145",
 
-	"7211", 
-	"7309", 
-	"7334", 
+	"7211",
+	"7309",
+	"7334",
 };
 
 string fills[] = {
