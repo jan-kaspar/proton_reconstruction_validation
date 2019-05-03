@@ -1,5 +1,15 @@
 string year = "2016";
 
+string arms[], a_labels[], a_nr_rps[], a_fr_rps[];
+arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("2"); a_fr_rps.push("3");
+arms.push("arm1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("102"); a_fr_rps.push("103");
+
+string rps[], rp_labels[], rp_arms[];
+rps.push("2"); rp_labels.push("45-210-nr"); rp_arms.push("arm0");
+rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
+rps.push("102"); rp_labels.push("56-210-nr"); rp_arms.push("arm1");
+rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
+
 string version = "version1";
 string versions[] = {
 	"version1",
@@ -28,6 +38,8 @@ string GetBeta(string fill_str)
 }
 
 real xSizeDefFill = 80cm;
+
+bool rebin = true;
 
 string fills_short[] = {
 	// pre-TS2
