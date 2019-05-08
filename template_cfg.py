@@ -26,21 +26,38 @@ process.maxEvents = cms.untracked.PSet(
 # declare global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, "105X_dataRun2_relval_v2")
-#process.GlobalTag = GlobalTag(process.GlobalTag, "auto:run2_data")
+process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v10")
+
+# get optics from a DB tag
+from CondCore.CondDB.CondDB_cfi import *
+process.CondDBOptics = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
+process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
+    process.CondDBOptics,
+    DumpStat = cms.untracked.bool(False),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('CTPPSOpticsRcd'),
+        tag = cms.string("PPSOpticalFunctions_offline_v1")
+    )),
+)
+
+process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
+
+# get alignment from SQLite file
+from CondCore.CondDB.CondDB_cfi import *
+process.CondDBAlignment = CondDB.clone( connect = 'sqlite_file:/afs/cern.ch/user/c/cmora/public/CTPPSDB/AlignmentSQlite/CTPPSRPRealAlignment_table_v26Apr.db' )
+process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+    process.CondDBAlignment,
+    #timetype = cms.untracked.string('runnumber'),
+    toGet = cms.VPSet(cms.PSet(
+        record = cms.string('RPRealAlignmentRecord'),
+        tag = cms.string('CTPPSRPAlignment_real_table_v26A19')
+    ))
+)
+
+process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
 
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
-
-##  process.ctppsRPAlignmentCorrectionsDataESSourceXML.RealFiles = cms.vstring(
-##    #"CalibPPS/ESProducers/data/alignment/RPixGeometryCorrections_old.xml",
-##    "CalibPPS/ESProducers/data/alignment/RPixGeometryCorrections-2017-2018.xml",
-##    #"CalibPPS/ESProducers/data/alignment/alignment_export_2019_03_18.5.xml",
-##    "CalibPPS/ESProducers/data/alignment/alignment_export_2019_04_15.1.xml",
-##    "CalibPPS/ESProducers/data/alignment/timing_RP_2017_preTS2.xml",
-##    "CalibPPS/ESProducers/data/alignment/timing_RP_2017_postTS2.xml",
-##    "CalibPPS/ESProducers/data/alignment/timing_RP_2018.xml"
-##  )
 
 if ($year == 2016):
   process.ctppsLocalTrackLiteProducer.includeDiamonds = False
