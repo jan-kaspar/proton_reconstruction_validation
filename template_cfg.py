@@ -36,25 +36,28 @@ process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
     DumpStat = cms.untracked.bool(False),
     toGet = cms.VPSet(cms.PSet(
         record = cms.string('CTPPSOpticsRcd'),
-        tag = cms.string("PPSOpticalFunctions_offline_v1")
+        tag = cms.string("PPSOpticalFunctions_offline_v2")
     )),
 )
 
 process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
 
 # get alignment from SQLite file
-from CondCore.CondDB.CondDB_cfi import *
-process.CondDBAlignment = CondDB.clone( connect = 'sqlite_file:/afs/cern.ch/user/c/cmora/public/CTPPSDB/AlignmentSQlite/CTPPSRPRealAlignment_table_v26Apr.db' )
-process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
-    process.CondDBAlignment,
-    #timetype = cms.untracked.string('runnumber'),
-    toGet = cms.VPSet(cms.PSet(
-        record = cms.string('RPRealAlignmentRecord'),
-        tag = cms.string('CTPPSRPAlignment_real_table_v26A19')
-    ))
-)
+###   from CondCore.CondDB.CondDB_cfi import *
+###   process.CondDBAlignment = CondDB.clone( connect = 'sqlite_file:/afs/cern.ch/user/c/cmora/public/CTPPSDB/AlignmentSQlite/CTPPSRPRealAlignment_table_v26Apr.db' )
+###   process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+###       process.CondDBAlignment,
+###       #timetype = cms.untracked.string('runnumber'),
+###       toGet = cms.VPSet(cms.PSet(
+###           record = cms.string('RPRealAlignmentRecord'),
+###           tag = cms.string('CTPPSRPAlignment_real_table_v26A19')
+###       ))
+###   )
+###   
+###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
 
-process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+# load alignment from XML files
+process.load("CalibPPS.ESProducers.ctppsAlignment_cff")
 
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
