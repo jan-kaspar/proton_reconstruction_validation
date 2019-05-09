@@ -134,14 +134,14 @@ int main(int argc, char **argv)
 	// 2018
 	if (fill >= 6579  && fill <= 7334)
 	{
-		min_xi_diffNF[0] = 0.06; max_xi_diffNF[0] = 0.095;
-		min_xi_diffNF[1] = 0.08; max_xi_diffNF[1] = 0.12;
+		min_xi_diffNF[0] = 0.06; max_xi_diffNF[0] = 0.11;
+		min_xi_diffNF[1] = 0.07; max_xi_diffNF[1] = 0.13;
 
-		min_xi_diffSM[0] = 0.06; max_xi_diffSM[0] = 0.095;
-		min_xi_diffSM[1] = 0.08; max_xi_diffSM[1] = 0.12;
+		min_xi_diffSM[0] = 0.05; max_xi_diffSM[0] = 0.10;
+		min_xi_diffSM[1] = 0.07; max_xi_diffSM[1] = 0.12;
 
 		min_th_x[0] = 0.06; max_th_x[0] = 0.10;
-		min_th_x[1] = 0.07; max_th_x[1] = 0.115;
+		min_th_x[1] = 0.08; max_th_x[1] = 0.13;
 
 		min_th_y[0] = 0.07; max_th_y[0] = 0.14;
 		min_th_y[1] = 0.07; max_th_y[1] = 0.14;
