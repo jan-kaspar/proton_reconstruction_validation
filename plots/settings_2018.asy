@@ -10,9 +10,9 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version1";
+string version = "version3";
 string versions[] = {
-	"version1",
+	"version3",
 };
 
 string stream = "SingleMuon";
@@ -42,35 +42,28 @@ bool rebin = true;
 
 string fills_short[] = {
 	"6617",
-	"6923",
-	"7145",
+	"6729",
 
-	"7211",
-	"7309",
-	"7334",
+	"6923",
+	"7039",
+	"7137",
+
+	"7315",
 };
 
+// fills from RP-OK JSON file
 string fills[] = {
-	"6579",
 	"6583",
 	"6584",
-	"6592",
-	"6594",
 	"6595",
 	"6611",
-	"6612",
-	"6613",
 	"6614",
 	"6615",
-	"6616",
 	"6617",
 	"6618",
-	"6620",
 	"6621",
 	"6624",
-	"6628",
 	"6629",
-	"6633",
 	"6636",
 	"6638",
 	"6639",
@@ -95,11 +88,9 @@ string fills[] = {
 	"6683",
 	"6688",
 	"6690",
-	"6692",
 	"6693",
 	"6694",
 	"6696",
-	"6699",
 	"6700",
 	"6702",
 	"6706",
@@ -115,7 +106,6 @@ string fills[] = {
 	"6733",
 	"6737",
 	"6738",
-	"6740",
 	"6741",
 	"6744",
 	"6747",
@@ -135,30 +125,15 @@ string fills[] = {
 	"6774",
 	"6776",
 	"6778",
-	"6843",
-	"6847",
-	"6850",
 	"6854",
 	"6858",
 	"6860",
-	"6864",
-	"6868",
 	"6874",
-	"6877",
-	"6879",
-	"6881",
-	"6882",
-	"6884",
-	"6885",
-	"6890",
-	"6891",
-	"6892",
 	"6901",
 	"6904",
 	"6909",
 	"6911",
 	"6912",
-	"6913",
 	"6919",
 	"6921",
 	"6923",
@@ -177,7 +152,6 @@ string fills[] = {
 	"6957",
 	"6960",
 	"6961",
-	"6966",
 	"6998",
 	"7003",
 	"7005",
@@ -203,7 +177,6 @@ string fills[] = {
 	"7048",
 	"7052",
 	"7053",
-	"7054",
 	"7055",
 	"7056",
 	"7058",
@@ -245,16 +218,11 @@ string fills[] = {
 	"7135",
 	"7137",
 	"7139",
-	"7142",
 	"7144",
 	"7145",
-
-	"7211",
-	"7212",
 	"7213",
 	"7217",
 	"7218",
-	"7220",
 	"7221",
 	"7234",
 	"7236",
@@ -272,9 +240,6 @@ string fills[] = {
 	"7270",
 	"7271",
 	"7274",
-	"7299",
-	"7300",
-	"7304",
 	"7308",
 	"7309",
 	"7310",
@@ -292,17 +257,21 @@ string fills[] = {
 
 void DrawFillMarkers(real y_min, real y_max)
 {
-	real b = 0;
+	real b_TS1 = 0;
+	real b_TS2 = 0;
 	for (int fi : fills.keys)
 	{
-		if (fills[fi] == "7211")
-		{
-			b = fi - 0.5;
-		}
+		if (fills[fi] == "6854")
+			b_TS1 = fi - 0.5;
+		if (fills[fi] == "7213")
+			b_TS2 = fi - 0.5;
 	}
 
-	draw((b, y_min)--(b, y_max), magenta+2pt);
-	label("post-TS2 ??", (b, y_max), SE, magenta);
+	draw((b_TS1, y_min)--(b_TS1, y_max), magenta+2pt);
+	label("TS1 ??", (b_TS1, y_max), SE, magenta);
+
+	draw((b_TS2, y_min)--(b_TS2, y_max), magenta+2pt);
+	label("TS2 ??", (b_TS2, y_max), SE, magenta);
 }
 
 string TickLabels(real x)
