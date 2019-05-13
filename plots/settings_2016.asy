@@ -10,13 +10,13 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("102"); rp_labels.push("56-210-nr"); rp_arms.push("arm1");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 
-string version = "version1";
+string version = "version3";
 string versions[] = {
-	"version1",
+	"version3",
 };
 
-//string stream = "SingleMuon";
-string stream = "ZeroBias";
+//string stream = "ZeroBias";
+string stream = "ALL";
 
 string xangle = "185";
 string xangles[] = {
@@ -96,7 +96,7 @@ string fills[] = {
 	"5288",
 	// TS2
 	"5393",
-	"5395",
+	//"5395", // not in CMS&RP JSON
 	"5401",
 	"5405",
 	"5406",
@@ -117,30 +117,45 @@ string fills[] = {
 	"5451",
 };
 
-void DrawFillMarkers(real y_min, real y_max)
+int GetIndexBefore(int f)
 {
-	real b_TS1 = 0;
-	real b_mit = 0;
-	real b_TS2 = 0;
 	for (int fi : fills.keys)
 	{
-		if (fills[fi] == "5005")
-			b_TS1 = fi - 0.5;
-		if (fills[fi] == "5261")
-			b_mit = fi - 0.5;
-		if (fills[fi] == "5393")
-			b_TS2 = fi - 0.5;
+		int fill_int = (int) fills[fi];
+		if (f <= fill_int)
+			return fi;
 	}
 
-	draw((b_TS1, y_min)--(b_TS1, y_max), magenta+2pt);
-	label("TS1", (b_TS1, y_max), SE, magenta);
-
-	draw((b_mit, y_min)--(b_mit, y_max), magenta+2pt);
-	label("radiation-damage mitigation", (b_mit, y_max), SE, magenta);
-
-	draw((b_TS2, y_min)--(b_TS2, y_max), magenta+2pt);
-	label("TS2", (b_TS2, y_max), SE, magenta);
+	return 0;
 }
+
+void DrawLine(int f, string l, pen p, bool u, real y_min, real y_max)
+{
+	real b = GetIndexBefore(f) - 0.5;
+
+	draw((b, y_min)--(b, y_max), p);
+
+	if (u)
+		label(l, (b, y_max), SE, p);
+	else
+		label(l, (b, y_min), NE, p);
+}
+
+void DrawFillMarkers(real y_min, real y_max)
+{
+	DrawLine(5005, "TS1", magenta, true, y_min, y_max);
+	DrawLine(5261, "radiation-damage mitigation", magenta, true, y_min, y_max);
+	DrawLine(5393, "TS2", magenta, true, y_min, y_max);
+
+	//DrawLine(4851, "2016A", magenta, false, y_min, y_max);
+	DrawLine(4879, "2016B", magenta, false, y_min, y_max);
+	DrawLine(5038, "2016C", magenta, false, y_min, y_max);
+	//DrawLine(5072, "2016D", magenta, false, y_min, y_max);
+	//DrawLine(5096, "2016E", magenta, false, y_min, y_max);
+	//DrawLine(5134, "2016F", magenta, false, y_min, y_max);
+	DrawLine(5199, "2016G", magenta, false, y_min, y_max);
+	DrawLine(5289, "2016H", magenta, false, y_min, y_max);
+}	
 
 string TickLabels(real x)
 {

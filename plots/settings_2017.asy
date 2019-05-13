@@ -1,7 +1,7 @@
 string year = "2017";
 
 string arms[], a_labels[], a_nr_rps[], a_fr_rps[];
-arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
+//arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
 arms.push("arm1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("103"); a_fr_rps.push("123");
 
 string rps[], rp_labels[], rp_arms[];
@@ -10,12 +10,14 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version8";
+string version = "version10";
 string versions[] = {
-	"version8",
+	"version6",
+	"version10",
 };
 
-string stream = "DoubleEG";
+//string stream = "DoubleEG";
+string stream = "ALL";
 
 string xangle = "150";
 string xangles[] = {
@@ -29,6 +31,8 @@ string xangles_short[];
 mark xa_marks[];
 pen xa_pens[];
 xangles_short.push("150"); xa_marks.push(mTU); xa_pens.push(blue);
+//xangles_short.push("140"); xa_marks.push(mTL); xa_pens.push(blue);
+//xangles_short.push("130"); xa_marks.push(mTR); xa_pens.push(blue);
 xangles_short.push("120"); xa_marks.push(mTD); xa_pens.push(red);
 
 string beta = "AUTO";
@@ -226,17 +230,40 @@ string fills[] = {
 	"6371",
 };
 
-void DrawFillMarkers(real y_min, real y_max)
+int GetIndexBefore(int f)
 {
-	real b_TS2 = 0;
 	for (int fi : fills.keys)
 	{
-		if (fills[fi] == "6239")
-			b_TS2 = fi - 0.5;
+		int fill_int = (int) fills[fi];
+		if (f <= fill_int)
+			return fi;
 	}
 
-	draw((b_TS2, y_min)--(b_TS2, y_max), magenta+2pt);
-	label("TS2", (b_TS2, y_max), SE, magenta);
+	return 0;
+}
+
+void DrawLine(int f, string l, pen p, bool u, real y_min, real y_max)
+{
+	real b = GetIndexBefore(f) - 0.5;
+
+	draw((b, y_min)--(b, y_max), p);
+
+	if (u)
+		label(l, (b, y_max), SE, p);
+	else
+		label(l, (b, y_min), NE, p);
+}
+
+void DrawFillMarkers(real y_min, real y_max)
+{
+	DrawLine(6239, "TS2", magenta, true, y_min, y_max);
+
+	//DrawLine(5677, "2017A", magenta, false, y_min, y_max);
+	DrawLine(5838, "2017B", magenta, false, y_min, y_max);
+	DrawLine(5961, "2017C", magenta, false, y_min, y_max);
+	DrawLine(6147, "2017D", magenta, false, y_min, y_max);
+	DrawLine(6222, "2017E", magenta, false, y_min, y_max);
+	DrawLine(6294, "2017F", magenta, false, y_min, y_max);
 }
 
 string TickLabels(real x)
