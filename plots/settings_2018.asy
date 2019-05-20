@@ -1,7 +1,7 @@
 string year = "2018";
 
 string arms[], a_labels[], a_nr_rps[], a_fr_rps[];
-//arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
+arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
 arms.push("arm1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("103"); a_fr_rps.push("123");
 
 string rps[], rp_labels[], rp_arms[];
@@ -277,15 +277,15 @@ void DrawLine(int f, string l, pen p, bool u, real y_min, real y_max)
 	draw((b, y_min)--(b, y_max), p);
 
 	if (u)
-		label(l, (b, y_max), SE, p);
+		label("{\SetFontSizesXX " + l + "}", (b, y_max), SE, p);
 	else
-		label(l, (b, y_min), NE, p);
+		label("{\SetFontSizesXX " + l + "}", (b, y_min), NE, p);
 }
 
 void DrawFillMarkers(real y_min, real y_max)
 {
-	DrawLine(6854, "TS1 ??", magenta, true, y_min, y_max);
-	DrawLine(7213, "TS2 ??", magenta, true, y_min, y_max);
+	DrawLine(6854, "TS1", magenta, true, y_min, y_max);
+	DrawLine(7213, "TS2", magenta, true, y_min, y_max);
 
 	DrawLine(6615, "2018A", magenta, false, y_min, y_max);
 	DrawLine(6734, "2018B", magenta, false, y_min, y_max);

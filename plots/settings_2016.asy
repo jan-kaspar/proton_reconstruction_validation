@@ -136,9 +136,9 @@ void DrawLine(int f, string l, pen p, bool u, real y_min, real y_max)
 	draw((b, y_min)--(b, y_max), p);
 
 	if (u)
-		label(l, (b, y_max), SE, p);
+		label("{\SetFontSizesXX " + l + "}", (b, y_max), SE, p);
 	else
-		label(l, (b, y_min), NE, p);
+		label("{\SetFontSizesXX " + l + "}", (b, y_min), NE, p);
 }
 
 void DrawFillMarkers(real y_min, real y_max)
