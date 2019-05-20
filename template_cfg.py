@@ -13,34 +13,37 @@ process.MessageLogger = cms.Service("MessageLogger",
 )
 
 # raw data source
+from input_files import input_files
 process.source = cms.Source("PoolSource",
-  fileNames = cms.untracked.vstring()
+  fileNames = input_files
   #lumisToProcess = cms.untracked.VLuminosityBlockRange("$run:1-$run:max")
 )
-$input
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(-1)
+  # TODO
+  #input = cms.untracked.int32(-1)
+  input = cms.untracked.int32(1000000)
 )
 
 # declare global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v10")
+process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
+#process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v10")
 
 # get optics from a DB tag
-from CondCore.CondDB.CondDB_cfi import *
-process.CondDBOptics = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
-process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
-    process.CondDBOptics,
-    DumpStat = cms.untracked.bool(False),
-    toGet = cms.VPSet(cms.PSet(
-        record = cms.string('CTPPSOpticsRcd'),
-        tag = cms.string("PPSOpticalFunctions_offline_v2")
-    )),
-)
-
-process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
+###   from CondCore.CondDB.CondDB_cfi import *
+###   process.CondDBOptics = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
+###   process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
+###       process.CondDBOptics,
+###       DumpStat = cms.untracked.bool(False),
+###       toGet = cms.VPSet(cms.PSet(
+###           record = cms.string('CTPPSOpticsRcd'),
+###           tag = cms.string("PPSOpticalFunctions_offline_v2")
+###       )),
+###   )
+###
+###   process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
 
 # get alignment from SQLite file
 ###   from CondCore.CondDB.CondDB_cfi import *
@@ -53,10 +56,24 @@ process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOpt
 ###           tag = cms.string('CTPPSRPAlignment_real_table_v26A19')
 ###       ))
 ###   )
-###   
+###
 ###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
 
-# load alignment from XML files
+# get alignment from a DB tag
+###   from CondCore.CondDB.CondDB_cfi import *
+###   process.CondDBAlignment = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
+###   process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+###       process.CondDBAlignment,
+###       #timetype = cms.untracked.string('runnumber'),
+###       toGet = cms.VPSet(cms.PSet(
+###           record = cms.string('RPRealAlignmentRecord'),
+###           tag = cms.string('CTPPSRPAlignment_real_offline_v1')
+###       ))
+###   )
+###
+###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+
+# apply default alignment settings
 process.load("CalibPPS.ESProducers.ctppsAlignment_cff")
 
 # local RP reconstruction chain with standard settings
@@ -101,6 +118,17 @@ else:
   process.ctppsProtonReconstructionPlotter.rpId_56_N = 103
   process.ctppsProtonReconstructionPlotter.rpId_56_F = 123
 
+# track distribution plotter
+process.ctppsTrackDistributionPlotter = cms.EDAnalyzer("CTPPSTrackDistributionPlotter",
+    tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+    outputFile = cms.string("output_tracks.root")
+)
+
+# optics plotter
+process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
+    outputFile = cms.string("output_optics.root")
+)
+
 # processing sequence
 if ($year == 2016):
   process.path = cms.Path(
@@ -108,10 +136,12 @@ if ($year == 2016):
     * process.totemRPLocalTrackFitter
 
     * process.ctppsLocalTrackLiteProducer
+    * process.ctppsTrackDistributionPlotter
 
     * process.ctppsProtons
     * process.ctppsProtonReconstructionValidator
     * process.ctppsProtonReconstructionPlotter
+    * process.ctppsOpticsPlotter
   )
 else:
   process.path = cms.Path(
@@ -124,8 +154,10 @@ else:
     * process.ctppsPixelLocalTracks
 
     * process.ctppsLocalTrackLiteProducer
+    * process.ctppsTrackDistributionPlotter
 
     * process.ctppsProtons
     * process.ctppsProtonReconstructionValidator
     * process.ctppsProtonReconstructionPlotter
+    * process.ctppsOpticsPlotter
   )
