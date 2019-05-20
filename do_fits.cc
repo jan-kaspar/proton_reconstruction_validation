@@ -40,6 +40,91 @@ TH1D* SumOverXi(TH2D *h_input, double xi_min, double xi_max)
 
 //----------------------------------------------------------------------------------------------------
 
+TF1 *ff_aperture = new TF1("ff_aperture", "[0] + (1 - TMath::Erf((x-[1])/[2])) / 2 * ([3] + [4]*x)");
+TF1 *ff_aperture_fit = new TF1("ff_aperture_fit", "(x - [0]) / [1]");
+
+void FitApertureLimitations(TH2D *input)
+{
+	TGraphErrors *g_aperture = new TGraphErrors();
+
+	for (int byi = 1; byi <= input->GetNbinsY(); byi++)
+	{
+		const double th_x = input->GetYaxis()->GetBinCenter(byi);
+		const double th_x_unc = input->GetYaxis()->GetBinWidth(byi) / 2.;
+
+		if (th_x < -120E-6 || th_x > 150E-6)
+			continue;
+
+		char buf[100];
+		sprintf(buf, "h_xi_th_x_%.0f", th_x*1E6);
+
+		TH1D *h_xi = input->ProjectionX(buf, byi, byi);
+
+		if (h_xi->GetEntries() < 1000)
+			continue;
+
+		const int n_cmp = 5;
+
+		double diff_max = -1E100;
+		int bxi_max = -1;
+
+		for (int bxi = n_cmp+1; bxi <= h_xi->GetNbinsX()-n_cmp; ++bxi)
+		{
+			if (h_xi->GetBinCenter(bxi) < 0.07)
+				continue;
+
+			double s_below=0., s_above=0.;
+			for (int i = 1; i <= n_cmp; ++i)
+			{
+				s_below += h_xi->GetBinContent(bxi - i);
+				s_above += h_xi->GetBinContent(bxi + i);
+			}
+
+			const double avg_diff = (s_below - s_above) / n_cmp;
+
+			if (avg_diff > diff_max)
+			{
+				diff_max = avg_diff;
+				bxi_max = bxi;
+			}
+		}
+
+		if (bxi_max < 0)
+			continue;
+
+		const double xi0 = h_xi->GetBinCenter(bxi_max);
+		const double xi0_unc = h_xi->GetBinWidth(bxi_max) / 2.;
+		const double xi_min = xi0 - 0.03;
+		const double xi_max = xi0 + 0.03;
+
+		ff_aperture->SetParameters(0., xi0, 0.01, diff_max, 0.);
+		ff_aperture->SetParLimits(0, 0., diff_max);
+
+		h_xi->Fit(ff_aperture, "Q", "", xi_min, xi_max);
+
+		const double xi1 = ff_aperture->GetParameter(1);
+		const double xi1_unc = max(ff_aperture->GetParError(1), xi0_unc);
+
+		//printf("th_x = %+4.0f urad | edge = %.3f --> %.3f\n", th_x * 1E6, xi0, xi1);
+
+		//h_xi->Write();
+
+		if (xi1_unc > 0.02 || xi1 < 0.05 || xi1 > 0.25)
+			continue;
+
+		int idx = g_aperture->GetN();
+		g_aperture->SetPoint(idx, xi1, th_x);
+		g_aperture->SetPointError(idx, xi1_unc, th_x_unc);
+	}
+
+	ff_aperture_fit->SetParameters(0.15, -2E2);
+	g_aperture->Fit(ff_aperture_fit, "Q");
+	g_aperture->Fit(ff_aperture_fit, "Q");
+	g_aperture->Write("g_aperture");
+}
+
+//----------------------------------------------------------------------------------------------------
+
 int main(int argc, char **argv)
 {
 	// parse command line
@@ -185,6 +270,8 @@ int main(int argc, char **argv)
 
 	    SumOverXi(h2_th_y_vs_xi, 0., 0.25)->Write("h_th_y_xi_full");
 	    SumOverXi(h2_th_y_vs_xi, min_th_y[rec.arm], max_th_y[rec.arm])->Write("h_th_y_xi_safe");
+
+		FitApertureLimitations(h2_th_x_vs_xi);
 	  }
 
 	  //----------
