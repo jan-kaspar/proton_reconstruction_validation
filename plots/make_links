@@ -7,7 +7,7 @@ do
 	mkdir "$year"
 	ln -s "../settings_$year.asy" "$year/settings.asy"
 
-	for dir in "quality" "th_x" "th_y" "vtx_y" "xi"
+	for dir in "apertures" "hit_distributions" "quality" "th_x" "th_y" "vtx_y" "xi"
 	do
 		mkdir "$year/$dir"
 
