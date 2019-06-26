@@ -34,6 +34,7 @@ for (int fi : fills_short.keys)
 	for (int rpi : rps.keys)
 	{
 		NewPad("$\xi_{\rm single}$", "$\xi_{\rm multi}$");
+		scale(Linear, Linear, Log);
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "singleMultiCorrelationPlots/si_rp" + rps[rpi]  + "_mu_" + rp_arms[rpi] + "/h2_xi_mu_vs_xi_si";
@@ -48,9 +49,11 @@ for (int fi : fills_short.keys)
 		
 		draw(hist);
 
-		draw((0, 0)--(0.25, 0.25), dashed);
+		real xi_max = 0.3;
 
-		limits((0., 0.), (0.25, 0.25), Crop);
+		draw((0, 0)--(xi_max, xi_max), dashed);
+
+		limits((0., 0.), (xi_max, xi_max), Crop);
 	}
 }
 
