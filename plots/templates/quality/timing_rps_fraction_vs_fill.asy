@@ -50,7 +50,7 @@ for (int ai : arms.keys)
 			real entries = hist.rExec("GetEntries");
 			int empty_bin = hist.iExec("FindBin", 0.);
 			real empty = hist.rExec("GetBinContent", empty_bin);
-			real non_empty_ratio = (entries - empty) / entries;
+			real non_empty_ratio = (entries > 0) ? (entries - empty) / entries : 0.;
 
 			mark m = mCi+3pt;
 
