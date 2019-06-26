@@ -40,6 +40,29 @@ TH1D* SumOverXi(TH2D *h_input, double xi_min, double xi_max)
 
 //----------------------------------------------------------------------------------------------------
 
+void ProfileToRMSGraph(TProfile *p, TGraphErrors *g)
+{
+	for (int bi = 1; bi <= p->GetNbinsX(); ++bi)
+	{
+		double c = p->GetBinCenter(bi);
+
+		double N = p->GetBinEntries(bi);
+		double Sy = p->GetBinContent(bi) * N;
+		double Syy = p->GetSumw2()->At(bi);
+
+		double si_sq = Syy/N - Sy*Sy/N/N;
+		double si = (si_sq >= 0.) ? sqrt(si_sq) : 0.;
+		double si_unc_sq = si_sq / 2. / N;	// Gaussian approximation
+		double si_unc = (si_unc_sq >= 0.) ? sqrt(si_unc_sq) : 0.;
+
+		int idx = g->GetN();
+		g->SetPoint(idx, c, si);
+		g->SetPointError(idx, 0., si_unc);
+	}
+}
+
+//----------------------------------------------------------------------------------------------------
+
 TF1 *ff_aperture = new TF1("ff_aperture", "[0] + (1 - TMath::Erf((x-[1])/[2])) / 2 * ([3] + [4]*x)");
 TF1 *ff_aperture_fit = new TF1("ff_aperture_fit", "(x - [0]) / [1]");
 
@@ -162,7 +185,9 @@ int main(int argc, char **argv)
 
 	// prepare input
 	TFile *f_in = TFile::Open((dir + "/output.root").c_str());
-	if (!f_in)
+	TFile *f_in_tracks = TFile::Open((dir + "/output_tracks.root").c_str());
+
+	if (!f_in || !f_in_tracks)
 	{
 	  printf("ERROR: can't open input.\n");
 	  return 10;
@@ -323,6 +348,14 @@ int main(int argc, char **argv)
 
 	    gDirectory = si_mu_dir->mkdir(rec.dir.c_str());
 	    p->Write("p_xi_diff_si_mu_vs_xi_mu");
+
+		TGraphErrors *g_RMS_vs_xi = new TGraphErrors();
+		ProfileToRMSGraph(p, g_RMS_vs_xi);
+
+	    ff_pol1->SetParameters(0., 0.);
+	    g_RMS_vs_xi->Fit(ff_pol1, "Q", "", min_xi_diffSM[rec.arm], max_xi_diffSM[rec.arm]);
+
+		g_RMS_vs_xi->Write("g_xi_diff_si_mu_RMS_vs_xi_mu");
 	  }
 	}
 
@@ -344,8 +377,69 @@ int main(int argc, char **argv)
 	  }
 	}
 
+	// process tracks
+	TF1 *ff_gauss = new TF1("ff_gauss", "[0] * exp(-(x-[1])*(x-[1])/2./[2]/[2]) + [3]");
+	vector<unsigned int> rps = { 23, 3, 103, 123 };
+	for (const auto &rp : rps)
+	{
+		char buf[100];
+		sprintf(buf, "RP %u", rp);
+		gDirectory = f_out->mkdir(buf);
+
+		bool process = true;
+
+		sprintf(buf, "RP %u/h2_y_vs_x", rp);
+		TH2D *h2_y_vs_x = (TH2D *) Load(f_in_tracks, buf, process);
+
+		if (!process)
+			continue;
+
+		TGraphErrors *g_y_mode_vs_x = new TGraphErrors();
+
+		for (int bix = 1; bix <= h2_y_vs_x->GetNbinsX(); ++bix)
+		{
+			const double x = h2_y_vs_x->GetXaxis()->GetBinCenter(bix);
+			const double x_unc = h2_y_vs_x->GetXaxis()->GetBinWidth(bix) / 2.;
+
+			sprintf(buf, "h_y_x=%.3f", x);
+			TH1D *h_y = h2_y_vs_x->ProjectionY(buf, bix, bix);
+
+			if (h_y->GetEntries() < 200)
+				continue;
+
+			double con_max = -1.;
+			for (int biy = 1; biy < h_y->GetNbinsX(); ++biy)
+				con_max = max(con_max, h_y->GetBinContent(biy));
+
+			ff_gauss->SetParameters(con_max, 0., 2., 0.);
+
+			h_y->Fit(ff_gauss, "Q", "", -2.5, +5.);
+			double n_si = 3.;
+			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
+			n_si = 2.;
+			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
+			n_si = 2.;
+			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
+
+			h_y->Write();
+
+			double y_mode = ff_gauss->GetParameter(1);
+			double y_mode_unc = ff_gauss->GetParError(1);
+
+			if (fabs(y_mode_unc) > 1. || ff_gauss->GetChisquare() / ff_gauss->GetNDF() > 10.)
+				continue;
+
+			int idx = g_y_mode_vs_x->GetN();
+			g_y_mode_vs_x->SetPoint(idx, x, y_mode);
+			g_y_mode_vs_x->SetPointError(idx, x_unc, y_mode_unc);
+		}
+
+		g_y_mode_vs_x->Write("g_y_mode_vs_x");
+	}
+
 	// clean up
 	delete f_in;
+	delete f_in_tracks;
 	delete f_out;
 
 	if (missing_counter > 0)
