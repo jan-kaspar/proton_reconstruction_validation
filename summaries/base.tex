@@ -15,6 +15,19 @@
 \def\caption{Proton reconstruction, data \DataYear}
 \def\date{\today}
 
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{$xy$ map}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/y_vs_x_2D_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{$y$ profiles}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/y_vs_x_profile_cmp_fill.pdf}}
+
+
 
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{Multi-RP reconstruction}{Fit quality}
@@ -45,9 +58,32 @@
 
 
 \newpage %-------------------------------------------------------------------------------------------
+\title{Reconstructed-proton multiplicity}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/quality/proton_multiplicity_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Reconstructed-proton multiplicity}{Mean vs.~fill}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/quality/proton_multiplicity_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\xi$ reconstruction}{Comparison of single-RP and multi-RP histograms}
 
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_histogram_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{Comparison of single-RP and multi-RP histograms}
+
+\> only events with 1 near and 1 far-RP track
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/xi/xi_histogram_2tracks_cmp_fill.pdf}}
 
 
 \iffalse
@@ -73,6 +109,9 @@
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\xi$ reconstruction}{Single-RP, ``mean'' near-far difference vs.~fill}
 
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
 \centerline{\fig[16cm]{../../plots/\DataYear/xi/xi_si_diffNF_mean_vs_fill.pdf}}
 
 
@@ -91,8 +130,25 @@
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\xi$ reconstruction}{``Mean'' difference between single and multi-RP vs.~fill}
 
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
 \centerline{\fig[16cm]{../../plots/\DataYear/xi/xi_mu_si_diff_mean_vs_fill.pdf}}
 
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{RMS of difference between single and multi-RP vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/xi/xi_mu_si_diff_RMS_vs_xi_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{$\xi$ reconstruction}{RMS of difference between single and multi-RP vs.~$\xi$}
+
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
+\centerline{\fig[16cm]{../../plots/\DataYear/xi/xi_mu_si_diff_RMS_vs_fill.pdf}}
 
 %====================================================================================================
 
@@ -100,6 +156,7 @@
 \ctitle{$\th^*_x$}{Histograms}
 
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_histogram_cmp_fill.pdf}}
+
 
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\th^*_x$ vs.~$\xi$}{2D histograms}
@@ -110,17 +167,31 @@
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\th^*_x$ vs.~$\xi$}{Profiles}
 
-%\> plots from previous slide represented as profile histogram
-
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_vs_xi_profile_cmp_fill.pdf}}
 
 
 \newpage %-------------------------------------------------------------------------------------------
 \title{mean $\th^*_x$ vs.~fill}
 
-%\> mean $\th^*_x$ over safe $\xi$ range (red fits on the previous slide) plotted vs.~fill number
+\SmallerFonts
+\> points represent centres of red lines from previous slide
 
 \centerline{\fig[16cm]{../../plots/\DataYear/th_x/th_x_mean_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $\th^*_x$ vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_x/th_x_RMS_vs_xi_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $\th^*_x$ vs.~fill}
+
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
+\centerline{\fig[16cm]{../../plots/\DataYear/th_x/th_x_RMS_vs_fill.pdf}}
 
 
 %====================================================================================================
@@ -139,17 +210,31 @@
 \newpage %-------------------------------------------------------------------------------------------
 \ctitle{$\th^*_y$ vs.~$\xi$}{Profiles}
 
-%\> plots from previous slide represented as profile histogram
-
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_vs_xi_profile_cmp_fill.pdf}}
 
 
 \newpage %-------------------------------------------------------------------------------------------
 \title{mean $\th^*_y$ vs.~fill}
 
-%\> mean $\th^*_y$ over safe $\xi$ range (red fits on the previous slide) plotted vs.~fill number
+\SmallerFonts
+\> points represent centres of red lines from previous slide
 
 \centerline{\fig[16cm]{../../plots/\DataYear/th_y/th_y_mean_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $\th^*_y$ vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_RMS_vs_xi_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $\th^*_y$ vs.~fill}
+
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
+\centerline{\fig[16cm]{../../plots/\DataYear/th_y/th_y_RMS_vs_fill.pdf}}
 
 %====================================================================================================
 
@@ -168,7 +253,25 @@
 \newpage %-------------------------------------------------------------------------------------------
 \title{mean $y^*$ vs.~fill}
 
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
 \centerline{\fig[16cm]{../../plots/\DataYear/vtx_y/vtx_y_mean_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $y^*$ vs.~$\xi$}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/vtx_y/vtx_y_RMS_vs_xi_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{RMS of $y^*$ vs.~fill}
+
+\SmallerFonts
+\> points represent centres of red lines from previous slide
+
+\centerline{\fig[16cm]{../../plots/\DataYear/vtx_y/vtx_y_RMS_vs_fill.pdf}}
 
 
 
