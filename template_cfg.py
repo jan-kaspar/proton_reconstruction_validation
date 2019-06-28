@@ -73,9 +73,6 @@ process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
 ###
 ###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
 
-# apply default alignment settings
-process.load("CalibPPS.ESProducers.ctppsAlignment_cff")
-
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
 
