@@ -148,6 +148,151 @@ void FitApertureLimitations(TH2D *input)
 
 //----------------------------------------------------------------------------------------------------
 
+double FindMax(TF1 *ff)
+{
+	const double mu = ff->GetParameter(1);
+	const double si = ff->GetParameter(2);
+
+	if (si > 25.)
+		return 1E100;
+
+	double x_max = 0.;
+	double y_max = -1E100;
+	for (double x = mu - si; x <= mu + si; x += 0.001)
+	{
+		double y = ff->Eval(x);
+		if (y > y_max)
+		{
+			x_max = x;
+			y_max = y;
+		}
+	}
+
+	return x_max;
+}
+
+//----------------------------------------------------------------------------------------------------
+
+TF1 *ff_fit = new TF1("ff_fit", "[0] * exp(-(x-[1])*(x-[1])/2./[2]/[2]) + [3] + [4]*x");
+
+TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
+{
+	bool aligned = false;
+
+	bool saveDetails = true;
+	TDirectory *d_top = gDirectory;
+
+	double y_max_fit = 10.;
+
+	// 2018 settings
+	if (rp ==  23) y_max_fit = 3.5;
+	if (rp ==   3) y_max_fit = 4.5;
+	if (rp == 103) y_max_fit = 5.5;
+	if (rp == 123) y_max_fit = 4.8;
+
+	TGraphErrors *g_y_mode_vs_x = new TGraphErrors();
+
+	for (int bix = 1; bix <= h2_y_vs_x->GetNbinsX(); ++bix)
+	{
+		const double x = h2_y_vs_x->GetXaxis()->GetBinCenter(bix);
+		const double x_unc = h2_y_vs_x->GetXaxis()->GetBinWidth(bix) / 2.;
+
+		if (x > 15.)
+			continue;
+
+		char buf[100];
+		sprintf(buf, "h_y_x=%.3f", x);
+		TH1D *h_y = h2_y_vs_x->ProjectionY(buf, bix, bix);
+
+		if (h_y->GetEntries() < 300)
+			continue;
+
+		if (saveDetails)
+		{
+			sprintf(buf, "x=%.3f", x);
+			gDirectory = d_top->mkdir(buf);
+		}
+
+		double con_max = -1.;
+		double con_max_x = 0.;
+		for (int biy = 1; biy < h_y->GetNbinsX(); ++biy)
+		{
+			if (h_y->GetBinContent(biy) > con_max)
+			{
+				con_max = h_y->GetBinContent(biy);
+				con_max_x = h_y->GetBinCenter(biy);
+			}
+		}
+
+		printf("x = %.3f\n", x);
+
+		ff_fit->SetParameters(con_max, con_max_x, h_y->GetRMS() * 0.75, 0., 0.);
+		ff_fit->FixParameter(4, 0.);
+
+		printf("    fit 1: mu = %.2f, si = %.2f\n", ff_fit->GetParameter(1), ff_fit->GetParameter(2));
+
+		double x_min = -2., x_max = y_max_fit;
+
+		h_y->Fit(ff_fit, "Q", "", x_min, x_max);
+
+		printf("    fit 1: mu = %.2f, si = %.2f\n", ff_fit->GetParameter(1), ff_fit->GetParameter(2));
+
+		ff_fit->ReleaseParameter(4);
+		double w = min(4., 2. * ff_fit->GetParameter(2));
+		x_min = ff_fit->GetParameter(1) - w;
+		x_max = min(y_max_fit, ff_fit->GetParameter(1) + w);
+		h_y->Fit(ff_fit, "Q", "", x_min, x_max);
+
+		printf("    fit 2: mu = %.2f, si = %.2f\n", ff_fit->GetParameter(1), ff_fit->GetParameter(2));
+		printf("        chi^2 = %.1f, ndf = %u, chi^2/ndf = %.1f\n", ff_fit->GetChisquare(), ff_fit->GetNDF(), ff_fit->GetChisquare() / ff_fit->GetNDF());
+
+		/*
+		w = min(2., 2. * ff_fit->GetParameter(2));
+		if (aligned)
+			w = min(2., 1. * ff_fit->GetParameter(2));
+		w = max(w, 0.3);
+		h_y->Fit(ff_fit, "Q", "", ff_fit->GetParameter(1) - w, ff_fit->GetParameter(1) + w);
+		*/
+
+		if (saveDetails)
+			h_y->Write("h_y");
+
+		//printf("x = %.3f mm, %f/%i = %.2f\n", x, ff_fit->GetChisquare(), ff_fit->GetNDF(), ff_fit->GetChisquare() / ff_fit->GetNDF());
+
+		double y_mode = FindMax(ff_fit);
+		const double y_mode_fit_unc = ff_fit->GetParameter(2) / 10;
+		const double y_mode_sys_unc = 0.030;
+		double y_mode_unc = sqrt(y_mode_fit_unc*y_mode_fit_unc + y_mode_sys_unc*y_mode_sys_unc);
+
+		const double chiSqThreshold = (aligned) ? 1000. : 50.;
+
+		const bool valid = ! (fabs(y_mode_unc) > 5. || fabs(y_mode) > 20. || ff_fit->GetChisquare() / ff_fit->GetNDF() > chiSqThreshold);
+
+		if (saveDetails)
+		{
+			TGraph *g_data = new TGraph();
+			g_data->SetPoint(0, y_mode, y_mode_unc);
+			g_data->SetPoint(1, ff_fit->GetChisquare(), ff_fit->GetNDF());
+			g_data->SetPoint(2, valid, 0.);
+			g_data->Write("g_data");
+		}
+
+		if (!valid)
+			continue;
+
+		int idx = g_y_mode_vs_x->GetN();
+		g_y_mode_vs_x->SetPoint(idx, x, y_mode);
+		g_y_mode_vs_x->SetPointError(idx, x_unc, y_mode_unc);
+	}
+
+	gDirectory = d_top;
+
+	return g_y_mode_vs_x;
+}
+
+//----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+
 int main(int argc, char **argv)
 {
 	// parse command line
@@ -378,7 +523,6 @@ int main(int argc, char **argv)
 	}
 
 	// process tracks
-	TF1 *ff_gauss = new TF1("ff_gauss", "[0] * exp(-(x-[1])*(x-[1])/2./[2]/[2]) + [3]");
 	vector<unsigned int> rps = { 23, 3, 103, 123 };
 	for (const auto &rp : rps)
 	{
@@ -394,45 +538,7 @@ int main(int argc, char **argv)
 		if (!process)
 			continue;
 
-		TGraphErrors *g_y_mode_vs_x = new TGraphErrors();
-
-		for (int bix = 1; bix <= h2_y_vs_x->GetNbinsX(); ++bix)
-		{
-			const double x = h2_y_vs_x->GetXaxis()->GetBinCenter(bix);
-			const double x_unc = h2_y_vs_x->GetXaxis()->GetBinWidth(bix) / 2.;
-
-			sprintf(buf, "h_y_x=%.3f", x);
-			TH1D *h_y = h2_y_vs_x->ProjectionY(buf, bix, bix);
-
-			if (h_y->GetEntries() < 200)
-				continue;
-
-			double con_max = -1.;
-			for (int biy = 1; biy < h_y->GetNbinsX(); ++biy)
-				con_max = max(con_max, h_y->GetBinContent(biy));
-
-			ff_gauss->SetParameters(con_max, 0., 2., 0.);
-
-			h_y->Fit(ff_gauss, "Q", "", -2.5, +5.);
-			double n_si = 3.;
-			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
-			n_si = 2.;
-			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
-			n_si = 2.;
-			h_y->Fit(ff_gauss, "Q", "", ff_gauss->GetParameter(1) - n_si*ff_gauss->GetParameter(2), ff_gauss->GetParameter(1) + n_si*ff_gauss->GetParameter(2));
-
-			h_y->Write();
-
-			double y_mode = ff_gauss->GetParameter(1);
-			double y_mode_unc = ff_gauss->GetParError(1);
-
-			if (fabs(y_mode_unc) > 1. || ff_gauss->GetChisquare() / ff_gauss->GetNDF() > 10.)
-				continue;
-
-			int idx = g_y_mode_vs_x->GetN();
-			g_y_mode_vs_x->SetPoint(idx, x, y_mode);
-			g_y_mode_vs_x->SetPointError(idx, x_unc, y_mode_unc);
-		}
+		TGraphErrors *g_y_mode_vs_x = BuildModeGraph(h2_y_vs_x, rp);
 
 		g_y_mode_vs_x->Write("g_y_mode_vs_x");
 	}
