@@ -48,12 +48,12 @@ for (int fi : fills_short.keys)
 			continue;
 
 		if (rebin)
-			h2_y_vs_x.vExec("Rebin2D", 3, 3);
+			h2_y_vs_x.vExec("Rebin2D", 2, 2);
 
 		draw(h2_y_vs_x);
 		draw(g_disp, "l", black+2pt);
 
-		limits((0, -5.), (25., +5), Crop);
+		limits((0, -7.), (25., +7), Crop);
 	}
 }
 
