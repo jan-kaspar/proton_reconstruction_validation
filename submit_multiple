@@ -217,7 +217,7 @@ input_dir="/eos/totem/data/ctpps/reconstruction/2017/physics_runs/rec-hit-versio
 sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step4/CMSSW_10_6_0/src"
 # at a3801a1be193158a372202ef2cb1cb728644bc25 (Added new alignment candidate)
 # with GT 106X_dataRun2_testPPS_v1, local alignment (2019_06_12), local optics (2017 --> version4)
-Submit
+#Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -255,9 +255,16 @@ stream="ALL"
 # with GT 106X_dataRun2_testPPS_v1, local alignment
 #Submit
 
-version="version6"
-input_dir="/eos/totem/data/ctpps/reconstruction/2018/physics_runs/rec-hit-version1"
-sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step4/CMSSW_10_6_0/src"
+#version="version6"
+#input_dir="/eos/totem/data/ctpps/reconstruction/2018/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/software/ctpps/development/proton_reco_step4/CMSSW_10_6_0/src"
 # at 94f620beb3c1adf67af9155338a61e783441e2c4 (Added xi histograms for different track multiplicities)
 # with GT 106X_dataRun2_testPPS_v1, local alignment
 #Submit
+
+version="version7"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at cf4932b701f44a26a3a45a219925bb5d7fd93ed0 (ctppsAlignment_cff included by default)
+# with GT 106X_dataRun2_v11, alignment local, optics local
+Submit
