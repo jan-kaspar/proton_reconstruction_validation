@@ -35,6 +35,8 @@ function ProcessOne()
 
 #----------------------------------------------------------------------------------------------------
 
+echo "* building directory list"
+
 # collect data
 idx=0
 input=()
@@ -49,6 +51,8 @@ do
 	fi
 done
 
+echo "* running fits"
+
 # run in parallel
 for (( idx=0; idx<n_threads; idx++))
 do
@@ -57,4 +61,4 @@ done
 
 wait
 
-echo "done"
+echo "* done"
