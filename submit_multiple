@@ -267,4 +267,11 @@ input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hi
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
 # at cf4932b701f44a26a3a45a219925bb5d7fd93ed0 (ctppsAlignment_cff included by default)
 # with GT 106X_dataRun2_v11, alignment local, optics local
+#Submit
+
+version="version8"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at TODO
+# with GT 106X_dataRun2_v11, alignment local, optics local
 Submit
