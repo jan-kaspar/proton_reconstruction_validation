@@ -50,6 +50,7 @@ for (int fi : fills_short.keys)
 
 		string f_fit = d + "/do_fits.root";
 		RootObject g_y_mode_vs_x = RootGetObject(f_fit, "RP " + rps[rpi] + "/g_y_mode_vs_x", error=false);
+		RootObject f_y_mode_vs_x = RootGetObject(f_fit, "RP " + rps[rpi] + "/g_y_mode_vs_x|ff_pol1", error=false);
 
 		string f_optics = d + "/output_optics.root";
 		RootObject g_disp = RootGetObject(f_optics, rps[rpi] + "/h_y_vs_x_disp", error=false);
@@ -60,6 +61,12 @@ for (int fi : fills_short.keys)
 		draw(g_disp, "l", black+2pt);
 
 		//draw(p_y_vs_x, "eb", red);
+
+		TF1_x_min = 0.;
+		draw(f_y_mode_vs_x, "l", blue+dashed);
+
+		TF1_x_min = -inf; 
+		draw(f_y_mode_vs_x, "l", blue);
 
 		draw(g_y_mode_vs_x, "p", red);
 

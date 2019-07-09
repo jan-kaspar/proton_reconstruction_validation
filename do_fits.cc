@@ -348,6 +348,8 @@ int main(int argc, char **argv)
 	map<unsigned int, double> min_th_y, max_th_y;
 	map<unsigned int, double> min_vtx_y, max_vtx_y;
 
+	map<unsigned int, double> min_x, max_x;
+
 	// 2016
 	if (fill >= 4947 && fill <= 5393)
 	{
@@ -403,6 +405,11 @@ int main(int argc, char **argv)
 
 		min_vtx_y[0] = 0.07; max_vtx_y[0] = 0.11;
 		min_vtx_y[1] = 0.06; max_vtx_y[1] = 0.17;
+
+		min_x[23] = 3.0; max_x[23] = 8.;
+		min_x[3] = 3.0; max_x[3] = 8.;
+		min_x[103] = 3.0; max_x[103] = 7.;
+		min_x[123] = 3.0; max_x[123] = 7.;
 	}
 
 	// process mu
@@ -539,6 +546,9 @@ int main(int argc, char **argv)
 			continue;
 
 		TGraphErrors *g_y_mode_vs_x = BuildModeGraph(h2_y_vs_x, rp);
+
+		ff_pol1->SetParameters(0., 0.);
+		g_y_mode_vs_x->Fit(ff_pol1, "Q", "", min_x[rp], max_x[rp]);
 
 		g_y_mode_vs_x->Write("g_y_mode_vs_x");
 	}
