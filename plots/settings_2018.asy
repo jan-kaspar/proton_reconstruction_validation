@@ -10,9 +10,9 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version7";
+string version = "version8";
 string versions[] = {
-	"version7",
+	"version8",
 };
 
 //string stream = "SingleMuon";
