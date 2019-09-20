@@ -64,9 +64,9 @@ for (int ai : arms.keys)
 		}
 	}
 
-	//DrawFillMarkers(-50, +50);
+	DrawFillMarkers(-400., -50);
 
-	limits((-1, -400.), (fills.length, -100.), Crop);
+	limits((-1, -400.), (fills.length, -50.), Crop);
 }
 
 GShipout(hSkip=0mm, vSkip=0mm);
