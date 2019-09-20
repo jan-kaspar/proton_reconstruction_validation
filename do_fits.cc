@@ -177,8 +177,6 @@ TF1 *ff_fit = new TF1("ff_fit", "[0] * exp(-(x-[1])*(x-[1])/2./[2]/[2]) + [3] + 
 
 TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 {
-	bool aligned = false;
-
 	bool saveDetails = true;
 	TDirectory *d_top = gDirectory;
 
@@ -246,14 +244,6 @@ TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 		printf("    fit 2: mu = %.2f, si = %.2f\n", ff_fit->GetParameter(1), ff_fit->GetParameter(2));
 		printf("        chi^2 = %.1f, ndf = %u, chi^2/ndf = %.1f\n", ff_fit->GetChisquare(), ff_fit->GetNDF(), ff_fit->GetChisquare() / ff_fit->GetNDF());
 
-		/*
-		w = min(2., 2. * ff_fit->GetParameter(2));
-		if (aligned)
-			w = min(2., 1. * ff_fit->GetParameter(2));
-		w = max(w, 0.3);
-		h_y->Fit(ff_fit, "Q", "", ff_fit->GetParameter(1) - w, ff_fit->GetParameter(1) + w);
-		*/
-
 		if (saveDetails)
 			h_y->Write("h_y");
 
@@ -264,9 +254,10 @@ TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 		const double y_mode_sys_unc = 0.030;
 		double y_mode_unc = sqrt(y_mode_fit_unc*y_mode_fit_unc + y_mode_sys_unc*y_mode_sys_unc);
 
-		const double chiSqThreshold = (aligned) ? 1000. : 50.;
+		const double normChiSq = (ff_fit->GetNDF() > 0) ? ff_fit->GetChisquare() / ff_fit->GetNDF() : 0.;
+		const double normChiSqThreshold = 50.;
 
-		const bool valid = ! (fabs(y_mode_unc) > 5. || fabs(y_mode) > 20. || ff_fit->GetChisquare() / ff_fit->GetNDF() > chiSqThreshold);
+		const bool valid = ! (fabs(y_mode_unc) > 5. || fabs(y_mode) > 20. || normChiSq > normChiSqThreshold);
 
 		if (saveDetails)
 		{
@@ -313,12 +304,22 @@ int main(int argc, char **argv)
 	  { "arm1", 1 },
 	};
 
-	vector<Record> si_mu_records = {
-	  { "si_rp23_mu_arm0", 0 },
-	  { "si_rp3_mu_arm0", 0 },
-	  { "si_rp103_mu_arm1", 1 },
-	  { "si_rp123_mu_arm1", 1 },
-	};
+	vector<Record> si_mu_records;
+
+	if (fill <= 5451) // 2016
+		si_mu_records = {
+		  { "si_rp2_mu_arm0", 0 },
+		  { "si_rp3_mu_arm0", 0 },
+		  { "si_rp102_mu_arm1", 1 },
+		  { "si_rp103_mu_arm1", 1 },
+		};
+	else
+		si_mu_records = {
+		  { "si_rp23_mu_arm0", 0 },
+		  { "si_rp3_mu_arm0", 0 },
+		  { "si_rp103_mu_arm1", 1 },
+		  { "si_rp123_mu_arm1", 1 },
+		};
 
 	vector<Record> arm_records = {
 	  { "arm0", 0 },
@@ -350,8 +351,8 @@ int main(int argc, char **argv)
 
 	map<unsigned int, double> min_x, max_x;
 
-	// 2016
-	if (fill >= 4947 && fill <= 5393)
+	// 2016 pre-TS2
+	if (fill >= 4947 && fill < 5393)
 	{
 		min_xi_diffNF[0] = 0.07; max_xi_diffNF[0] = 0.095;
 		min_xi_diffNF[1] = 0.07; max_xi_diffNF[1] = 0.11;
@@ -367,6 +368,35 @@ int main(int argc, char **argv)
 
 		min_vtx_y[0] = 0.07; max_vtx_y[0] = 0.11;
 		min_vtx_y[1] = 0.06; max_vtx_y[1] = 0.12;
+
+		min_x[2] = 3.0; max_x[2] = 8.;
+		min_x[3] = 3.0; max_x[3] = 8.;
+		min_x[102] = 3.0; max_x[102] = 7.;
+		min_x[103] = 3.0; max_x[103] = 7.;
+	}
+
+	// 2016 post-TS2
+	if (fill >= 5393 && fill <= 5451)
+	{
+		min_xi_diffNF[0] = 0.05; max_xi_diffNF[0] = 0.09;
+		min_xi_diffNF[1] = 0.05; max_xi_diffNF[1] = 0.09;
+
+		min_xi_diffSM[0] = 0.05; max_xi_diffSM[0] = 0.09;
+		min_xi_diffSM[1] = 0.05; max_xi_diffSM[1] = 0.09;
+
+		min_th_x[0] = 0.05; max_th_x[0] = 0.09;
+		min_th_x[1] = 0.05; max_th_x[1] = 0.09;
+
+		min_th_y[0] = 0.05; max_th_y[0] = 0.10;
+		min_th_y[1] = 0.05; max_th_y[1] = 0.10;
+
+		min_vtx_y[0] = 0.04; max_vtx_y[0] = 0.10;
+		min_vtx_y[1] = 0.04; max_vtx_y[1] = 0.10;
+
+		min_x[2] = 4.0; max_x[2] = 12.;
+		min_x[3] = 3.5; max_x[3] = 12.;
+		min_x[102] = 3.5; max_x[102] = 12.;
+		min_x[103] = 3.5; max_x[103] = 12.;
 	}
 
 	// 2017
@@ -530,7 +560,12 @@ int main(int argc, char **argv)
 	}
 
 	// process tracks
-	vector<unsigned int> rps = { 23, 3, 103, 123 };
+	vector<unsigned int> rps;
+	if (fill <= 5451) // 2016
+		rps = { 2, 3, 102, 103 };
+	else
+		rps = { 23, 3, 103, 123 };
+
 	for (const auto &rp : rps)
 	{
 		char buf[100];
