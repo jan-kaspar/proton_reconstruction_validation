@@ -153,7 +153,7 @@ double FindMax(TF1 *ff)
 	const double mu = ff->GetParameter(1);
 	const double si = ff->GetParameter(2);
 
-	if (si > 25.)
+	if (fabs(mu) > 25. || fabs(si) > 25.)
 		return 1E100;
 
 	double x_max = 0.;
@@ -568,6 +568,8 @@ int main(int argc, char **argv)
 
 	for (const auto &rp : rps)
 	{
+		printf("* processing tracks in RP %u\n", rp);
+
 		char buf[100];
 		sprintf(buf, "RP %u", rp);
 		gDirectory = f_out->mkdir(buf);
