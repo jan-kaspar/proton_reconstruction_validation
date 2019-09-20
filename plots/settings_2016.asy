@@ -10,15 +10,15 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("102"); rp_labels.push("56-210-nr"); rp_arms.push("arm1");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 
-string version = "version3";
+string version = "version4";
 string versions[] = {
-	"version3",
+	"version4",
 };
 
 //string stream = "ZeroBias";
 string stream = "ALL";
 
-string xangle = "185";
+string xangle = "AUTO";
 string xangles[] = {
 	"185",
 	"140",
@@ -29,6 +29,19 @@ mark xa_marks[];
 pen xa_pens[];
 xangles_short.push("185"); xa_marks.push(mTU); xa_pens.push(blue);
 xangles_short.push("140"); xa_marks.push(mTD); xa_pens.push(red);
+
+string GetXangle(string fill_str, string xangle)
+{
+	if (xangle != "AUTO")
+		return xangle;
+
+	int fill = (int) fill_str;
+
+	if (fill >= 5393)
+		return "140";
+	else
+		return "185";
+}
 
 string beta = "0.30";
 
@@ -48,7 +61,7 @@ string fills_short[] = {
 	"5276",
 
 	// post-TS2
-	"5394",
+	"5393",
 	"5427",
 	"5451",
 };
@@ -64,7 +77,9 @@ string fills[] = {
 	"4985",
 	"4988",
 	"4990",
-	// TS1
+
+	// ----- TS1
+
 	"5005",
 	"5013",
 	"5017",
@@ -94,7 +109,9 @@ string fills[] = {
 	"5279",
 	"5287",
 	"5288",
-	// TS2
+
+	// ----- TS2
+
 	"5393",
 	//"5395", // not in CMS&RP JSON
 	"5401",

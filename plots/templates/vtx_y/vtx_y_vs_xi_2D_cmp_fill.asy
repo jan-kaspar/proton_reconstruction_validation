@@ -33,7 +33,8 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "$y^*\ung{\mu m}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "multiRPPlots/" + arms[ai] + "/h2_vtx_y_vs_xi";
 
 		RootObject obj = RootGetObject(f, on, error=false);

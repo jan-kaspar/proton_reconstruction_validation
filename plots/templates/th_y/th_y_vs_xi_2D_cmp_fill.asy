@@ -33,15 +33,16 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "$\th^*_y\ung{\mu rad}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "multiRPPlots/" + arms[ai] + "/h2_th_y_vs_xi";
 
 		RootObject obj = RootGetObject(f, on, error=false);
 		if (!obj.valid)
 			continue;
 
-		if (rebin)
-			obj.vExec("Rebin2D", 2, 2);
+		//if (rebin)
+		//	obj.vExec("Rebin2D", 2, 2);
 
 		draw(scale(1., 1e6), obj);
 

@@ -36,7 +36,8 @@ for (int ai : arms.keys)
 
 	for (int fi : fills.keys)
 	{
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+			+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
 
 		RootObject hist_si_N = RootGetObject(f, "singleRPPlots/rp" + a_nr_rps[ai] + "/h_multiplicity", error=false);
 		RootObject hist_si_F = RootGetObject(f, "singleRPPlots/rp" + a_fr_rps[ai] + "/h_multiplicity", error=false);

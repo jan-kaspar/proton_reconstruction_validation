@@ -34,6 +34,11 @@ xangles_short.push("150"); xa_marks.push(mTU); xa_pens.push(blue);
 //xangles_short.push("130"); xa_marks.push(mTR); xa_pens.push(blue);
 xangles_short.push("120"); xa_marks.push(mTD); xa_pens.push(red);
 
+string GetXangle(string fill_str, string xangle)
+{
+	return xangle;
+}
+
 string beta = "AUTO";
 
 string GetBeta(string fill_str)

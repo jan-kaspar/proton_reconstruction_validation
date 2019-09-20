@@ -10,9 +10,9 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version8";
+string version = "version9";
 string versions[] = {
-	"version8",
+	"version9",
 };
 
 //string stream = "SingleMuon";
@@ -31,6 +31,11 @@ mark xa_marks[];
 pen xa_pens[];
 xangles_short.push("160"); xa_marks.push(mTU); xa_pens.push(blue);
 xangles_short.push("130"); xa_marks.push(mTD); xa_pens.push(red);
+
+string GetXangle(string fill_str, string xangle)
+{
+	return xangle;
+}
 
 string beta = "0.30";
 

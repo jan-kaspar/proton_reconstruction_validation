@@ -47,7 +47,8 @@ for (int ai : arms.keys)
 
 			for (int fi : fills.keys)
 			{
-				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
+				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
 				string on = "armCorrelationPlots/" + arms[ai] + "/p_xi_si_diffNF_vs_xi_mu|ff_pol1";
 			
 				RootObject fit = RootGetObject(f, on, error=false);

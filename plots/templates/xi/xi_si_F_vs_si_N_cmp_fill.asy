@@ -35,7 +35,8 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm single,N}$", "$\xi_{\rm single,F}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "armCorrelationPlots/" + arms[ai] + "/h2_xi_si_F_vs_xi_si_N";
 		
 		RootObject hist = RootGetObject(f, on, error=true);

@@ -40,7 +40,8 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		
 		RootObject hist_si_N = RootGetObject(f, "singleRPPlots/rp" + a_nr_rps[ai] + "/h_xi", error=false);
 		RootObject hist_si_F = RootGetObject(f, "singleRPPlots/rp" + a_fr_rps[ai] + "/h_xi", error=false);

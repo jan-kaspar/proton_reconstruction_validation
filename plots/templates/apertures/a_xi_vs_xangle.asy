@@ -58,7 +58,7 @@ for (int qi : q_idxs.keys)
 				string xangle = xangles[xai];
 				real xangle_real = (real) xangle;
 
-				string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+				string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 				string f_fit = d + "/do_fits.root";
 				RootObject f_aperture = RootGetObject(f_fit, "multiRPPlots/" + arms[ai] + "/g_aperture|ff_aperture_fit", error=false);
 

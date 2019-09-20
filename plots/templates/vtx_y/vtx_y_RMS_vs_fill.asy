@@ -47,7 +47,8 @@ for (int ai : arms.keys)
 
 			for (int fi : fills.keys)
 			{
-				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
+				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
 				string on = "multiRPPlots/" + arms[ai] + "/g_vtx_y_RMS_vs_xi|ff_pol1";
 			
 				RootObject fit = RootGetObject(f, on, error=false);
@@ -70,7 +71,7 @@ for (int ai : arms.keys)
 		}
 	}
 
-	DrawFillMarkers(0, +100);
+	DrawFillMarkers(0, +500);
 
 	limits((-1, 0.), (fills.length, +500.), Crop);
 

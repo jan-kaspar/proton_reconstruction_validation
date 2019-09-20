@@ -8,6 +8,11 @@ string topDir = "../../../";
 
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
+TH2_x_min = 0;
+TH2_x_max = 25;
+TH2_y_min = -7.;
+TH2_y_max = +7.;
+
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
@@ -36,7 +41,7 @@ for (int fi : fills_short.keys)
 		NewPad("$x\ung{mm}$", "$y\ung{mm}$");
 		scale(Linear, Linear, Log);
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_tracks = d + "/output_tracks.root";
 		RootObject h2_y_vs_x = RootGetObject(f_tracks, "RP " + rps[rpi] + "/h2_y_vs_x", error=false);

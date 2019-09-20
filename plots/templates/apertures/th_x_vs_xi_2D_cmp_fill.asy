@@ -37,7 +37,7 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "$\th^*_x\ung{\mu rad}$");
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_output = d + "/output.root";
 		RootObject hist = RootGetObject(f_output, "multiRPPlots/" + arms[ai] + "/h2_th_x_vs_xi", error=false);

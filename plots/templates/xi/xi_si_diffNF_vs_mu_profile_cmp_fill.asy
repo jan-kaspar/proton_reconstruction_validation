@@ -34,7 +34,8 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "$\xi_{\rm single,F} - \xi_{\rm single,N}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
 		string on = "armCorrelationPlots/" + arms[ai] + "/p_xi_si_diffNF_vs_xi_mu";
 		
 		RootObject hist = RootGetObject(f, on, error=false);

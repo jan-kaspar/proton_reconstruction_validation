@@ -41,7 +41,8 @@ for (int fi : fills_short.keys)
 		{
 			string xangle = xangles_short[xai];
 
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 			string on = "armCorrelationPlots/" + arms[ai] + "/h_xi_si_diffNF";
 			
 			RootObject hist = RootGetObject(f, on, error=false);

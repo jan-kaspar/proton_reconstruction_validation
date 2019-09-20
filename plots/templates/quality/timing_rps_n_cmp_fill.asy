@@ -36,7 +36,8 @@ for (int fi : fills_short.keys)
 		NewPad("number of contributing timing-RP tracks");
 		//scale(Linear, Log);
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "multiRPPlots/" + arms[ai] + "/h_n_timing_RPs";
 
 		RootObject hist = RootGetObject(f, on, error=false);

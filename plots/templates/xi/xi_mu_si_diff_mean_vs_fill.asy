@@ -47,7 +47,8 @@ for (int rpi : rps.keys)
 
 			for (int fi : fills.keys)
 			{
-				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + xangle + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
+				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
 				string on = "singleMultiCorrelationPlots/si_rp" + rps[rpi]  + "_mu_" + rp_arms[rpi] + "/p_xi_diff_si_mu_vs_xi_mu|ff_pol1";
 			
 				RootObject fit = RootGetObject(f, on, error=false);

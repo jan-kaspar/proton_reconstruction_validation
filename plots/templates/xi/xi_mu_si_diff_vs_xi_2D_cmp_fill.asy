@@ -35,7 +35,8 @@ for (int fi : fills_short.keys)
 		NewPad("$\xi_{\rm multi}$", "$\xi_{\rm single} - \xi_{\rm multi}$");
 		//scale(Linear, Linear, Log);
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "singleMultiCorrelationPlots/si_rp" + rps[rpi]  + "_mu_" + rp_arms[rpi] + "/h2_xi_diff_si_mu_vs_xi_mu";
 		
 		RootObject hist = RootGetObject(f, on, error=false);
