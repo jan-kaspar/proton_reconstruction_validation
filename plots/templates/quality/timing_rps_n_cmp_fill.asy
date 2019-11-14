@@ -38,7 +38,7 @@ for (int fi : fills_short.keys)
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/" + arms[ai] + "/h_n_timing_RPs";
+		string on = "multiRPPlots/" + arms[ai] + "/h_n_contrib_timing_tracks";
 
 		RootObject hist = RootGetObject(f, on, error=false);
 		if (!hist.valid)
