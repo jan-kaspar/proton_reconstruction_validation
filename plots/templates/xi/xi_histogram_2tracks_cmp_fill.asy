@@ -21,7 +21,7 @@ AddToLegend("single-RP, ``near'' RP", blue);
 AddToLegend("single-RP, ``far'' RP", heavygreen);
 AddToLegend("multi-RP", red);
 
-AddToLegend("events with 1 near and 1 far track");
+AddToLegend("events with 2 tracks per arm");
 
 AttachLegend();
 

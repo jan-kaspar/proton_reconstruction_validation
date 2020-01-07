@@ -147,12 +147,19 @@ stream="ALL"
 # with GT 106X_dataRun2_testPPS_v1, local alignment
 #Submit
 
-version="version4"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/rec-hit-version1"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+#version="version4"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
 # at 83be64d0c9566ba3aaa14142204984b9ffe1b57f (Use version1 of 2016 post-TS2 optics)
 # with GT 106X_dataRun2_v11, local alignment
-Submit
+#Submit
+
+version="version5"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at f2e490a377efd0fc22deee052cfbb8683747a039 (Switched to version2 of 2016 pre-TS2 optics)
+# with GT 106X_dataRun2_v11, local alignment
+#Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -226,7 +233,19 @@ stream="ALL"
 # with GT 106X_dataRun2_testPPS_v1, local alignment (2019_06_12), local optics (2017 --> version4)
 #Submit
 
+#version="version12"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/rec-hit-version2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at 1ebb05f3c961cde76c7386effb43b4de5a0ee5b3
+# with GT 106X_dataRun2_v24, alignment local, optics local
+#Submit
+
+version="version13"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/rec-hit-version2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at e5ae42006066be39938358106d921031eac4c0a4
+# with GT 106X_dataRun2_v24, alignment local, optics local
+Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -285,9 +304,16 @@ stream="ALL"
 # with GT 106X_dataRun2_v11, alignment local, optics local
 #Submit
 
-version="version9"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hit-version1"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+#version="version9"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hit-version1"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
 # at 0b855eef4cc (2018 alignment updated)
 # with GT 106X_dataRun2_v11, alignment local, optics local
+#Submit
+
+version="version10"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/rec-hit-version1"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/proton_reco_step4/CMSSW_10_6_1/src"
+# at 58c6c727517d325d4efbe3a88fdadedbc3a44a4d
+# with GT 106X_dataRun2_v24, alignment local, optics local
 #Submit
