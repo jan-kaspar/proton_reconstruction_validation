@@ -10,9 +10,9 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("102"); rp_labels.push("56-210-nr"); rp_arms.push("arm1");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 
-string version = "version5";
+string version = "version6";
 string versions[] = {
-	"version5",
+	"version6",
 };
 
 //string stream = "ZeroBias";

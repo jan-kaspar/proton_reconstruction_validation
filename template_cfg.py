@@ -28,7 +28,7 @@ process.maxEvents = cms.untracked.PSet(
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
-process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v24")
+process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v26")
 
 # get optics from a DB tag
 ###   from CondCore.CondDB.CondDB_cfi import *
