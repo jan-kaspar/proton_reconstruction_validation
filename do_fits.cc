@@ -177,7 +177,7 @@ TF1 *ff_fit = new TF1("ff_fit", "[0] * exp(-(x-[1])*(x-[1])/2./[2]/[2]) + [3] + 
 
 TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 {
-	bool saveDetails = true;
+	bool saveDetails = false;
 	TDirectory *d_top = gDirectory;
 
 	double y_max_fit = 10.;
