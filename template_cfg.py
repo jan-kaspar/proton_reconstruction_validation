@@ -20,8 +20,7 @@ process.source = cms.Source("PoolSource",
 )
 
 process.maxEvents = cms.untracked.PSet(
-  #input = cms.untracked.int32(-1)
-  input = cms.untracked.int32(4000000)
+  input = cms.untracked.int32($max_events)
 )
 
 # declare global tag
@@ -79,69 +78,88 @@ if ($year == 2016):
   process.ctppsLocalTrackLiteProducer.includeDiamonds = False
   process.ctppsLocalTrackLiteProducer.includePixels = False
 
+# define RP ids
+process.rpIds = cms.PSet()
+
+if ($year == 2016):
+  process.rpIds.rp_45_F = cms.uint32(3)
+  process.rpIds.rp_45_N = cms.uint32(2)
+  process.rpIds.rp_56_N = cms.uint32(102)
+  process.rpIds.rp_56_F = cms.uint32(103)
+else:
+  process.rpIds.rp_45_F = cms.uint32(23)
+  process.rpIds.rp_45_N = cms.uint32(3)
+  process.rpIds.rp_56_N = cms.uint32(103)
+  process.rpIds.rp_56_F = cms.uint32(123)
+
 # reconstruction validator
 process.ctppsProtonReconstructionValidator = cms.EDAnalyzer("CTPPSProtonReconstructionValidator",
-    tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-    tagRecoProtons = cms.InputTag("ctppsProtons", "multiRP"),
+  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+  tagRecoProtons = cms.InputTag("ctppsProtons", "multiRP"),
 
-    chiSqCut = cms.double(2.),
+  chiSqCut = cms.double(2.),
 
-    outputFile = cms.string("output_validation.root")
+  outputFile = cms.string("output_validation.root")
 )
 
 # reconstruction plotter
 process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstructionPlotter",
-    tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-    tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP"),
-    tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+  tagRecoProtonsSingleRP = cms.InputTag("ctppsProtons", "singleRP"),
+  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
 
-    rpId_45_F = cms.uint32(0),
-    rpId_45_N = cms.uint32(0),
-    rpId_56_N = cms.uint32(0),
-    rpId_56_F = cms.uint32(0),
+  rpId_45_F = process.rpIds.rp_45_F,
+  rpId_45_N = process.rpIds.rp_45_N,
+  rpId_56_N = process.rpIds.rp_56_N,
+  rpId_56_F = process.rpIds.rp_56_F,
 
-    outputFile = cms.string("$output")
+  outputFile = cms.string("$output")
 )
-
-if ($year == 2016):
-  process.ctppsProtonReconstructionPlotter.rpId_45_F = 3
-  process.ctppsProtonReconstructionPlotter.rpId_45_N = 2
-  process.ctppsProtonReconstructionPlotter.rpId_56_N = 102
-  process.ctppsProtonReconstructionPlotter.rpId_56_F = 103
-else:
-  process.ctppsProtonReconstructionPlotter.rpId_45_F = 23
-  process.ctppsProtonReconstructionPlotter.rpId_45_N = 3
-  process.ctppsProtonReconstructionPlotter.rpId_56_N = 103
-  process.ctppsProtonReconstructionPlotter.rpId_56_F = 123
 
 # track distribution plotter
 process.ctppsTrackDistributionPlotter = cms.EDAnalyzer("CTPPSTrackDistributionPlotter",
-    tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-    outputFile = cms.string("output_tracks.root")
+  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+  outputFile = cms.string("output_tracks.root")
+)
+
+# xangle and beta* plotter
+process.ctppsLHCInfoPlotter = cms.EDAnalyzer("CTPPSLHCInfoPlotter",
+  lhcInfoLabel = cms.string(""),
+  outputFile = cms.string("output_lhcInfo.root"),
 )
 
 # optics plotter
 process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
-    opticsLabel = cms.string(""),
-    outputFile = cms.string("output_optics.root")
+  opticsLabel = cms.string(""),
+  outputFile = cms.string("output_optics.root")
 )
+
+# event category plotter
+###   process.ctppsEventCategoryPlotter = cms.EDAnalyzer("CTPPSEventCategoryPlotter",
+###     tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+###     tagStripHits = cms.InputTag("totemRPRecHitProducer"),
+###     tagStripPatterns = cms.InputTag("totemRPUVPatternFinder"),
+###     tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+###   
+###     rpId_45_F = process.rpIds.rp_45_F,
+###     rpId_45_N = process.rpIds.rp_45_N,
+###     rpId_56_N = process.rpIds.rp_56_N,
+###     rpId_56_F = process.rpIds.rp_56_F,
+###   
+###     outputFile = cms.string("output_categories.root")
+###   )
 
 # processing sequence
 if ($year == 2016):
-  process.path = cms.Path(
+  process.seq_reco = cms.Sequence(
     process.totemRPUVPatternFinder
     * process.totemRPLocalTrackFitter
 
     * process.ctppsLocalTrackLiteProducer
-    * process.ctppsTrackDistributionPlotter
-
     * process.ctppsProtons
-    * process.ctppsProtonReconstructionValidator
-    * process.ctppsProtonReconstructionPlotter
-    * process.ctppsOpticsPlotter
   )
 else:
-  process.path = cms.Path(
+  process.seq_reco = cms.Sequence(
     process.totemRPUVPatternFinder
     * process.totemRPLocalTrackFitter
 
@@ -151,10 +169,37 @@ else:
     * process.ctppsPixelLocalTracks
 
     * process.ctppsLocalTrackLiteProducer
-    * process.ctppsTrackDistributionPlotter
-
     * process.ctppsProtons
+  )
+
+process.seq_anal = cms.Sequence(
+    process.ctppsLHCInfoPlotter
+    * process.ctppsOpticsPlotter
+    * process.ctppsTrackDistributionPlotter
     * process.ctppsProtonReconstructionValidator
     * process.ctppsProtonReconstructionPlotter
-    * process.ctppsOpticsPlotter
+    #* process.ctppsEventCategoryPlotter
+)
+
+if ($run_reco):
+  process.path = cms.Path(
+    process.seq_reco
+    * process.seq_anal
   )
+else:
+  process.path = cms.Path(
+    process.seq_anal
+  )
+
+# output configuration
+###   process.maxEvents.input = cms.untracked.int32(10000)
+###
+###   process.output = cms.OutputModule("PoolOutputModule",
+###     fileName = cms.untracked.string("output_edm.root"),
+###     outputCommands = cms.untracked.vstring(
+###       "drop *",
+###       'keep recoForwardProtons_*_*_*'
+###     )
+###   )
+###   
+###   process.outpath = cms.EndPath(process.output)
