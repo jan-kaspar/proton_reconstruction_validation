@@ -131,6 +131,12 @@ process.ctppsLHCInfoPlotter = cms.EDAnalyzer("CTPPSLHCInfoPlotter",
 # optics plotter
 process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
   opticsLabel = cms.string(""),
+
+  rpId_45_F = process.rpIds.rp_45_F,
+  rpId_45_N = process.rpIds.rp_45_N,
+  rpId_56_N = process.rpIds.rp_56_N,
+  rpId_56_F = process.rpIds.rp_56_F,
+
   outputFile = cms.string("output_optics.root")
 )
 
@@ -148,6 +154,18 @@ process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
 ###   
 ###     outputFile = cms.string("output_categories.root")
 ###   )
+
+# efficiency estimation
+process.load("Validation.CTPPS.ctppsProtonReconstructionEfficiencyEstimatorData_cfi")
+process.ctppsProtonReconstructionEfficiencyEstimatorData.tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer")
+process.ctppsProtonReconstructionEfficiencyEstimatorData.tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP")
+
+process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_F = process.rpIds.rp_45_F
+process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_N = process.rpIds.rp_45_N
+process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_N = process.rpIds.rp_56_N
+process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_F = process.rpIds.rp_56_F
+
+process.ctppsProtonReconstructionEfficiencyEstimatorData.outputFile = "output_efficiency.root"
 
 # processing sequence
 if ($year == 2016):
@@ -179,6 +197,7 @@ process.seq_anal = cms.Sequence(
     * process.ctppsProtonReconstructionValidator
     * process.ctppsProtonReconstructionPlotter
     #* process.ctppsEventCategoryPlotter
+    * process.ctppsProtonReconstructionEfficiencyEstimatorData
 )
 
 if ($run_reco):
