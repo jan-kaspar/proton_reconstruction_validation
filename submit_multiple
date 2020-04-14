@@ -35,6 +35,7 @@ function SubmitOneDir()
 	rm -rf "$dir/output_lhcInfo.root"
 	rm -rf "$dir/output_optics.root"
 	rm -rf "$dir/output_categories.root"
+	rm -rf "$dir/output_efficiency.root"
 	rm -rf "$dir/log"
 	rm -rf "$dir/do_fits.root"
 
@@ -196,6 +197,15 @@ sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_1
 # with GT 106X_dataRun2_v26
 run_reco="False"
 # this repo at TODO
+#Submit
+
+version="version-UL-4"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at TODO
+# with GT 106X_dataRun2_v26
+run_reco="False"
+# this repo at TODO
 Submit
 
 #----------------------------------------------------------------------------------------------------
@@ -315,7 +325,16 @@ sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_1
 # with GT 106X_dataRun2_v26
 run_reco="False"
 # this repo at TODO
-Submit
+#Submit
+
+version="version-UL-retune-3" # 2017: discard BX-shifted tracks, add th*_y rule for near-far association cuts
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at b89c9969f6b
+# with GT 106X_dataRun2_v26
+run_reco="True"
+# this repo at TODO
+#Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -434,13 +453,22 @@ sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_1
 # with GT 106X_dataRun2_v26
 run_reco="False"
 # this repo at TODO
-Submit
+#Submit
 
-version="version-UL-retune-1"
+version="version-UL-retune-1" # retuned D_y 
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
 # at TODO
 # with GT 106X_dataRun2_v26
+run_reco="True"
+# this repo at TODO
+#Submit
+
+version="version-UL-retune-2" # retuned alignment
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at TODO + test alignment
+# with GT 106X_dataRun2_v26, local alignment
 run_reco="True"
 # this repo at TODO
 #Submit
