@@ -119,6 +119,12 @@ process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstruc
 # track distribution plotter
 process.ctppsTrackDistributionPlotter = cms.EDAnalyzer("CTPPSTrackDistributionPlotter",
   tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+
+  rpId_45_F = process.rpIds.rp_45_F,
+  rpId_45_N = process.rpIds.rp_45_N,
+  rpId_56_N = process.rpIds.rp_56_N,
+  rpId_56_F = process.rpIds.rp_56_F,
+
   outputFile = cms.string("output_tracks.root")
 )
 
@@ -141,19 +147,19 @@ process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
 )
 
 # event category plotter
-###   process.ctppsEventCategoryPlotter = cms.EDAnalyzer("CTPPSEventCategoryPlotter",
-###     tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-###     tagStripHits = cms.InputTag("totemRPRecHitProducer"),
-###     tagStripPatterns = cms.InputTag("totemRPUVPatternFinder"),
-###     tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
-###   
-###     rpId_45_F = process.rpIds.rp_45_F,
-###     rpId_45_N = process.rpIds.rp_45_N,
-###     rpId_56_N = process.rpIds.rp_56_N,
-###     rpId_56_F = process.rpIds.rp_56_F,
-###   
-###     outputFile = cms.string("output_categories.root")
-###   )
+process.ctppsEventCategoryPlotter = cms.EDAnalyzer("CTPPSEventCategoryPlotter",
+  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+  tagStripHits = cms.InputTag("totemRPRecHitProducer"),
+  tagStripPatterns = cms.InputTag("totemRPUVPatternFinder"),
+  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+
+  rpId_45_F = process.rpIds.rp_45_F,
+  rpId_45_N = process.rpIds.rp_45_N,
+  rpId_56_N = process.rpIds.rp_56_N,
+  rpId_56_F = process.rpIds.rp_56_F,
+
+  outputFile = cms.string("output_categories.root")
+)
 
 # efficiency estimation
 process.load("Validation.CTPPS.ctppsProtonReconstructionEfficiencyEstimatorData_cfi")
@@ -167,17 +173,23 @@ process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_F = process.rpI
 
 process.ctppsProtonReconstructionEfficiencyEstimatorData.outputFile = "output_efficiency.root"
 
-# processing sequence
+# adjust reco - TODO: remove
+###   process.ctppsLocalTrackLiteProducer.pixelDiscardBXShiftedTracks = True
+###   
+###   process.ctppsProtons.association_cuts_45.th_y_cut_apply = True
+###   process.ctppsProtons.association_cuts_45.th_y_cut_value = 30E-6
+###   
+###   process.ctppsProtons.association_cuts_56.th_y_cut_apply = True
+###   process.ctppsProtons.association_cuts_56.th_y_cut_value = 30E-6
+
+# processing sequences
 if ($year == 2016):
-  process.seq_reco = cms.Sequence(
+  process.seq_reco_loc = cms.Sequence(
     process.totemRPUVPatternFinder
     * process.totemRPLocalTrackFitter
-
-    * process.ctppsLocalTrackLiteProducer
-    * process.ctppsProtons
   )
 else:
-  process.seq_reco = cms.Sequence(
+  process.seq_reco_loc = cms.Sequence(
     process.totemRPUVPatternFinder
     * process.totemRPLocalTrackFitter
 
@@ -185,10 +197,14 @@ else:
     * process.ctppsDiamondLocalTracks
 
     * process.ctppsPixelLocalTracks
-
-    * process.ctppsLocalTrackLiteProducer
-    * process.ctppsProtons
   )
+
+process.seq_reco_glb = cms.Sequence(
+    process.ctppsLocalTrackLiteProducer
+    * process.ctppsProtons
+
+    * process.ctppsEventCategoryPlotter
+)
 
 process.seq_anal = cms.Sequence(
     process.ctppsLHCInfoPlotter
@@ -196,13 +212,14 @@ process.seq_anal = cms.Sequence(
     * process.ctppsTrackDistributionPlotter
     * process.ctppsProtonReconstructionValidator
     * process.ctppsProtonReconstructionPlotter
-    #* process.ctppsEventCategoryPlotter
     * process.ctppsProtonReconstructionEfficiencyEstimatorData
 )
 
 if ($run_reco):
   process.path = cms.Path(
-    process.seq_reco
+    process.seq_reco_loc
+    * process.seq_reco_glb
+
     * process.seq_anal
   )
 else:
