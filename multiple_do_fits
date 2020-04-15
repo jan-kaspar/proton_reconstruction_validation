@@ -40,15 +40,22 @@ echo "* building directory list"
 # collect data
 idx=0
 input=()
-for dir in `find $1 -type d` 
+while [ -n "$1" ]
 do
-	if [ -f "$dir/output.root" ]
-	then
-		input[$idx]="${input[$idx]} $dir"
-		idx=$(( (idx+1) % n_threads ))
-	#else
-		#echo "ERROR: no output.root in $dir"
-	fi
+	echo "    - $1"
+
+	for dir in `find $1 -type d`
+	do
+		if [ -f "$dir/output.root" ]
+		then
+			input[$idx]="${input[$idx]} $dir"
+			idx=$(( (idx+1) % n_threads ))
+		#else
+			#echo "ERROR: no output.root in $dir"
+		fi
+	done
+
+	shift
 done
 
 echo "* running fits"
