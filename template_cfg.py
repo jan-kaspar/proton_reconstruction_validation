@@ -16,9 +16,17 @@ process.MessageLogger = cms.Service("MessageLogger",
 from input_files import input_files
 process.source = cms.Source("PoolSource",
   fileNames = input_files
-  #lumisToProcess = cms.untracked.VLuminosityBlockRange("$run:1-$run:max")
 )
 
+# apply JSON file
+import FWCore.PythonUtilities.LumiList as LumiList
+import FWCore.ParameterSet.Types as CfgTypes
+process.source.lumisToProcess = CfgTypes.untracked(CfgTypes.VLuminosityBlockRange())
+JSONfile = '$json_file'
+myLumis = LumiList.LumiList(filename = JSONfile).getCMSSWString().split(',')
+process.source.lumisToProcess.extend(myLumis)
+
+# number of events to process
 process.maxEvents = cms.untracked.PSet(
   input = cms.untracked.int32($max_events)
 )
