@@ -41,6 +41,13 @@ function SubmitOneDir()
 
 	full_dir="`pwd -P`/$dir"
 
+	# compile list of era modifiers
+	era_modifiers="eras.Run2_$year"
+	if [ "$devel" == "True" ]
+	then
+		era_modifiers="$era_modifiers, eras.run2_miniAOD_devel"
+	fi
+
 	# make config
 	cat "template_cfg.py" | sed -e "\
 			s|\$input|$input|g;\
@@ -52,6 +59,7 @@ function SubmitOneDir()
 			s|\$run_reco|$run_reco|g;\
 			s|\$max_events|$max_events|g;\
 			s|\$json_file|selection.json|g;\
+			s|\$era_modifiers|$era_modifiers|g;\
 		" > "$dir/cfg.py"
 
 	# make config with input files
@@ -136,6 +144,7 @@ function Submit()
 # defaults
 
 run_reco="True"
+devel="False"
 max_events="4000000"
 
 #----------------------------------------------------------------------------------------------------
@@ -177,13 +186,22 @@ stream="ALL"
 ## this repo at 58ba45b
 #Submit
 
-version="version-UL-5"
+#version="version-UL-5"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 57f24476748
+## with GT 106X_dataRun2_v26
+#run_reco="False"
+## this repo at 69da062
+##Submit
+
+version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 57f24476748
+# at TODO
 # with GT 106X_dataRun2_v26
 run_reco="False"
-# this repo at 69da062
+# this repo at TODO
 Submit
 
 #----------------------------------------------------------------------------------------------------
@@ -232,22 +250,31 @@ stream="ALL"
 ## this repo at 58ba45b
 ##Submit
 
-version="version-UL-5"
+#version="version-UL-5"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 57f24476748
+## with GT 106X_dataRun2_v26
+#run_reco="False"
+## this repo at 69da062
+##Submit
+
+version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 57f24476748
+# at TODO
 # with GT 106X_dataRun2_v26
 run_reco="False"
-# this repo at 69da062
+# this repo at TODO
 Submit
 
-version="version-UL-4"
+version="version-UL-EvCat-2"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 57f24476748
+# at 28664d700be
 # with GT 106X_dataRun2_v26
-run_reco="False"
-# this repo at 58ba45b
+run_reco="True"
+# this repo at 25fc23f
 #Submit
 
 version="version-UL-retune-3" # 2017: discard BX-shifted tracks, add th*_y rule for near-far association cuts
@@ -256,7 +283,7 @@ sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_1
 # at b89c9969f6b
 # with GT 106X_dataRun2_v26
 run_reco="True"
-# this repo at TODO
+# this repo at ???
 #Submit
 
 #----------------------------------------------------------------------------------------------------
@@ -313,29 +340,39 @@ stream="ALL"
 ## this repo at 58ba45b
 ##Submit
 
-version="version-UL-5"
+#version="version-UL-5"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 57f24476748
+## with GT 106X_dataRun2_v26
+#run_reco="False"
+## this repo at 69da062
+##Submit
+
+version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 57f24476748
+# at TODO
 # with GT 106X_dataRun2_v26
 run_reco="False"
-# this repo at 69da062
+# this repo at TODO
 Submit
 
 version="version-UL-retune-1" # retuned D_y 
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ???
 # with GT 106X_dataRun2_v26
 run_reco="True"
-# this repo at TODO
+# this repo at ???
 #Submit
 
 version="version-UL-retune-2" # retuned alignment
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO + test alignment
-# with GT 106X_dataRun2_v26, local alignment
+# at TODO
+# with GT 106X_dataRun2_v26
 run_reco="True"
+devel="True"
 # this repo at TODO
 #Submit
