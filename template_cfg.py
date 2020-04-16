@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process("CTPPSTestProtonReconstruction", eras.Run2_$year)
+process = cms.Process("CTPPSTestProtonReconstruction", $era_modifiers)
 
 # minimum of logs
 process.MessageLogger = cms.Service("MessageLogger",
