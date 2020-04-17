@@ -1,1 +1,0 @@
-../../templates/xi/xi_si_diffNF_vs_mu_profile_cmp_fill.asy

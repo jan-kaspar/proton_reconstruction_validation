@@ -1,8 +1,10 @@
+string topDir = "/afs/cern.ch/work/j/jkaspar/work/analyses/ctpps/proton_reconstruction_validation/";
+
 string year = "2017";
 
 string arms[], a_labels[], a_nr_rps[], a_fr_rps[];
-arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
-arms.push("arm1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("103"); a_fr_rps.push("123");
+arms.push("0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("3"); a_fr_rps.push("23");
+arms.push("1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("103"); a_fr_rps.push("123");
 
 string rps[], rp_labels[], rp_arms[];
 rps.push("23"); rp_labels.push("45-220-fr"); rp_arms.push("arm0");
@@ -10,9 +12,10 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version13";
+string version = "version-UL-6";
 string versions[] = {
-	"version13",
+	"version-UL-6",
+	"version-UL-devel-2",
 };
 
 //string stream = "DoubleEG";
@@ -59,13 +62,16 @@ real xSizeDefFill = 80cm;
 
 bool rebin = true;
 
+real eff_xi_45_sample1 = 0.03, eff_xi_45_sample2 = 0.06, eff_xi_45_sample3 = 0.12;
+real eff_xi_56_sample1 = 0.04, eff_xi_56_sample2 = 0.07, eff_xi_56_sample3 = 0.16;
+
 string fills_short[] = {
 	"5849",
 	"6053",
 	"6189",
 	"6240",
-	"6303",
-	"6371",
+	"6304", // used to be 6303
+	"6360", // used to be 6371
 };
 
 // fills from JSON: CMS golden & RPs inserted

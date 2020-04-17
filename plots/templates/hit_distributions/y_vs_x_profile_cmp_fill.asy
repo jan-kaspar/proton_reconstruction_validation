@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 //xTicksDef = LeftTicks(0.05, 0.01);
 
 TGraph_errorBar = None;
@@ -40,7 +38,7 @@ for (int fi : fills_short.keys)
 
 	for (int rpi : rps.keys)
 	{
-		NewPad("$x\ung{mm}$", "$y\ung{mm}$");
+		NewPad("$x\ung{mm}$", "mode of $y\ung{mm}$");
 		scale(Linear, Linear, Log);
 
 		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
@@ -58,7 +56,7 @@ for (int fi : fills_short.keys)
 		if (!p_y_vs_x.valid || !g_y_mode_vs_x.valid || !g_disp.valid)
 			continue;
 
-		draw(g_disp, "l", black+2pt);
+		draw(scale(10, 10), g_disp, "l", black+2pt); // conversion from cm to mm
 
 		//draw(p_y_vs_x, "eb", red);
 

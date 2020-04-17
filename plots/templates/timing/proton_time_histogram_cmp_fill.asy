@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 //xTicksDef = LeftTicks(0.05, 0.01);
@@ -12,10 +10,13 @@ TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 NewPad(false);
 AddToLegend("year: " + year);
-AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
 AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
+
+for (int vi : versions.keys)
+	AddToLegend(versions[vi], StdPen(vi + 1));
+
 AttachLegend();
 
 //----------------------------------------------------------------------------------------------------
@@ -33,20 +34,26 @@ for (int fi : fills_short.keys)
 
 	for (int ai : arms.keys)
 	{
-		NewPad("number of contributing timing-RP tracks");
+		NewPad("proton time");
 		//scale(Linear, Log);
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
-			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/" + arms[ai] + "/h_n_contrib_timing_tracks";
+		for (int vi : versions.keys)
+		{
+			version = versions[vi];
+			pen p = StdPen(vi + 1);
 
-		RootObject hist = RootGetObject(f, on, error=false);
-		if (!hist.valid)
-			continue;
+			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+			string on = "multiRPPlots/arm" + arms[ai] + "/h_time";
 
-		draw(hist, "vl", blue);
+			RootObject hist = RootGetObject(f, on, error=false);
+			if (!hist.valid)
+				continue;
 
-		//xlimits(0, 10., Crop);
+			draw(hist, "vl", p);
+		}
+
+		//xlimits(-5, 5., Crop);
 	}
 }
 

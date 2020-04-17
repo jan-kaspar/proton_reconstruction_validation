@@ -1,1 +1,0 @@
-../../templates/th_x/th_x_vs_xi_2D_cmp_fill.asy

@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 //xTicksDef = LeftTicks(0.05, 0.01);
@@ -60,7 +58,7 @@ for (int qi : q_idxs.keys)
 
 				string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 				string f_fit = d + "/do_fits.root";
-				RootObject f_aperture = RootGetObject(f_fit, "multiRPPlots/" + arms[ai] + "/g_aperture|ff_aperture_fit", error=false);
+				RootObject f_aperture = RootGetObject(f_fit, "multiRPPlots/arm" + arms[ai] + "/g_aperture|ff_aperture_fit", error=false);
 
 				if (!f_aperture.valid)
 					continue;

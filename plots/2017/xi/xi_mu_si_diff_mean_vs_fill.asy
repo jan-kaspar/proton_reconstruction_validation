@@ -1,1 +1,0 @@
-../../templates/xi/xi_mu_si_diff_mean_vs_fill.asy

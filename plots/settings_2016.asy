@@ -1,8 +1,10 @@
+string topDir = "/afs/cern.ch/work/j/jkaspar/work/analyses/ctpps/proton_reconstruction_validation/";
+
 string year = "2016";
 
 string arms[], a_labels[], a_nr_rps[], a_fr_rps[];
-arms.push("arm0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("2"); a_fr_rps.push("3");
-arms.push("arm1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("102"); a_fr_rps.push("103");
+arms.push("0"); a_labels.push("sector 45 (L, z+)"); a_nr_rps.push("2"); a_fr_rps.push("3");
+arms.push("1"); a_labels.push("sector 56 (R, z-)"); a_nr_rps.push("102"); a_fr_rps.push("103");
 
 string rps[], rp_labels[], rp_arms[];
 rps.push("2"); rp_labels.push("45-210-nr"); rp_arms.push("arm0");
@@ -10,9 +12,10 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("102"); rp_labels.push("56-210-nr"); rp_arms.push("arm1");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 
-string version = "version6";
+string version = "version-UL-6";
 string versions[] = {
-	"version6",
+	"version-UL-6",
+	"version-UL-devel-3",
 };
 
 //string stream = "ZeroBias";
@@ -43,7 +46,7 @@ string GetXangle(string fill_str, string xangle)
 		return "185";
 }
 
-string beta = "0.30";
+string beta = "0.40";
 
 string GetBeta(string fill_str)
 {
@@ -53,6 +56,9 @@ string GetBeta(string fill_str)
 real xSizeDefFill = 80cm;
 
 bool rebin = true;
+
+real eff_xi_45_sample1 = 0.03, eff_xi_45_sample2 = 0.07, eff_xi_45_sample3 = 0.10;
+real eff_xi_56_sample1 = 0.03, eff_xi_56_sample2 = 0.09, eff_xi_56_sample3 = 0.14;
 
 string fills_short[] = {
 	// pre-TS2

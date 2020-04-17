@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 //xTicksDef = LeftTicks(0.05, 0.01);
@@ -37,7 +35,7 @@ for (int fi : fills_short.keys)
 		//scale(Linear, Log);
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/" + arms[ai] + "/h_log_chi_sq";
+		string on = "multiRPPlots/arm" + arms[ai] + "/h_log_chi_sq";
 
 		RootObject hist = RootGetObject(f, on, error=false);
 		if (!hist.valid)

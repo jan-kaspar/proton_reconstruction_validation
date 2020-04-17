@@ -1,1 +1,0 @@
-../../templates/xi/xi_si_F_vs_si_N_cmp_fill.asy

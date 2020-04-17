@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -41,22 +39,21 @@ for (int ai : arms.keys)
 		for (int fi : fills.keys)
 		{
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
-			string on = "multiRPPlots/" + arms[ai] + "/h_de_x_match_timing_vs_tracking";
+			string on = "multiRPPlots/arm" + arms[ai] + "/h_n_contrib_timing_tracks";
 		
 			RootObject hist = RootGetObject(f, on, error=false);
 			if (!hist.valid)
 				continue;
 		
-			real n_no_match = hist.rExec("GetBinContent", 1);
-			real n_match = hist.rExec("GetBinContent", 2);
-			real den = n_no_match + n_match;
-
-			real ratio = (den > 0) ? n_match / den : 0.;
+			real entries = hist.rExec("GetEntries");
+			int empty_bin = hist.iExec("FindBin", 0.);
+			real empty = hist.rExec("GetBinContent", empty_bin);
+			real non_empty_ratio = (entries > 0) ? (entries - empty) / entries : 0.;
 
 			mark m = mCi+3pt;
 
 			real x = fi;
-			draw((x, ratio), m+p);
+			draw((x, non_empty_ratio), m+p);
 		}
 	}
 

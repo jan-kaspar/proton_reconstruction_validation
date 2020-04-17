@@ -1,1 +1,0 @@
-../../templates/th_x/th_x_mean_vs_fill.asy

@@ -1,1 +1,0 @@
-../../templates/xi/xi_mu_si_diff_vs_xi_2D_cmp_fill.asy

@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TGraph_errorBar = None;
 
 xTicksDef = LeftTicks(0.05, 0.01);
@@ -37,7 +35,7 @@ for (int fi : fills_short.keys)
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
-		string on = "multiRPPlots/" + arms[ai] + "/g_th_y_RMS_vs_xi";
+		string on = "multiRPPlots/arm" + arms[ai] + "/g_th_y_RMS_vs_xi";
 
 		RootObject hist = RootGetObject(f, on, error=false);
 		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);

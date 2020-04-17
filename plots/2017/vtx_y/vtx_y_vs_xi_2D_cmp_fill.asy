@@ -1,1 +1,0 @@
-../../templates/vtx_y/vtx_y_vs_xi_2D_cmp_fill.asy

@@ -1,9 +1,6 @@
 import root;
 import pad_layout;
-
 include "../settings.asy";
-
-string topDir = "../../../";
 
 xTicksDef = LeftTicks(0.05, 0.01);
 
@@ -45,7 +42,7 @@ for (int fi : fills_short.keys)
 		
 		RootObject hist_si_N = RootGetObject(f, "singleRPPlots/rp" + a_nr_rps[ai] + "/h_xi", error=false);
 		RootObject hist_si_F = RootGetObject(f, "singleRPPlots/rp" + a_fr_rps[ai] + "/h_xi", error=false);
-		RootObject hist_mu = RootGetObject(f, "multiRPPlots/" + arms[ai] + "/h_xi", error=false);
+		RootObject hist_mu = RootGetObject(f, "multiRPPlots/arm" + arms[ai] + "/h_xi", error=false);
 
 		if (hist_si_N.valid)
 			draw(hist_si_N, "vl", blue);

@@ -1,9 +1,6 @@
 import root;
 import pad_layout;
-
 include "../settings.asy";
-
-string topDir = "../../../";
 
 xTicksDef = LeftTicks(0.05, 0.01);
 

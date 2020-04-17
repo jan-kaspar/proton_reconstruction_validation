@@ -1,9 +1,6 @@
 import root;
 import pad_layout;
-
 include "../settings.asy";
-
-string topDir = "../../../";
 
 xTicksDef = LeftTicks(0.05, 0.01);
 
@@ -36,7 +33,7 @@ for (int fi : fills_short.keys)
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "armCorrelationPlots/" + arms[ai] + "/h2_xi_si_diffNF_vs_xi_mu";
+		string on = "armCorrelationPlots/arm" + arms[ai] + "/h2_xi_si_diffNF_vs_xi_mu";
 		
 		RootObject hist = RootGetObject(f, on, error=false);
 

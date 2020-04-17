@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -49,7 +47,7 @@ for (int ai : arms.keys)
 			{
 				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
 					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
-				string on = "multiRPPlots/" + arms[ai] + "/h_log_chi_sq";
+				string on = "multiRPPlots/arm" + arms[ai] + "/h_log_chi_sq";
 			
 				RootObject fit = RootGetObject(f, on, error=false);
 				if (!fit.valid)

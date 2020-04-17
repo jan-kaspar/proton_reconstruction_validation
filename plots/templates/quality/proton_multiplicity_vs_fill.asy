@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -41,7 +39,7 @@ for (int ai : arms.keys)
 
 		RootObject hist_si_N = RootGetObject(f, "singleRPPlots/rp" + a_nr_rps[ai] + "/h_multiplicity", error=false);
 		RootObject hist_si_F = RootGetObject(f, "singleRPPlots/rp" + a_fr_rps[ai] + "/h_multiplicity", error=false);
-		RootObject hist_mu = RootGetObject(f, "multiRPPlots/" + arms[ai] + "/h_multiplicity", error=false);
+		RootObject hist_mu = RootGetObject(f, "multiRPPlots/arm" + arms[ai] + "/h_multiplicity", error=false);
 	
 		real mult_si_N = (hist_si_N.valid) ? hist_si_N.rExec("GetMean") : 0.;
 		real mult_si_F = (hist_si_F.valid) ? hist_si_F.rExec("GetMean") : 0.;
@@ -56,9 +54,9 @@ for (int ai : arms.keys)
 		draw((x, mult_mu), m+red);
 	}
 
-	DrawFillMarkers(0, 2.);
+	DrawFillMarkers(0, 3.);
 
-	limits((-1, 0), (fills.length, 2.), Crop);
+	limits((-1, 0), (fills.length, 3.), Crop);
 
 	xaxis(YEquals(0., false), dashed);
 }

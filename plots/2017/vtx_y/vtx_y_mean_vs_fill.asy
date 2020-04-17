@@ -1,1 +1,0 @@
-../../templates/vtx_y/vtx_y_mean_vs_fill.asy

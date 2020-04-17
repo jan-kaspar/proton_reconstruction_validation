@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
@@ -31,7 +29,7 @@ for (int ai : arms.keys)
 
 	NewPadLabel(a_labels[ai]);
 
-	NewPad("fill", "fraction of reco.~protons with timing");
+	NewPad("fill", "mean proton time");
 
 	for (int vi : versions.keys)
 	{
@@ -41,29 +39,26 @@ for (int ai : arms.keys)
 		for (int fi : fills.keys)
 		{
 			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
-			string on = "multiRPPlots/" + arms[ai] + "/h_n_contrib_timing_tracks";
+			string on = "multiRPPlots/arm" + arms[ai] + "/h_time";
 		
 			RootObject hist = RootGetObject(f, on, error=false);
 			if (!hist.valid)
 				continue;
 		
 			real entries = hist.rExec("GetEntries");
-			int empty_bin = hist.iExec("FindBin", 0.);
-			real empty = hist.rExec("GetBinContent", empty_bin);
-			real non_empty_ratio = (entries > 0) ? (entries - empty) / entries : 0.;
+
+			real mean = hist.rExec("GetMean");
 
 			mark m = mCi+3pt;
 
 			real x = fi;
-			draw((x, non_empty_ratio), m+p);
+			draw((x, mean), m+p);
 		}
 	}
 
-	DrawFillMarkers(0, 1.);
+	DrawFillMarkers(-1., 1.);
 
-	limits((-1, 0), (fills.length, 1.), Crop);
-
-	xaxis(YEquals(0., false), dashed);
+	limits((-1, -1.), (fills.length, 1.), Crop);
 }
 
 GShipout(hSkip=0mm, vSkip=0mm);

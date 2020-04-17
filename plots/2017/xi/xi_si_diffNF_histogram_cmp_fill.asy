@@ -1,1 +1,0 @@
-../../templates/xi/xi_si_diffNF_histogram_cmp_fill.asy

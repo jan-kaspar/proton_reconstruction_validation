@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 //----------------------------------------------------------------------------------------------------
@@ -35,7 +33,7 @@ for (int fi : fills_short.keys)
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
-		string on = "multiRPPlots/" + arms[ai] + "/p_vtx_y_vs_xi";
+		string on = "multiRPPlots/arm" + arms[ai] + "/p_vtx_y_vs_xi";
 
 		RootObject hist = RootGetObject(f, on, error=false);
 		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);

@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 //xTicksDef = LeftTicks(0.05, 0.01);
 
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
@@ -56,7 +54,8 @@ for (int fi : fills_short.keys)
 			h2_y_vs_x.vExec("Rebin2D", 2, 2);
 
 		draw(h2_y_vs_x);
-		draw(g_disp, "l", black+2pt);
+
+		draw(scale(10, 10), g_disp, "l", black+2pt); // conversion from cm to mm
 
 		limits((0, -7.), (25., +7), Crop);
 	}

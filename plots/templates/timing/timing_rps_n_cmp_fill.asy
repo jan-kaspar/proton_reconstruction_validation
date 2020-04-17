@@ -2,8 +2,6 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-string topDir = "../../../";
-
 TH2_palette = Gradient(blue, heavygreen, yellow, red);
 
 //xTicksDef = LeftTicks(0.05, 0.01);
@@ -33,12 +31,12 @@ for (int fi : fills_short.keys)
 
 	for (int ai : arms.keys)
 	{
-		NewPad("($x_{\rm timing} - x_{\rm tracking}) / \si(x)$");
+		NewPad("number of contributing timing-RP tracks");
 		//scale(Linear, Log);
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/" + arms[ai] + "/h_de_x_rel_timing_vs_tracking";
+		string on = "multiRPPlots/arm" + arms[ai] + "/h_n_contrib_timing_tracks";
 
 		RootObject hist = RootGetObject(f, on, error=false);
 		if (!hist.valid)
@@ -47,9 +45,6 @@ for (int fi : fills_short.keys)
 		draw(hist, "vl", blue);
 
 		//xlimits(0, 10., Crop);
-
-		yaxis(XEquals(-1., false), red+1pt);
-		yaxis(XEquals(+1., false), red+1pt);
 	}
 }
 

@@ -1,12 +1,9 @@
 import root;
 import pad_layout;
 include "../settings.asy";
+include "eff_common.asy";
 
-string topDir = "../../../";
-
-TH2_palette = Gradient(blue, heavygreen, yellow, red);
-
-//xTicksDef = LeftTicks(0.05, 0.01);
+xTicksDef = LeftTicks(0.05, 0.01);
 
 //----------------------------------------------------------------------------------------------------
 
@@ -16,6 +13,12 @@ AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
 AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
+
+AddToLegend("n sigma: " + n_sigma);
+
+for (int nei : n_exps.keys)
+	AddToLegend(n_exps[nei] + " exp.~proton", StdPen(nei));
+
 AttachLegend();
 
 //----------------------------------------------------------------------------------------------------
@@ -33,21 +36,25 @@ for (int fi : fills_short.keys)
 
 	for (int ai : arms.keys)
 	{
-		NewPad("num.~of multi-RP reco protons", "\vbox{\hbox{num.~of timing-RP tracks}\hbox{(same arm as proton, per event)}}");
-		//scale(Linear, Log);
+		NewPad("$\xi_{si,N}$", "efficiency");
 
 		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
-			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/" + arms[ai] + "/h2_timing_tracks_vs_prot_mult";
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output_efficiency.root";
 
-		RootObject hist = RootGetObject(f, on, error=false);
-		if (!hist.valid)
-			continue;
+		string base = "arm " + arms[ai];
 
-		draw(hist, "p,bar,t");
+		for (int nei : n_exps.keys)
+		{
+			RootObject hist = RootGetObject(f, base + "/exp prot " + n_exps[nei] + "/nsi = " + n_sigma + "/p_eff2_vs_xi_N", error=false);
 
-		limits((-0.5, -0.5), (5.5, 10.5), Crop);
+			if (!hist.valid)
+				continue;
+
+			draw(hist, "vl", StdPen(nei));
+		}
+
+		limits((0, 0), (0.25, 1.1), Crop);
 	}
 }
 
-GShipout(hSkip=0mm, vSkip=0mm);
+GShipout(hSkip=5mm, vSkip=0mm);
