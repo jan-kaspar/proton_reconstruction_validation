@@ -174,6 +174,8 @@ process.load("Validation.CTPPS.ctppsProtonReconstructionEfficiencyEstimatorData_
 process.ctppsProtonReconstructionEfficiencyEstimatorData.tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer")
 process.ctppsProtonReconstructionEfficiencyEstimatorData.tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP")
 
+process.ctppsProtonReconstructionEfficiencyEstimatorData.pixelDiscardBXShiftedTracks = process.ctppsProtons.pixelDiscardBXShiftedTracks
+
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_F = process.rpIds.rp_45_F
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_N = process.rpIds.rp_45_N
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_N = process.rpIds.rp_56_N
