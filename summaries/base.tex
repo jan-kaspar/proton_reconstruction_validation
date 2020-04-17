@@ -23,6 +23,13 @@
 
 
 \newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{Multiplicity per event per sector}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/track_multiplicity_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
 \ctitle{Track distribution}{$xy$ map}
 
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/y_vs_x_2D_cmp_fill.pdf}}
@@ -33,6 +40,34 @@
 \ctitle{Track distribution}{$y$ profiles}
 
 \centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/y_vs_x_profile_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{$x^{F} - x^{N}$ distributions}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/de_x_vs_x_2D_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{$y^{F} - y^{N}$ distributions}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/hit_distributions/de_y_vs_x_2D_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{Mean value of x}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/hit_distributions/x_mean_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Track distribution}{Mean value of y}
+
+\centerline{\fig[16cm]{../../plots/\DataYear/hit_distributions/y_mean_vs_fill.pdf}}
 
 
 
@@ -243,6 +278,12 @@
 
 \centerline{\fig[16cm]{../../plots/\DataYear/th_y/th_y_RMS_vs_fill.pdf}}
 
+
+\newpage %-------------------------------------------------------------------------------------------
+\title{$\th^*_y$: comparison of single-RP reco in near and far RP}
+
+\centerline{\fig[,10.5cm]{../../plots/\DataYear/th_y/th_y_si_diffNF_histogram_cmp_fill.pdf}}
+
 %====================================================================================================
 
 \newpage %-------------------------------------------------------------------------------------------
@@ -285,15 +326,88 @@
 %====================================================================================================
 
 \newpage %-------------------------------------------------------------------------------------------
-\ctitle{Timing information}{Number of timing RPs associated with reconstructed proton}
+\ctitle{Timing}{Definition of clean conditions}
 
-\centerline{\fig[,10.5cm]{../../plots/\DataYear/quality/timing_rps_n_cmp_fill.pdf}}
+\SmallerFonts
+
+\> ``clean conditions'' defined per event and per arm:
+\>> exactly one local track in near RP
+\>> exactly one local track in far RP
+\>> exactly one multi-RP proton
+\>> exactly one timing track
 
 
 \newpage %-------------------------------------------------------------------------------------------
-\ctitle{Timing information}{Fraction of reconstructed protons with associated timing}
+\ctitle{Timing}{Matching between timing and tracking local tracks}
 
-\centerline{\fig[16cm]{../../plots/\DataYear/quality/timing_rps_fraction_vs_fill.pdf}}
+\SmallerFonts
+
+\> in ``clean conditions''
+
+\centerline{\fig[,10.0cm]{../../plots/\DataYear/timing/timing_de_x_over_unc_cmp_fill.pdf}}
+
+
+% there is a bug in this plot - don't use until the module is fixed
+%\newpage %-------------------------------------------------------------------------------------------
+%\ctitle{Timing}{Fraction of timing tracks matching tracks from tracking RPs}
+%
+%\SmallerFonts
+%
+%\> in ``clean conditions''
+%
+%\centerline{\fig[16cm]{../../plots/\DataYear/timing/timing_matching_fraction_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing}{Correlation between number of timing tracks and multi-RP protons}
+
+\SmallerFonts
+
+\> all tracks and protons from the same arm and event considered
+
+\centerline{\fig[,10.0cm]{../../plots/\DataYear/timing/timing_tracks_vs_proton_mult_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing}{Number of timing RPs associated with reconstructed proton}
+
+\SmallerFonts
+
+\> all multi-RP protons considered
+
+\centerline{\fig[,10.0cm]{../../plots/\DataYear/timing/timing_rps_n_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing}{Fraction of reconstructed protons with associated timing}
+
+\SmallerFonts
+
+\> all multi-RP protons considered
+
+\centerline{\fig[16cm]{../../plots/\DataYear/timing/timing_rps_fraction_vs_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing}{Histogram of proton time}
+
+\SmallerFonts
+
+\> time of each multi-RP proton plotted
+
+\centerline{\fig[,10.0cm]{../../plots/\DataYear/timing/proton_time_histogram_cmp_fill.pdf}}
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Timing}{Mean proton time vs.~fill}
+
+\> time of each multi-RP proton considered
+
+\centerline{\fig[16cm]{../../plots/\DataYear/timing/proton_time_mean_vs_fill.pdf}}
+
+
+
+
 
 
 
@@ -326,6 +440,94 @@
 
 \centerline{\fig[16cm]{../../plots/\DataYear/apertures/a_vs_fill.pdf}}
 
+
+
+%====================================================================================================
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Determination of $\De x$ window}
+
+\SmallerFonts
+
+\> red fit $\rightarrow$ mean and sigma of $\De x$
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/de_x_fit_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Determination of $\De y$ window}
+
+\SmallerFonts
+
+\> red fit $\rightarrow$ mean and sigma of $\De y$
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/de_y_fit_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Definition of matching window}
+
+\SmallerFonts
+
+\> near and far local tracks match if: $|\De x - x_{\rm mean}| < n_\si x_{\rm sigma}$ AND $|\De y - y_{\rm mean}| < n_\si y_{\rm sigma}$
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/de_y_vs_de_x_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Comparison of $n_\si$ choices}
+
+\SmallerFonts
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/eff2_xi_cmp_n_si_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Comparison between proton multiplicities}
+
+\SmallerFonts
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/eff2_xi_cmp_n_exp_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Comparison between xangles}
+
+\SmallerFonts
+
+\centerline{\fig[,9.5cm]{../../plots/\DataYear/multi_rp_eff/eff2_xi_cmp_xangle_cmp_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Efficiency at low-$\xi$ vs.~fill}
+
+\SmallerFonts
+
+\centerline{\fig[16cm]{../../plots/\DataYear/multi_rp_eff/eff_xi_sample1_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Efficiency at mid-$\xi$ vs.~fill}
+
+\SmallerFonts
+
+\centerline{\fig[16cm]{../../plots/\DataYear/multi_rp_eff/eff_xi_sample2_vs_fill.pdf}}
+
+
+
+\newpage %-------------------------------------------------------------------------------------------
+\ctitle{Multi-RP efficiency}{Efficiency at high-$\xi$ vs.~fill}
+
+\SmallerFonts
+
+\centerline{\fig[16cm]{../../plots/\DataYear/multi_rp_eff/eff_xi_sample3_vs_fill.pdf}}
 
 
 \vfil
