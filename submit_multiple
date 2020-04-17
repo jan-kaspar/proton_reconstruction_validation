@@ -198,9 +198,19 @@ stream="ALL"
 version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ddb85bed16f
 # with GT 106X_dataRun2_v26
 run_reco="False"
+# this repo at 41deff6
+#Submit
+
+version="version-UL-devel-3"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at TODO
+# with GT 106X_dataRun2_v26
+run_reco="True"
+devel="True"
 # this repo at TODO
 Submit
 
@@ -262,11 +272,11 @@ stream="ALL"
 version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ddb85bed16f
 # with GT 106X_dataRun2_v26
 run_reco="False"
-# this repo at TODO
-Submit
+# this repo at 41deff6
+#Submit
 
 version="version-UL-EvCat-2"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
@@ -277,13 +287,24 @@ run_reco="True"
 # this repo at 25fc23f
 #Submit
 
-version="version-UL-retune-3" # 2017: discard BX-shifted tracks, add th*_y rule for near-far association cuts
+#version="version-UL-devel-1"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ddb85bed16f
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 41deff6
+##Submit
+
+version="version-UL-devel-2"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at b89c9969f6b
+# at 25debe6ab6b
 # with GT 106X_dataRun2_v26
 run_reco="True"
-# this repo at ???
+devel="True"
+# this repo at 0e9cd65
 #Submit
 
 #----------------------------------------------------------------------------------------------------
@@ -352,13 +373,13 @@ stream="ALL"
 version="version-UL-6"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ddb85bed16f
 # with GT 106X_dataRun2_v26
 run_reco="False"
-# this repo at TODO
-Submit
+# this repo at 41deff6
+#Submit
 
-version="version-UL-retune-1" # retuned D_y 
+version="version-UL-retune-Dy"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
 # at ???
@@ -367,12 +388,12 @@ run_reco="True"
 # this repo at ???
 #Submit
 
-version="version-UL-retune-2" # retuned alignment
+version="version-UL-devel-1"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ddb85bed16f
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at TODO
+# this repo at 41deff6
 #Submit
