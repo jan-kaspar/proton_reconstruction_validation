@@ -207,11 +207,11 @@ run_reco="False"
 version="version-UL-devel-3"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at ddebeee998c
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at TODO
+# this repo at b0f7183
 Submit
 
 #----------------------------------------------------------------------------------------------------
