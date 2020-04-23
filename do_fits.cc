@@ -185,7 +185,7 @@ TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 	// 2018 settings
 	if (rp ==  23) y_max_fit = 3.5;
 	if (rp ==   3) y_max_fit = 4.5;
-	if (rp == 103) y_max_fit = 5.5;
+	if (rp == 103) y_max_fit = 4.8;
 	if (rp == 123) y_max_fit = 4.8;
 
 	TGraphErrors *g_y_mode_vs_x = new TGraphErrors();
