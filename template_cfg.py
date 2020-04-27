@@ -121,6 +121,9 @@ process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstruc
   rpId_56_N = process.rpIds.rp_56_N,
   rpId_56_F = process.rpIds.rp_56_F,
 
+  association_cuts_45 = process.ctppsProtons.association_cuts_45,
+  association_cuts_56 = process.ctppsProtons.association_cuts_56,
+
   outputFile = cms.string("$output")
 )
 
@@ -176,21 +179,17 @@ process.ctppsProtonReconstructionEfficiencyEstimatorData.tagRecoProtonsMultiRP =
 
 process.ctppsProtonReconstructionEfficiencyEstimatorData.pixelDiscardBXShiftedTracks = process.ctppsProtons.pixelDiscardBXShiftedTracks
 
+process.ctppsProtonReconstructionEfficiencyEstimatorData.localAngleXMin = process.ctppsProtons.localAngleXMin
+process.ctppsProtonReconstructionEfficiencyEstimatorData.localAngleXMax = process.ctppsProtons.localAngleXMax
+process.ctppsProtonReconstructionEfficiencyEstimatorData.localAngleYMin = process.ctppsProtons.localAngleYMin
+process.ctppsProtonReconstructionEfficiencyEstimatorData.localAngleYMax = process.ctppsProtons.localAngleYMax
+
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_F = process.rpIds.rp_45_F
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_45_N = process.rpIds.rp_45_N
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_N = process.rpIds.rp_56_N
 process.ctppsProtonReconstructionEfficiencyEstimatorData.rpId_56_F = process.rpIds.rp_56_F
 
 process.ctppsProtonReconstructionEfficiencyEstimatorData.outputFile = "output_efficiency.root"
-
-# adjust reco - TODO: remove
-###   process.ctppsLocalTrackLiteProducer.pixelDiscardBXShiftedTracks = True
-###   
-###   process.ctppsProtons.association_cuts_45.th_y_cut_apply = True
-###   process.ctppsProtons.association_cuts_45.th_y_cut_value = 30E-6
-###   
-###   process.ctppsProtons.association_cuts_56.th_y_cut_apply = True
-###   process.ctppsProtons.association_cuts_56.th_y_cut_value = 30E-6
 
 # processing sequences
 if ($year == 2016):
