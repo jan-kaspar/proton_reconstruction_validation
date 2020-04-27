@@ -250,7 +250,7 @@ TGraphErrors* BuildModeGraph(const TH2D *h2_y_vs_x, unsigned int rp)
 		//printf("x = %.3f mm, %f/%i = %.2f\n", x, ff_fit->GetChisquare(), ff_fit->GetNDF(), ff_fit->GetChisquare() / ff_fit->GetNDF());
 
 		double y_mode = FindMax(ff_fit);
-		const double y_mode_fit_unc = ff_fit->GetParameter(2) / 10;
+		const double y_mode_fit_unc = ff_fit->GetParameter(2) / 10.;
 		const double y_mode_sys_unc = 0.030;
 		double y_mode_unc = sqrt(y_mode_fit_unc*y_mode_fit_unc + y_mode_sys_unc*y_mode_sys_unc);
 
@@ -438,8 +438,39 @@ int main(int argc, char **argv)
 
 		min_x[23] = 3.0; max_x[23] = 8.;
 		min_x[3] = 3.0; max_x[3] = 8.;
-		min_x[103] = 3.0; max_x[103] = 7.;
-		min_x[123] = 3.0; max_x[123] = 7.;
+		min_x[103] = 3.5; max_x[103] = 8.;
+		min_x[123] = 2.5; max_x[123] = 8.;
+	}
+
+	// process tracks
+	vector<unsigned int> rps;
+	if (fill <= 5451) // 2016
+		rps = { 2, 3, 102, 103 };
+	else
+		rps = { 23, 3, 103, 123 };
+
+	for (const auto &rp : rps)
+	{
+		printf("* processing tracks in RP %u\n", rp);
+
+		char buf[100];
+		sprintf(buf, "RP %u", rp);
+		gDirectory = f_out->mkdir(buf);
+
+		bool process = true;
+
+		sprintf(buf, "RP %u/h2_y_vs_x", rp);
+		TH2D *h2_y_vs_x = (TH2D *) Load(f_in_tracks, buf, process);
+
+		if (!process)
+			continue;
+
+		TGraphErrors *g_y_mode_vs_x = BuildModeGraph(h2_y_vs_x, rp);
+
+		ff_pol1->SetParameters(0., 0.);
+		g_y_mode_vs_x->Fit(ff_pol1, "Q", "", min_x[rp], max_x[rp]);
+
+		g_y_mode_vs_x->Write("g_y_mode_vs_x");
 	}
 
 	// process mu
@@ -557,37 +588,6 @@ int main(int argc, char **argv)
 	    gDirectory = arm_dir->mkdir(rec.dir.c_str());
 	    p->Write("p_xi_si_diffNF_vs_xi_mu");
 	  }
-	}
-
-	// process tracks
-	vector<unsigned int> rps;
-	if (fill <= 5451) // 2016
-		rps = { 2, 3, 102, 103 };
-	else
-		rps = { 23, 3, 103, 123 };
-
-	for (const auto &rp : rps)
-	{
-		printf("* processing tracks in RP %u\n", rp);
-
-		char buf[100];
-		sprintf(buf, "RP %u", rp);
-		gDirectory = f_out->mkdir(buf);
-
-		bool process = true;
-
-		sprintf(buf, "RP %u/h2_y_vs_x", rp);
-		TH2D *h2_y_vs_x = (TH2D *) Load(f_in_tracks, buf, process);
-
-		if (!process)
-			continue;
-
-		TGraphErrors *g_y_mode_vs_x = BuildModeGraph(h2_y_vs_x, rp);
-
-		ff_pol1->SetParameters(0., 0.);
-		g_y_mode_vs_x->Fit(ff_pol1, "Q", "", min_x[rp], max_x[rp]);
-
-		g_y_mode_vs_x->Write("g_y_mode_vs_x");
 	}
 
 	// clean up
