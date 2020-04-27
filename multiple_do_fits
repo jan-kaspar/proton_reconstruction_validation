@@ -46,7 +46,7 @@ do
 
 	for dir in `find $1 -type d`
 	do
-		if [ -f "$dir/output.root" ]
+		if [ -f "$dir/output_tracks.root" ]
 		then
 			input[$idx]="${input[$idx]} $dir"
 			idx=$(( (idx+1) % n_threads ))
