@@ -15,7 +15,12 @@ function SubmitOneDir()
 	beta=${buf%%_*}
 	beta=${beta#beta}
 
-	echo "* $fill, $xangle, $beta"
+	# TODO
+	cfg="${xangle}_${beta}"
+	#if [ "$cfg" != "160_0.30" -a "$cfg" != "130_0.30" ]; then return; fi
+	if [ "$xangle" != "150" -a "$xangle" != "120" ]; then return; fi
+
+	echo "  - $fill, $xangle, $beta"
 
 	# get input
 	input="process.source.fileNames.append(\"root://eoscms.cern.ch/${input_dir}/${tag}\")"
@@ -106,6 +111,8 @@ function SubmitOneDir()
 function Submit()
 {
 	top_dir="data/$year/$version"
+
+	echo "* $top_dir"
 
 	mkdir -p "$top_dir"
 
@@ -212,7 +219,7 @@ sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_1
 run_reco="True"
 devel="True"
 # this repo at b0f7183
-Submit
+#Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -297,15 +304,35 @@ run_reco="True"
 ## this repo at 41deff6
 ##Submit
 
-version="version-UL-devel-2"
+#version="version-UL-devel-2"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 25debe6ab6b
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 0e9cd65
+##Submit
+
+#version="version-UL-devel-7"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at TODO
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at TODO
+#Submit
+
+version="version-UL-devel-8"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 25debe6ab6b
+# at TODO
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at 0e9cd65
-#Submit
+# this repo at TODO
+Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -379,21 +406,61 @@ run_reco="False"
 # this repo at 41deff6
 #Submit
 
-version="version-UL-retune-Dy"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at ???
-# with GT 106X_dataRun2_v26
-run_reco="True"
-# this repo at ???
+#version="version-UL-retune-Dy"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ???
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+## this repo at ???
+##Submit
+
+#version="version-UL-devel-1"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ddb85bed16f
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 41deff6
+##Submit
+
+#version="version-UL-devel-4"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at bb9713b221a
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at c92cb1f
+##Submit
+
+#version="version-UL-devel-5"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 0115e0ad43a
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at b99221c
+##Submit
+
+#version="version-UL-devel-6"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 2c0dda32a5e
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 6d0ff88
 #Submit
 
-version="version-UL-devel-1"
+version="version-UL-devel-7"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at ddb85bed16f
+# at TODO
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at 41deff6
+# this repo at TODO
 #Submit
