@@ -430,11 +430,11 @@ int main(int argc, char **argv)
 		min_th_x[0] = 0.06; max_th_x[0] = 0.10;
 		min_th_x[1] = 0.08; max_th_x[1] = 0.13;
 
-		min_th_y[0] = 0.07; max_th_y[0] = 0.14;
-		min_th_y[1] = 0.07; max_th_y[1] = 0.14;
+		min_th_y[0] = 0.04; max_th_y[0] = 0.14;
+		min_th_y[1] = 0.04; max_th_y[1] = 0.14;
 
-		min_vtx_y[0] = 0.07; max_vtx_y[0] = 0.11;
-		min_vtx_y[1] = 0.06; max_vtx_y[1] = 0.17;
+		min_vtx_y[0] = 0.04; max_vtx_y[0] = 0.14;
+		min_vtx_y[1] = 0.04; max_vtx_y[1] = 0.14;
 
 		min_x[23] = 3.0; max_x[23] = 8.;
 		min_x[3] = 3.0; max_x[3] = 8.;
