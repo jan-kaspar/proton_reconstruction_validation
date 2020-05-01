@@ -16,9 +16,10 @@ function SubmitOneDir()
 	beta=${beta#beta}
 
 	# TODO
-	cfg="${xangle}_${beta}"
+	#cfg="${xangle}_${beta}"
+	#if [ "$fill" != "6617" -a "$fill" != "6738" -a "$fill" != "6923" -a "$fill" != "7039" -a "$fill" != "7137" -a "$fill" != "7315" ]; then return; fi
 	#if [ "$cfg" != "160_0.30" -a "$cfg" != "130_0.30" ]; then return; fi
-	if [ "$xangle" != "150" -a "$xangle" != "120" ]; then return; fi
+	#if [ "$xangle" != "150" -a "$xangle" != "120" ]; then return; fi
 
 	echo "  - $fill, $xangle, $beta"
 
@@ -211,15 +212,25 @@ run_reco="False"
 # this repo at 41deff6
 #Submit
 
-version="version-UL-devel-3"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+#version="version-UL-devel-3"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ddebeee998c
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at b0f7183
+##Submit
+
+version="version-UL-devel-9"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at ddebeee998c
+# at f6cec570e53
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at b0f7183
-#Submit
+# this repo at d60c783
+Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -317,21 +328,31 @@ run_reco="True"
 #version="version-UL-devel-7"
 #input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 #sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-## at TODO
+# at c78c4d60710: New optics candidate for 2017 and 2018.
 ## with GT 106X_dataRun2_v26
 #run_reco="True"
 #devel="True"
-## this repo at TODO
+## this repo at 516dfeb
 #Submit
 
-version="version-UL-devel-8"
+#version="version-UL-devel-8"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ef56b838c30
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 516dfeb
+##Submit
+
+version="version-UL-devel-9"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at f6cec570e53
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at TODO
+# this repo at d60c783
 Submit
 
 #----------------------------------------------------------------------------------------------------
@@ -455,12 +476,32 @@ run_reco="False"
 ## this repo at 6d0ff88
 #Submit
 
-version="version-UL-devel-7"
+#version="version-UL-devel-7"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at c78c4d60710: New optics candidate for 2017 and 2018.
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 516dfeb
+##Submit
+
+#version="version-UL-devel-8"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at ef56b838c30
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at 516dfeb
+##Submit
+
+version="version-UL-devel-9"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at TODO
+# at f6cec570e53
 # with GT 106X_dataRun2_v26
 run_reco="True"
 devel="True"
-# this repo at TODO
-#Submit
+# this repo at d60c783
+Submit
