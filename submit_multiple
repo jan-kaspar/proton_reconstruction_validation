@@ -15,15 +15,33 @@ function SubmitOneDir()
 	beta=${buf%%_*}
 	beta=${beta#beta}
 
-	# TODO
+	# optional selection
+	selected="n"
+
 	cfg="${xangle}_${beta}"
 
-	#if [ "$fill" != "5849" -a "$fill" != "6053" -a "$fill" != "6189" -a "$fill" != "6240" -a "$fill" != "6304" -a "$fill" != "6360" ]; then return; fi
-	#if [ "$xangle" != "150" -a "$xangle" != "120" ]; then return; fi
+	if [ "$year" == "2016" ]
+	then
+		if [ "$fill" == "4953" -o "$fill" == "5052" -o "$fill" == "5276" -o "$fill" == "5393" -o "$fill" == "5427" -o "$fill" == "5451" ]; then selected="y"; fi
+	fi
 
-	#if [ "$fill" != "6617" -a "$fill" != "6738" -a "$fill" != "6923" -a "$fill" != "7039" -a "$fill" != "7137" -a "$fill" != "7315" ]; then return; fi
-	#if [ "$cfg" != "160_0.30" -a "$cfg" != "130_0.30" ]; then return; fi
+	if [ "$year" == "2017" ]
+	then
+		if [ "$fill" == "5849" -o "$fill" == "6053" -o "$fill" == "6189" -o "$fill" == "6240" -o "$fill" == "6304" -o "$fill" == "6360" ]; then selected="y"; fi
+		if [ "$xangle" != "140" ]; then selected="n"; fi
+	fi
 
+	if [ "$year" == "2018" ]
+	then
+		if [ "$fill" == "6617" -o "$fill" == "6738" -o "$fill" == "6923" -o "$fill" == "7039" -o "$fill" == "7137" -o "$fill" == "7315" ]; then selected="y"; fi
+		if [ "$xangle" != "140" ]; then selected="n"; fi
+
+		#if [ "$cfg" == "160_0.30" -o "$cfg" == "130_0.30" ]; then return; fi
+	fi
+
+	#if [ "$selected" != "y" ]; then return; fi
+
+	# inform user
 	echo "  - $fill, $xangle, $beta"
 
 	# get input
@@ -35,18 +53,20 @@ function SubmitOneDir()
 	mkdir -p "$dir"
 
 	# clean work directory
-	rm -rf "$dir/submitted"
-	rm -rf "$dir/finished"
-	rm -rf "$dir/success"
-	rm -rf "$dir/output.root"
-	rm -rf "$dir/output_validation.root"
-	rm -rf "$dir/output_tracks.root"
-	rm -rf "$dir/output_lhcInfo.root"
-	rm -rf "$dir/output_optics.root"
-	rm -rf "$dir/output_categories.root"
-	rm -rf "$dir/output_efficiency.root"
-	rm -rf "$dir/log"
-	rm -rf "$dir/do_fits.root"
+	rm -f "$dir/submitted"
+	rm -f "$dir/finished"
+	rm -f "$dir/success"
+	rm -f "$dir/output.root"
+	rm -f "$dir/output_validation.root"
+	rm -f "$dir/output_tracks.root"
+	rm -f "$dir/output_lhcInfo.root"
+	rm -f "$dir/output_optics.root"
+	rm -f "$dir/output_categories.root"
+	rm -f "$dir/output_efficiency.root"
+	rm -f "$dir/log"
+	rm -f "$dir/out"
+	rm -f "$dir/err"
+	rm -f "$dir/do_fits.root"
 
 	full_dir="`pwd -P`/$dir"
 
@@ -235,6 +255,26 @@ run_reco="False"
 ## this repo at d60c783
 #Submit
 
+#version="version-UL-devel-11"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
+## at e5a7b68fbc7
+## with GT 106X_dataRun2_v26 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+#run_reco="True"
+#devel="True"
+## this repo at af8414c
+##Submit
+
+version="version-simu-cmp-1"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2016/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at TODO
+# with GT 106X_dataRun2_v28 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+run_reco="True"
+devel="True"
+# this repo at TODO
+#Submit
+
 #----------------------------------------------------------------------------------------------------
 
 year="2017"
@@ -299,15 +339,6 @@ run_reco="False"
 # this repo at 41deff6
 #Submit
 
-version="version-UL-EvCat-2"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at 28664d700be
-# with GT 106X_dataRun2_v26
-run_reco="True"
-# this repo at 25fc23f
-#Submit
-
 #version="version-UL-devel-1"
 #input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 #sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
@@ -348,25 +379,74 @@ run_reco="True"
 ## this repo at 516dfeb
 ##Submit
 
-version="version-UL-devel-9"
-input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
-# at f6cec570e53
-# with GT 106X_dataRun2_v26
-run_reco="True"
-devel="True"
-# this repo at d60c783
+#version="version-UL-devel-9"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at f6cec570e53
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at d60c783
+##Submit
+
+#version="version-UL-devel-10"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at TODO
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+#devel="True"
+## this repo at TODO
 #Submit
 
-version="version-UL-devel-10"
+#version="version-UL-devel-11"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
+## at e5a7b68fbc7
+## with GT 106X_dataRun2_v26 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+#run_reco="True"
+#devel="True"
+## this repo at af8414c
+##Submit
+
+#version="version-UL-devel-12"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
+## at da559594d4b
+## with GT 106X_dataRun2_v26 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+#run_reco="True"
+#devel="True"
+## this repo at af8414c
+##Submit
+
+version="version-simu-cmp-1"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
 sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
 # at TODO
-# with GT 106X_dataRun2_v26
+# with GT 106X_dataRun2_v28 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
 run_reco="True"
 devel="True"
 # this repo at TODO
-Submit
+#Submit
+
+#version="version-UL-EvCat-2"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+## at 28664d700be
+## with GT 106X_dataRun2_v26
+#run_reco="True"
+## this repo at 25fc23f
+##Submit
+
+version="version-UL-EvCat-3"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2017/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_event_cat/CMSSW_10_6_13/src"
+# at 3a19d0734fc
+# with 106X_dataRun2_v28
+run_reco="True"
+# this repo at 7d1864f
+max_events="100000000"
+#Submit
 
 #----------------------------------------------------------------------------------------------------
 
@@ -529,12 +609,42 @@ run_reco="False"
 ## this repo at TODO
 ##Submit
 
-version="version-UL-devel-11"
+#version="version-UL-devel-11"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
+## at e5a7b68fbc7
+## with GT 106X_dataRun2_v26 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+#run_reco="True"
+#devel="True"
+## this repo at af8414c
+##Submit
+
+#version="version-UL-devel-12"
+#input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+#sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
+## at da559594d4b
+## with GT 106X_dataRun2_v26 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+#run_reco="True"
+#devel="True"
+## this repo at af8414c
+##Submit
+
+version="version-UL-devel-13"
 input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
-sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_re_miniaod_10_6/CMSSW_10_6_12/src"
-# at 18fa2b3e45b
-# with GT 106X_dataRun2_v26
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/pps_event_cat/CMSSW_10_6_13/src"
+# at 3a19d0734fc
+# with GT 106X_dataRun2_v28 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
 run_reco="True"
 devel="True"
 # this repo at TODO
 Submit
+
+version="version-simu-cmp-1"
+input_dir="/eos/cms/store/group/phys_pps/reconstruction/2018/physics_runs/version-UL-2"
+sw_dir="/afs/cern.ch/work/j/jkaspar/work/software/ctpps/development/jan_buffer_10_6/CMSSW_10_6_11_CANDIDATE2/src"
+# at TODO
+# with GT 106X_dataRun2_v28 + CTPPSRPAlignment_real_offline_v8 + PPSOpticalFunctions_offline_v7
+run_reco="True"
+devel="True"
+# this repo at TODO
+#Submit

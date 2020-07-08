@@ -35,49 +35,33 @@ process.maxEvents = cms.untracked.PSet(
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
-process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v26")
-
-# get optics from a DB tag
-###   from CondCore.CondDB.CondDB_cfi import *
-###   process.CondDBOptics = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
-###   process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
-###       process.CondDBOptics,
-###       DumpStat = cms.untracked.bool(False),
-###       toGet = cms.VPSet(cms.PSet(
-###           record = cms.string('CTPPSOpticsRcd'),
-###           tag = cms.string("PPSOpticalFunctions_offline_v2")
-###       )),
-###   )
-###
-###   process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
-
-# get alignment from SQLite file
-###   from CondCore.CondDB.CondDB_cfi import *
-###   process.CondDBAlignment = CondDB.clone( connect = 'sqlite_file:/afs/cern.ch/user/c/cmora/public/CTPPSDB/AlignmentSQlite/CTPPSRPRealAlignment_table_v26Apr.db' )
-###   process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
-###       process.CondDBAlignment,
-###       #timetype = cms.untracked.string('runnumber'),
-###       toGet = cms.VPSet(cms.PSet(
-###           record = cms.string('RPRealAlignmentRecord'),
-###           tag = cms.string('CTPPSRPAlignment_real_table_v26A19')
-###       ))
-###   )
-###
-###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v28")
 
 # get alignment from a DB tag
-###   from CondCore.CondDB.CondDB_cfi import *
-###   process.CondDBAlignment = CondDB.clone( connect = 'frontier://FrontierProd/CMS_CONDITIONS' )
-###   process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
-###       process.CondDBAlignment,
-###       #timetype = cms.untracked.string('runnumber'),
-###       toGet = cms.VPSet(cms.PSet(
-###           record = cms.string('RPRealAlignmentRecord'),
-###           tag = cms.string('CTPPSRPAlignment_real_offline_v1')
-###       ))
-###   )
-###
-###   process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+from CondCore.CondDB.CondDB_cfi import *
+process.CondDBAlignment = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
+process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+  process.CondDBAlignment,
+  toGet = cms.VPSet(cms.PSet(
+    record = cms.string("RPRealAlignmentRecord"),
+    tag = cms.string("CTPPSRPAlignment_real_offline_v8")
+  ))
+)
+
+process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+
+# get optics from a DB tag
+from CondCore.CondDB.CondDB_cfi import *
+process.CondDBOptics = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
+process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
+  process.CondDBOptics,
+  toGet = cms.VPSet(cms.PSet(
+    record = cms.string("CTPPSOpticsRcd"),
+    tag = cms.string("PPSOpticalFunctions_offline_v7")
+  )),
+)
+
+process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
 
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
@@ -158,19 +142,19 @@ process.ctppsOpticsPlotter = cms.EDAnalyzer("CTPPSOpticsPlotter",
 )
 
 # event category plotter
-process.ctppsEventCategoryPlotter = cms.EDAnalyzer("CTPPSEventCategoryPlotter",
-  tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
-  tagStripHits = cms.InputTag("totemRPRecHitProducer"),
-  tagStripPatterns = cms.InputTag("totemRPUVPatternFinder"),
-  tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
-
-  rpId_45_F = process.rpIds.rp_45_F,
-  rpId_45_N = process.rpIds.rp_45_N,
-  rpId_56_N = process.rpIds.rp_56_N,
-  rpId_56_F = process.rpIds.rp_56_F,
-
-  outputFile = cms.string("output_categories.root")
-)
+###   process.ctppsEventCategoryPlotter = cms.EDAnalyzer("CTPPSEventCategoryPlotter",
+###     tagTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
+###     tagStripHits = cms.InputTag("totemRPRecHitProducer"),
+###     tagStripPatterns = cms.InputTag("totemRPUVPatternFinder"),
+###     tagRecoProtonsMultiRP = cms.InputTag("ctppsProtons", "multiRP"),
+###   
+###     rpId_45_F = process.rpIds.rp_45_F,
+###     rpId_45_N = process.rpIds.rp_45_N,
+###     rpId_56_N = process.rpIds.rp_56_N,
+###     rpId_56_F = process.rpIds.rp_56_F,
+###   
+###     outputFile = cms.string("output_categories.root")
+###   )
 
 # efficiency estimation
 process.load("Validation.CTPPS.ctppsProtonReconstructionEfficiencyEstimatorData_cfi")
@@ -212,7 +196,7 @@ process.seq_reco_glb = cms.Sequence(
     process.ctppsLocalTrackLiteProducer
     * process.ctppsProtons
 
-    * process.ctppsEventCategoryPlotter
+    #* process.ctppsEventCategoryPlotter
 )
 
 process.seq_anal = cms.Sequence(
