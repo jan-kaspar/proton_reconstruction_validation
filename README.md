@@ -7,3 +7,7 @@
 1) Run `./submit` with desired options, minimally `./submit -o some_version_tag`. This will generate jobs under `data/some_version_tag`.
 
 1) Review the generated configs if you like. Use the HTCondor command printed on screen to submit the jobs.
+
+1) Make sure that all jobs finished successfully - each directory should contain `success` file.
+
+1) Run `./do_fits_multiple <data/some_version_tag>`.
