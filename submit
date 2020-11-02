@@ -103,7 +103,7 @@ function SubmitOne()
 
 	# make job
 	cat "template_job" | sed "\
-			s|\$sw_dir|$sw_dir|g;\
+			s|\$sw_dir|$CMSSW_BASE|g;\
 			s|\$job_dir|$full_dir|g;\
 		" > "$dir/job"
 	chmod u+x "$dir/job"
