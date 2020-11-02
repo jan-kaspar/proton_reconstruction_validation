@@ -1,5 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.StandardSequences.Eras import eras
+from Configuration.ProcessModifiers.run2_miniAOD_UL_cff import run2_miniAOD_UL
 
 process = cms.Process("CTPPSTestProtonReconstruction", $era_modifiers)
 
@@ -28,40 +29,39 @@ process.source.lumisToProcess.extend(myLumis)
 
 # number of events to process
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32($max_events)
+  input = cms.untracked.int32(int($max_events))
 )
 
 # declare global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-#process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_testPPS_v1")
-process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v28")
+process.GlobalTag = GlobalTag(process.GlobalTag, "106X_dataRun2_v29")
 
 # get alignment from a DB tag
-from CondCore.CondDB.CondDB_cfi import *
-process.CondDBAlignment = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
-process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
-  process.CondDBAlignment,
-  toGet = cms.VPSet(cms.PSet(
-    record = cms.string("RPRealAlignmentRecord"),
-    tag = cms.string("CTPPSRPAlignment_real_offline_v8")
-  ))
-)
-
-process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
+#from CondCore.CondDB.CondDB_cfi import *
+#process.CondDBAlignment = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
+#process.PoolDBESSourceAlignment = cms.ESSource("PoolDBESSource",
+#  process.CondDBAlignment,
+#  toGet = cms.VPSet(cms.PSet(
+#    record = cms.string("RPRealAlignmentRecord"),
+#    tag = cms.string("CTPPSRPAlignment_real_offline_v8")
+#  ))
+#)
+#
+#process.esPreferDBFileAlignment = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceAlignment")
 
 # get optics from a DB tag
-from CondCore.CondDB.CondDB_cfi import *
-process.CondDBOptics = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
-process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
-  process.CondDBOptics,
-  toGet = cms.VPSet(cms.PSet(
-    record = cms.string("CTPPSOpticsRcd"),
-    tag = cms.string("PPSOpticalFunctions_offline_v7")
-  )),
-)
-
-process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
+#from CondCore.CondDB.CondDB_cfi import *
+#process.CondDBOptics = CondDB.clone(connect = "frontier://FrontierProd/CMS_CONDITIONS")
+#process.PoolDBESSourceOptics = cms.ESSource("PoolDBESSource",
+#  process.CondDBOptics,
+#  toGet = cms.VPSet(cms.PSet(
+#    record = cms.string("CTPPSOpticsRcd"),
+#    tag = cms.string("PPSOpticalFunctions_offline_v7")
+#  )),
+#)
+#
+#process.esPreferDBFileOptics = cms.ESPrefer("PoolDBESSource", "PoolDBESSourceOptics")
 
 # local RP reconstruction chain with standard settings
 process.load("RecoCTPPS.Configuration.recoCTPPS_cff")
@@ -108,7 +108,7 @@ process.ctppsProtonReconstructionPlotter = cms.EDAnalyzer("CTPPSProtonReconstruc
   association_cuts_45 = process.ctppsProtons.association_cuts_45,
   association_cuts_56 = process.ctppsProtons.association_cuts_56,
 
-  outputFile = cms.string("$output")
+  outputFile = cms.string("output.root")
 )
 
 # track distribution plotter

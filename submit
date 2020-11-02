@@ -1,0 +1,308 @@
+#!/bin/bash
+
+function SubmitOne()
+{
+	local buf="$tag"
+
+	fill=${buf#fill}
+	fill=${fill%%_*}
+
+	buf=${buf#*_}
+	xangle=${buf%%_*}
+	xangle=${xangle#xangle}
+
+	buf=${buf#*_}
+	beta=${buf%%_*}
+	beta=${beta#beta}
+
+	# optional selection
+	selected="n"
+
+	cfg="${xangle}_${beta}"
+
+	if [ "$year" == "2016" ]
+	then
+		if [ "$fill" == "4953" -o "$fill" == "5052" -o "$fill" == "5276" -o "$fill" == "5393" -o "$fill" == "5427" -o "$fill" == "5451" ]; then selected="y"; fi
+	fi
+
+	if [ "$year" == "2017" ]
+	then
+		if [ "$fill" == "5849" -o "$fill" == "6053" -o "$fill" == "6189" -o "$fill" == "6240" -o "$fill" == "6304" -o "$fill" == "6360" ]; then selected="y"; fi
+		if [ "$xangle" != "140" ]; then selected="n"; fi
+	fi
+
+	if [ "$year" == "2018" ]
+	then
+		if [ "$fill" == "6617" -o "$fill" == "6738" -o "$fill" == "6923" -o "$fill" == "7039" -o "$fill" == "7137" -o "$fill" == "7315" ]; then selected="y"; fi
+		#if [ "$xangle" != "140" ]; then selected="n"; fi
+
+		#if [ "$cfg" == "160_0.30" -o "$cfg" == "130_0.30" ]; then return; fi
+	fi
+
+	#if [ "$selected" != "y" ]; then return; fi
+
+	# inform user
+	echo "  - $year, $fill, $xangle, $beta"
+
+	# make work directory
+	subdir="fill_$fill/xangle_${xangle}_beta_${beta}_stream_${stream}"
+	dir="$top_dir/$subdir"
+	mkdir -p "$dir"
+
+	# clean work directory
+	rm -f "$dir/submitted"
+	rm -f "$dir/finished"
+	rm -f "$dir/success"
+	rm -f "$dir/output.root"
+	rm -f "$dir/output_validation.root"
+	rm -f "$dir/output_tracks.root"
+	rm -f "$dir/output_lhcInfo.root"
+	rm -f "$dir/output_optics.root"
+	rm -f "$dir/output_categories.root"
+	rm -f "$dir/output_efficiency.root"
+	rm -f "$dir/log"
+	rm -f "$dir/out"
+	rm -f "$dir/err"
+	rm -f "$dir/do_fits.root"
+
+	full_dir="`pwd -P`/$dir"
+
+	# compile list of era modifiers
+	era_modifiers="eras.Run2_$year"
+	if [ "$re_mini" == "True" ]
+	then
+		era_modifiers="$era_modifiers, run2_miniAOD_UL"
+	fi
+
+	# make config
+	cat "template_cfg.py" | sed -e "\
+			s|\$year|$year|g;\
+			s|\$fill|$fill|g;\
+			s|\$xangle|$xangle|g;\
+			s|\$beta|$beta|g;\
+			s|\$run_reco|$run_reco|g;\
+			s|\$max_events|$max_events|g;\
+			s|\$json_file|selection.json|g;\
+			s|\$era_modifiers|$era_modifiers|g;\
+		" > "$dir/cfg.py"
+
+	# make config with input files
+	(
+		echo "import FWCore.ParameterSet.Config as cms"
+		echo ""
+		echo "input_files = cms.untracked.vstring("
+
+		search="fill${fill}_xangle${xangle}_beta${beta}"
+		for f_in in `eos ls "$input_dir"|grep ".root"|grep "$search"`
+		do
+			echo "    \"root://eostotem.cern.ch/${input_dir}/${f_in}\","
+		done
+
+		echo ")"
+	) > "$dir/input_files.py"
+
+	# make job
+	cat "template_job" | sed "\
+			s|\$sw_dir|$sw_dir|g;\
+			s|\$job_dir|$full_dir|g;\
+		" > "$dir/job"
+	chmod u+x "$dir/job"
+
+	# copy json file
+	cp "json/cms_pps_$year.json" "$dir/selection.json"
+
+	# add submission line
+	(
+		echo ""
+		echo "dir=data/$version/$period/$subdir"
+		echo "queue"
+	) >> "$condor_file_sub"
+}
+
+#----------------------------------------------------------------------------------------------------
+# defaults
+
+input="/eos/cms/store/group/phys_pps/reconstruction/<PERIOD>/physics_runs/version-UL-2"
+periods="2016,2017,2018"
+run_reco="True"
+re_mini="True"
+max_events="4E6"
+version=""
+
+#----------------------------------------------------------------------------------------------------
+
+function PrintUsage()
+{
+	echo "USAGE: $0 <option> <option> ..."
+	echo "OPTIONS:"
+	echo "    -i <string>        input directory (default: $input)"
+	echo "    -p <string>        comma-separated list of periods (default: '$periods')"
+	echo "    -reco <bool>       whether reconstruction should be run (default: $run_reco)"
+	echo "    -re-mini <bool>    whether re-miniAOD settings should be applied (default: $re_mini)"
+	echo "    -events <int>      set maximum number of events (default: $max_events)"
+	echo "    -o <string>        output/version directory (default: '$version')"
+}
+
+#----------------------------------------------------------------------------------------------------
+# parse command line
+
+while [ -n "$1" ]
+do
+	case "$1" in
+		"-h" | "--help")
+			PrintUsage
+			exit 1
+			;;
+
+		"-p")
+			shift
+			periods="$1"
+			;;
+
+		"-reco")
+			shift
+			run_reco="$1"
+			;;
+
+		"-re-mini")
+			shift
+			re_mini="$1"
+			;;
+
+		"-events")
+			shift
+			max_events="$1"
+			;;
+
+		"-o")
+			shift
+			version="$1"
+			;;
+
+		*)
+			echo "ERROR: parameter '$1' not understood"
+			PrintUsage
+			exit 2
+		;;
+	esac
+
+	shift
+done
+
+# input check
+if [ -z "$version" ]
+then
+	echo "ERROR: version not given"
+	PrintUsage
+	exit 3
+fi
+
+if [ -d "data/$version" ]
+then
+	echo "ERROR: directory 'data/$version' already exists"
+	exit 4
+fi
+
+#----------------------------------------------------------------------------------------------------
+
+# make version directory
+mkdir -p "data/$version"
+
+# make info file
+(
+	echo "DATE:"
+	date
+
+	cd $CMSSW_BASE/src
+
+	echo ""
+	echo "--------------------------------------------------"
+
+	echo ""
+	echo "CMSSW base: $CMSSW_BASE"
+
+	echo ""
+	echo "CMSSW history:"
+	git log --oneline|head -n 3
+
+	echo ""
+	echo "CMSSW status:"
+	git st
+
+	echo ""
+	echo "--------------------------------------------------"
+
+	cd - &> /dev/null
+
+	echo ""
+	echo "This repo at:"
+	git log --oneline|head -n 3
+
+	echo ""
+	echo "This repo history:"
+	git st
+
+	echo ""
+	echo "--------------------------------------------------"
+	echo ""
+	echo "Conditions:"
+	cat "template_cfg.py" | grep "process.GlobalTag"
+	cat "template_cfg.py" | grep "CTPPSRPAlignment_real"
+	cat "template_cfg.py" | grep "PPSOpticalFunctions_"
+
+) > "data/$version/info"
+
+# initiate submission script
+condor_file_sub="data/$version/condor.sub"
+
+(
+	base_dir_full="$(pwd)"
+	echo "executable = $base_dir_full/\$(dir)/job"
+	echo "arguments = \$(ClusterId) \$(ProcId) \\\"\$(dir)\\\""
+	echo "output = $base_dir_full/\$(dir)/out"
+	echo "error = $base_dir_full/\$(dir)/err"
+	echo "log = $base_dir_full/data/$version/condor.log"
+
+	echo "+MaxRuntime = 10800"
+	#echo "+JobBatchName = \"$job_name\""
+	#echo "requirements = (OpSysAndVer =?= \"SLCern6\")"
+	echo "requirements = (OpSysAndVer =?= \"CentOS7\")"
+
+) > "$condor_file_sub"
+
+#----------------------------------------------------------------------------------------------------
+# make per-period directories
+
+while [ -n "$periods" ]
+do
+	period="${periods%%,*}"
+
+	echo "* $period"
+
+	periods_new=${periods#*,}
+	if [ "$periods_new" == "$periods" ]
+	then
+		periods=""
+	else
+		periods="$periods_new"
+	fi
+
+	# compile input directory name
+	input_dir="${input/<PERIOD>/$period}"
+
+	# loop over files for the period
+	top_dir="data/$version/$period"
+	year="$period"
+	stream="ALL"
+	for tag in `eos ls "$input_dir"|grep .root|sed "s/_[a-zA-Z]*\.root//"|sort|uniq`
+	do
+		SubmitOne
+	done
+done
+
+#----------------------------------------------------------------------------------------------------
+# print submit instructions
+
+echo "In order to submit do:"
+echo "    condor_submit \"$condor_file_sub"\"
+#condor_submit "$condor_file_sub"
