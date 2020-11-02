@@ -3,7 +3,9 @@
 *.pdf
 
 data
-
-jkaspar.cc
+debug
 
 do_fits
+grant_permission
+jkaspar.cc
+run_multiple
