@@ -13,3 +13,13 @@
 `./wd_control -wd data/some_version_tag -s failed resubmit`. Run `./wd_control --help` for more options.
 
 1) Run `./do_fits_multiple <data/some_version_tag>`.
+
+1) If you have the Asymptote package, you can build the standar plots by:
+  * going to `plots` directory
+  * edditing the `settings_*.asy` files to use the `some_version_tag` version.
+  * and running `./make_links`
+  * and running `./make_multiple 2016 2017 2018`
+
+1) Eventually, the standard "reports" can be produced by:
+  * going to the `summaries` directory
+  * and running `./make_multiple 2016 2017 2018`

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+while [ -n "$1" ]
+do
+	echo "--- $1 ---"
+
+	cd "$1"
+
+	pdftex -fmt=encpdftex -interaction=batchmode "proton_reconstruction_$1.tex"
+
+	cd - &> /dev/null
+
+	shift
+done
