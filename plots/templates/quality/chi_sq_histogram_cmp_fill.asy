@@ -12,7 +12,7 @@ NewPad(false);
 AddToLegend("year: " + year);
 AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
-AddToLegend("xangle: " + beta);
+AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
 AttachLegend();
 
@@ -34,7 +34,7 @@ for (int fi : fills_short.keys)
 		NewPad("$\log_{10}(\ch^2)$");
 		//scale(Linear, Log);
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "multiRPPlots/arm" + arms[ai] + "/h_log_chi_sq";
 
 		RootObject hist = RootGetObject(f, on, error=false);

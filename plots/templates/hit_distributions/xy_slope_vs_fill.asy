@@ -46,20 +46,20 @@ for (int rpi : rps.keys)
 			if (!f_y_mode_vs_x.valid)
 				continue;
 
-			real i = f_y_mode_vs_x.rExec("GetParameter", 0);
-			real i_unc = f_y_mode_vs_x.rExec("GetParError", 0);
+			real s = f_y_mode_vs_x.rExec("GetParameter", 1);
+			real s_unc = f_y_mode_vs_x.rExec("GetParError", 1);
 		
 			mark m = mCi+3pt;
 
 			real x = fi;
-			draw((x, i), m+p);
-			draw((x, i - i_unc)--(x, i + i_unc), p);
+			draw((x, s), m+p);
+			draw((x, s - s_unc)--(x, s + s_unc), p);
 		}
 	}
 
-	DrawFillMarkers(-1, +1);
+	DrawFillMarkers(0.1, 0.5);
 
-	limits((-1, -1), (fills.length, +1), Crop);
+	limits((-1, 0.1), (fills.length, 0.5), Crop);
 }
 
 GShipout(hSkip=0mm, vSkip=0mm);

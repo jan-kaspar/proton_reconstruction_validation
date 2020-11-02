@@ -6,7 +6,7 @@ xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
 
-yTicksDef = RightTicks(100., 50.);
+//yTicksDef = RightTicks(10., 5.);
 
 //----------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,8 @@ for (int ai : arms.keys)
 
 	NewPadLabel(a_labels[ai]);
 
-	NewPad("fill", "RMS of $y^*\ung{\mu m}$");
+	NewPad("fill", "fraction of invalid multi-RP protons");
+	scale(Linear, Log);
 
 	for (int vi : versions.keys)
 	{
@@ -46,34 +47,35 @@ for (int ai : arms.keys)
 			for (int fi : fills.keys)
 			{
 				string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
-					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
-				string on = "multiRPPlots/arm" + arms[ai] + "/g_vtx_y_RMS_vs_xi|ff_pol1";
+					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
+				string on = "multiRPPlots/arm" + arms[ai] + "/h_valid";
 			
-				RootObject fit = RootGetObject(f, on, error=false);
-				if (!fit.valid)
+				RootObject hist = RootGetObject(f, on, error=false);
+				if (!hist.valid)
 					continue;
+
+				int bin_0 = hist.iExec("FindBin", 0.);
+				real n_0 = hist.rExec("GetBinContent", bin_0);
+
+				int bin_1 = hist.iExec("FindBin", 1.);
+				real n_1 = hist.rExec("GetBinContent", bin_1);
 			
-				real x_min = fit.rExec("GetXmin");
-				real x_max = fit.rExec("GetXmax");
+				real n = n_0 + n_1;
 
-				real f_min = fit.rExec("Eval", x_min);
-				real f_max = fit.rExec("Eval", x_max);
+				if (n <= 0. || n_0 <= 0.)
+					continue;
 
-				real d = (f_max + f_min)/2 * 1e4;
-				real d_unc = abs(f_max - f_min)/2 * 1e4;
+				real frac = n_0 / n;
 
 				real x = fi;
-				draw((x, d), m+p);
-				draw((x, d-d_unc)--(x, d+d_unc), p);
+				draw(Scale((x, frac)), m+p);
 			}
 		}
 	}
 
-	DrawFillMarkers(0, +500);
+	DrawFillMarkers(-8, 0);
 
-	limits((-1, 0.), (fills.length, +500.), Crop);
-
-	xaxis(YEquals(0., false), dashed);
+	limits((-1, 1e-8), (fills.length, 1e0), Crop);
 }
 
 GShipout(hSkip=0mm, vSkip=0mm);

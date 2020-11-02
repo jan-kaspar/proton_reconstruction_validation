@@ -12,8 +12,11 @@ NewPad(false);
 AddToLegend("year: " + year);
 AddToLegend("version: " + version);
 AddToLegend("stream: " + stream);
-AddToLegend("xangle: " + xangle);
 AddToLegend("beta: " + beta);
+
+for (int xai : xangles_short.keys)
+	AddToLegend("xangle = " + xangles_short[xai], xa_pens[xai]);
+
 AttachLegend();
 
 //----------------------------------------------------------------------------------------------------
@@ -33,18 +36,31 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "mean of $\th^*_y\ung{\mu rad}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
-		string on = "multiRPPlots/arm" + arms[ai] + "/p_th_y_vs_xi";
+		for (int xai : xangles_short.keys)
+		{
+			string xangle = xangles_short[xai];
+			pen p = xa_pens[xai];
 
-		RootObject hist = RootGetObject(f, on, error=false);
-		RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);
-		if (!hist.valid)
-			continue;
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
+			string on = "multiRPPlots/arm" + arms[ai] + "/p_th_y_vs_xi";
 
-		draw(scale(1., 1e6), hist, "d0,eb", blue);
-		draw(scale(1., 1e6), fit, "def", red+1pt);
+			RootObject hist = RootGetObject(f, on, error=false);
+			RootObject fit = RootGetObject(f, on + "|ff_pol1", error=false);
+			if (!hist.valid)
+				continue;
+
+			draw(scale(1., 1e6), hist, "d0,eb", p);
+
+			if (fit.valid)
+			{
+				string l = format("slope = %#.3f", fit.rExec("GetParameter", 1) * 1e6);
+				draw(scale(1., 1e6), fit, "def", p+1pt);
+			}
+		}
 
 		limits((0.00, -300), (0.25, +300), Crop);
+
+		AttachLegend();
 	}
 }
 

@@ -36,7 +36,7 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$x_F - x_N\ung{mm}$", "$y_F - y_N\ung{mm}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output_efficiency.root";
 
 		string base = "arm " + arms[ai];

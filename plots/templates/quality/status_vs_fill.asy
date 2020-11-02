@@ -43,7 +43,7 @@ for (int xai : xangles.keys)
 
 	for (int fi : fills.keys)
 	{
-		string dir = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream;
+		string dir = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream;
 		file f_submitted = input(dir + "/submitted", check=false);
 		file f_success = input(dir + "/success", check=false);
 	

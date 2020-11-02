@@ -31,18 +31,24 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "$y^*\ung{\mu m}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
-			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
-		string on = "multiRPPlots/arm" + arms[ai] + "/h2_vtx_y_vs_xi";
+		string dir = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
-		RootObject obj = RootGetObject(f, on, error=false);
-		if (!obj.valid)
+		string base = "multiRPPlots/arm" + arms[ai];
+
+		RootObject hist = RootGetObject(dir + "/output.root", base + "/h2_vtx_y_vs_xi", error=false);
+		RootObject prof = RootGetObject(dir + "/do_fits.root", base + "/p_vtx_y_vs_xi", error=false);
+
+		if (!hist.valid)
 			continue;
 
 		if (rebin)
-			obj.vExec("Rebin2D", 2, 2);
+			hist.vExec("Rebin2D", 2, 2);
 
-		draw(scale(1., 1e4), obj);
+		draw(scale(1., 1e4), hist);
+
+		if (prof.valid)
+			draw(scale(1., 1e4), prof, "vl", black);
 
 		limits((0.00, -1000), (0.25, +1000), Crop);
 	}

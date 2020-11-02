@@ -38,18 +38,21 @@ for (int ai : arms.keys)
 
 		for (int fi : fills.keys)
 		{
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
 			string on = "multiRPPlots/arm" + arms[ai] + "/h_time";
 		
 			RootObject hist = RootGetObject(f, on, error=false);
 			if (!hist.valid)
 				continue;
+
+			int bins = hist.iExec("GetNbinsX");
 		
-			real entries = hist.rExec("GetEntries");
+			// entries without under- and over-flow
+			real entries = hist.rExec("GetEntries") - hist.rExec("GetBinContent", 0) - hist.rExec("GetBinContent", bins);
 
 			real mean = hist.rExec("GetMean");
 
-			mark m = mCi+3pt;
+			mark m = (entries > 0) ? mCi+3pt : mCr + 5pt;
 
 			real x = fi;
 			draw((x, mean), m+p);

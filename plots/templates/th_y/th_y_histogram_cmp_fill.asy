@@ -2,7 +2,7 @@ import root;
 import pad_layout;
 include "../settings.asy";
 
-xTicksDef = LeftTicks(500., 100.);
+xTicksDef = LeftTicks(100., 50.);
 
 //----------------------------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ for (int fi : fills_short.keys)
 		{
 			string xangle = xangles_short[xai];
 
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 			string on = "multiRPPlots/arm" + arms[ai] + "/h_th_y";
 			
@@ -50,7 +50,7 @@ for (int fi : fills_short.keys)
 			draw(scale(1e6, 1), hist, "vl", xa_pens[xai]);
 		}
 
-		xlimits(-200., +1000., Crop);
+		xlimits(-300., +300., Crop);
 	}
 }
 

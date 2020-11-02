@@ -39,7 +39,7 @@ for (int fi : fills_short.keys)
 		NewPad("$x_N\ung{mm}$", "$y_F - y_N\ung{mm}$");
 		//scale(Linear, Linear, Log);
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_tracks = d + "/output_tracks.root";
 		RootObject h2_de_y_vs_x = RootGetObject(f_tracks, "arm " + arms[ai] + "/h2_de_y_vs_x", error=false);

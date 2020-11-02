@@ -43,7 +43,7 @@ for (int fi : fills_short.keys)
 		{
 			xangle = xangles[xai];
 
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + xangle
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + xangle
 				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output_efficiency.root";
 
 			string base = "arm " + arms[ai];

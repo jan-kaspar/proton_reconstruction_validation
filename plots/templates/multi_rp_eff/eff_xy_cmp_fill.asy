@@ -3,8 +3,6 @@ import pad_layout;
 include "../settings.asy";
 include "eff_common.asy";
 
-xTicksDef = LeftTicks(0.05, 0.01);
-
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
@@ -15,9 +13,7 @@ AddToLegend("beta: " + beta);
 
 AddToLegend("exp. protons: " + n_exp);
 AddToLegend("n sigma: " + n_sigma);
-
-for (int vi : versions.keys)
-	AddToLegend(versions[vi], StdPen(vi + 1));
+AddToLegend("version: " + version);
 
 AttachLegend();
 
@@ -36,28 +32,24 @@ for (int fi : fills_short.keys)
 
 	for (int ai : arms.keys)
 	{
-		NewPad("$\xi_{si,N}$", "efficiency");
+		NewPad("$x_N\ung{mm}$", "$y_N\ung{mm}$");
 
 		string base = "arm " + arms[ai];
 		
-		for (int vi : versions.keys)
-		{
-			version = versions[vi];
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output_efficiency.root";
 
-			pen p = StdPen(vi + 1);
+		RootObject prof = RootGetObject(f, base + "/exp prot " + n_exp + "/nsi = " + n_sigma + "/p_eff" + method + "_vs_x_N_y_N", error=false);
 
-			string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
-				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output_efficiency.root";
+		if (!prof.valid)
+			continue;
 
-			RootObject hist = RootGetObject(f, base + "/exp prot " + n_exp + "/nsi = " + n_sigma + "/p_eff" + method + "_vs_xi_N", error=false);
+		TH2_z_min = 0.5;
+		TH2_z_max = 1.0;
 
-			if (!hist.valid)
-				continue;
+		draw(prof);
 
-			draw(hist, "vl,eb", p);
-		}
-
-		limits((0, 0), (0.25, 1.1), Crop);
+		limits((0, -15), (25., +15.), Crop);
 	}
 }
 

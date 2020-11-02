@@ -41,7 +41,7 @@ for (int fi : fills_short.keys)
 		NewPad("$x\ung{mm}$", "mode of $y\ung{mm}$");
 		scale(Linear, Linear, Log);
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_tracks = d + "/output_tracks.root";
 		RootObject p_y_vs_x = RootGetObject(f_tracks, "RP " + rps[rpi] + "/p_y_vs_x", error=false);
@@ -68,10 +68,10 @@ for (int fi : fills_short.keys)
 
 		draw(g_y_mode_vs_x, "p", red);
 
-		real y_min = -5, y_max = +5;
+		real y_min = -1, y_max = +6;
 		if (year == "2016") { y_min = -2; y_max = +2; }
 
-		limits((0, y_min), (25., y_max), Crop);
+		limits((0, y_min), (15., y_max), Crop);
 	}
 }
 

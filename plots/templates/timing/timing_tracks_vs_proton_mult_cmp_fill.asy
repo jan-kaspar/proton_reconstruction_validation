@@ -34,7 +34,7 @@ for (int fi : fills_short.keys)
 		NewPad("num.~of multi-RP reco protons", "\vbox{\hbox{num.~of timing-RP tracks}\hbox{(same arm as proton, per event)}}");
 		//scale(Linear, Log);
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 		string on = "multiRPPlots/arm" + arms[ai] + "/h2_timing_tracks_vs_prot_mult";
 

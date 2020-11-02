@@ -34,7 +34,7 @@ for (int rpi : rps.keys)
 
 	for (int fi : fills.keys)
 	{
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
 			+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output_validation.root";
 
 		RootObject hist_x = RootGetObject(f, rps[rpi] + "/h_de_x", error=false);

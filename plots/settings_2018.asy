@@ -12,13 +12,11 @@ rps.push("3"); rp_labels.push("45-210-fr"); rp_arms.push("arm0");
 rps.push("103"); rp_labels.push("56-210-fr"); rp_arms.push("arm1");
 rps.push("123"); rp_labels.push("56-220-fr"); rp_arms.push("arm1");
 
-string version = "version-UL-6";
+string version = "version-0";
 string versions[] = {
-	"version-UL-6",
-	//"version-UL-devel-1",
+	"version-0",
 };
 
-//string stream = "SingleMuon";
 string stream = "ALL";
 
 string xangle = "160";
@@ -55,17 +53,6 @@ real eff_xi_45_sample1 = 0.03, eff_xi_45_sample2 = 0.09, eff_xi_45_sample3 = 0.1
 real eff_xi_56_sample1 = 0.05, eff_xi_56_sample2 = 0.12, eff_xi_56_sample3 = 0.17;
 
 string fills_short[] = {
-	// TODO: remove
-	/*
-	"6611",
-	"6617",
-	"6629",
-	"6640",
-
-	"6729",
-	*/
-
-	// TODO: uncomment
 	"6617",
 	"6738", // used to be 6729 which is not anymore in the JSON
 

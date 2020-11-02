@@ -42,7 +42,7 @@ for (int fi : fills_short.keys)
 			version = versions[vi];
 			pen p = StdPen(vi + 1);
 
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 				+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/output.root";
 			string on = "multiRPPlots/arm" + arms[ai] + "/h_time";
 

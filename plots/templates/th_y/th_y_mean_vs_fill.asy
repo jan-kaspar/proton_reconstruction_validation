@@ -6,7 +6,7 @@ xTicksDef = LeftTicks(rotate(90)*Label(""), TickLabels, Step=1, step=0);
 
 xSizeDef = xSizeDefFill;
 
-yTicksDef = RightTicks(100., 50.);
+yTicksDef = RightTicks(50., 10.);
 
 //----------------------------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ for (int ai : arms.keys)
 
 			for (int fi : fills.keys)
 			{
-				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+				string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
 					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
 				string on = "multiRPPlots/arm" + arms[ai] + "/p_th_y_vs_xi|ff_pol1";
 			
@@ -69,9 +69,9 @@ for (int ai : arms.keys)
 		}
 	}
 
-	DrawFillMarkers(-500, +500);
+	DrawFillMarkers(-100, +100);
 
-	limits((-1, -500.), (fills.length, +500.), Crop);
+	limits((-1, -100.), (fills.length, +100.), Crop);
 
 	xaxis(YEquals(0., false), dashed);
 }

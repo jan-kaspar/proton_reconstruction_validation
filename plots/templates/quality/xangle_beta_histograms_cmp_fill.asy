@@ -37,7 +37,7 @@ for (int fi : fills_short.keys)
 	{
 		string xangle = xangles[xai];
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill)
 			+ "_stream_" + stream + "/output_lhcInfo.root";
 	
 		string on = "h_xangle";
@@ -59,7 +59,7 @@ for (int fi : fills_short.keys)
 	{
 		string xangle = xangles[xai];
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill)
 			+ "_stream_" + stream + "/output_lhcInfo.root";
 	
 		string on = "h_betaStar";

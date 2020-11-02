@@ -31,7 +31,7 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$\xi_{\rm multi}$", "mean of $y^*\ung{\mu m}$");
 
-		string f = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
+		string f = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle)
 			+ "_beta_" + GetBeta(fill) + "_stream_" + stream + "/do_fits.root";
 		string on = "multiRPPlots/arm" + arms[ai] + "/p_vtx_y_vs_xi";
 
@@ -41,9 +41,16 @@ for (int fi : fills_short.keys)
 			continue;
 
 		draw(scale(1., 1e4), hist, "d0,eb", blue);
-		draw(scale(1., 1e4), fit, "def", red+1pt);
+
+		if (fit.valid)
+		{
+			string l = format("slope = %#.3f", fit.rExec("GetParameter", 1));
+			draw(scale(1., 1e4), fit, "def", red+1pt);
+		}
 
 		limits((0.00, -1000), (0.25, +1000), Crop);
+
+		AttachLegend();
 	}
 }
 

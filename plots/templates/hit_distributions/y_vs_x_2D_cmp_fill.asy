@@ -11,6 +11,10 @@ TH2_x_max = 25;
 TH2_y_min = -7.;
 TH2_y_max = +7.;
 
+TGraph_errorBar = None;
+
+TGraph_x_max = 10;
+
 //----------------------------------------------------------------------------------------------------
 
 NewPad(false);
@@ -39,21 +43,26 @@ for (int fi : fills_short.keys)
 		NewPad("$x\ung{mm}$", "$y\ung{mm}$");
 		scale(Linear, Linear, Log);
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_tracks = d + "/output_tracks.root";
 		RootObject h2_y_vs_x = RootGetObject(f_tracks, "RP " + rps[rpi] + "/h2_y_vs_x", error=false);
 
+		string f_fit = d + "/do_fits.root";
+		RootObject g_y_mode_vs_x = RootGetObject(f_fit, "RP " + rps[rpi] + "/g_y_mode_vs_x", error=false);
+
 		string f_optics = d + "/output_optics.root";
 		RootObject g_disp = RootGetObject(f_optics, rps[rpi] + "/h_y_vs_x_disp", error=false);
 
-		if (!h2_y_vs_x.valid || !g_disp.valid)
+		if (!h2_y_vs_x.valid || !g_y_mode_vs_x.valid || !g_disp.valid)
 			continue;
 
 		if (rebin)
 			h2_y_vs_x.vExec("Rebin2D", 2, 2);
 
 		draw(h2_y_vs_x);
+
+		draw(g_y_mode_vs_x, "l", blue);
 
 		draw(scale(10, 10), g_disp, "l", black+2pt); // conversion from cm to mm
 

@@ -38,7 +38,7 @@ for (int ai : arms.keys)
 
 		for (int fi : fills.keys)
 		{
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle) + "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output.root";
 			string on = "multiRPPlots/arm" + arms[ai] + "/h_de_x_match_timing_vs_tracking_ClCo";
 		
 			RootObject hist = RootGetObject(f, on, error=false);

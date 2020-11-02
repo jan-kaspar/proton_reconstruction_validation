@@ -45,7 +45,7 @@ for (int ai : arms.keys)
 
 			for (int fi : fills.keys)
 			{
-				string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+				string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
 					+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/do_fits.root";
 				string on = "multiRPPlots/arm" + arms[ai] + "/g_aperture|ff_aperture_fit";
 				RootObject fit = RootGetObject(f, on, error=false);

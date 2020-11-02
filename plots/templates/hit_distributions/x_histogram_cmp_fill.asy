@@ -31,7 +31,7 @@ for (int fi : fills_short.keys)
 	{
 		NewPad("$x\ung{mm}$");
 
-		string d = topDir + "data/" + year + "/" + version + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
+		string d = topDir + "data/" + version + "/" + year + "/fill_" + fill + "/xangle_" + GetXangle(fill, xangle) + "_beta_" + GetBeta(fill) + "_stream_" + stream;
 
 		string f_tracks = d + "/output_tracks.root";
 		RootObject hist = RootGetObject(f_tracks, "RP " + rps[rpi] + "/h_x", error=false);

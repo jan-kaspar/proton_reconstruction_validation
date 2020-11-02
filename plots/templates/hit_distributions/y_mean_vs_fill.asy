@@ -38,7 +38,7 @@ for (int rpi : rps.keys)
 			version = versions[vi];
 			pen p = StdPen(vi + 1);
 
-			string f = topDir + "data/" + year + "/" + version + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
+			string f = topDir + "data/" + version + "/" + year + "/fill_" + fills[fi] + "/xangle_" + GetXangle(fills[fi], xangle)
 				+ "_beta_" + GetBeta(fills[fi]) + "_stream_" + stream + "/output_tracks.root";
 
 			RootObject hist = RootGetObject(f, "RP " + rps[rpi] + "/h_y", error=false);
