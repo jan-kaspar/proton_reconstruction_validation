@@ -1,0 +1,262 @@
+#!/bin/bash
+
+work_dir="work_dir"
+
+#----------------------------------------------------------------------------------------------------
+
+function PrintUsage()
+{
+	echo "USAGE: wd_control <option> <command> <option> ..."
+	echo "COMMANDS:"
+	echo "    print                   print directory name"
+	echo "    clean                   clean directory"
+	echo "    remove                  remove directory"
+	echo "    submit, resubmit        (re)submit"
+	echo "OPTIONS:"
+	echo "    -h, --help              print this help and exit"
+	echo "    -s <selection>          set directory selection rule:"
+	echo "        all                 all jobs"
+	echo "        finished            job has saved 'finished' file"
+	echo "        success             job has saved 'success' file"
+	echo "        crashed             job has saved 'finished' but no 'success' file"
+	echo "        unsubmitted         job has not 'submitted' file"
+	echo "        unfinished          job has 'submitted' but not 'finished' file"
+	echo "        failed              job has 'submitted' but not 'success' file"
+	echo "    -maxtime <v>            set max time to <v> seconds"
+	echo "    -wd <dir>               set work_dir to <dir>"
+	echo "    -system <spec>          set system requirements (SLCern6, CentOS7, ...)"
+}
+
+#----------------------------------------------------------------------------------------------------
+
+function CleanDirectory()
+{
+	local dir="$1"
+
+	rm -rf "$dir/out"
+	rm -rf "$dir/err"
+	rm -rf "$dir/log"
+
+	rm -rf "$dir/submitted"
+	rm -rf "$dir/finished"
+	rm -rf "$dir/success"
+}
+
+#----------------------------------------------------------------------------------------------------
+
+# defaults
+selection=""
+comm=""
+
+max_time="14400" # s
+
+condor_file="$work_dir/condor.resub"
+
+required_system=""
+
+# parse command line
+while [ -n "$1" ]
+do
+	case "$1" in
+		"-h" | "--help")
+			PrintUsage
+			exit 0
+			;;
+
+        "-s")
+			shift
+            selection="$1"
+            ;;
+
+        "-maxtime")
+			shift
+            max_time="$1"
+            ;;
+
+        "-wd")
+			shift
+            work_dir="$1"
+            ;;
+
+        "-system")
+			shift
+            required_system="$1"
+            ;;
+
+		"print" | "clean" | "resubmit" | "remove")
+			comm="$1"
+			;;
+         
+        *)
+			echo "ERROR: command/option '$1' not understood."
+			PrintUsage
+            exit 1
+	esac
+
+	shift
+done
+
+# command given?
+if [ -z "$comm" ]
+then
+	echo "ERROR: no command given"
+	PrintUsage
+	exit 1
+fi
+
+# selection given?
+if [ -z "$selection" ]
+then
+	echo "ERROR: no selection given"
+	PrintUsage
+	exit 1
+fi
+
+# validate selection
+case "$selection" in
+	"all" | "finished" | "success" | "crashed" | "unsubmitted" | "unfinished" | "failed")
+		;;
+	*)
+		echo "ERROR: selection '$selection' not understood."
+		PrintUsage
+		exit 1
+esac
+
+# preparations
+if [ "$comm" == "resubmit" ]
+then
+	cwd=`pwd -P`
+
+	(
+		echo "executable = $cwd/\$(dir)/job"
+		echo "arguments = \$(ClusterId) \$(ProcId) \\\"\$(dir)\\\""
+		echo "output = $cwd/\$(dir)/out"
+		echo "error = $cwd/\$(dir)/err"
+		echo "log = $cwd/$work_dir/condor.log"
+
+		echo "+MaxRuntime = $max_time"
+
+		echo "+JobBatchName = resubmission"
+
+		if [ -n "$required_system" ]
+		then
+			echo "requirements = (OpSysAndVer =?= \"$required_system\")"
+		fi
+
+
+	) > "$condor_file"
+fi
+
+# process all directory entries
+find "$work_dir" -type d|while read entry
+do
+	# skip non-directory entries
+	if [ ! -d "$entry" ]
+	then
+		continue
+	fi
+
+	# skip non-final directoris
+	if [ ! -f "$entry/job" ]
+	then
+		continue
+	fi
+
+	# is selected ?
+	selected="f"
+	case "$selection" in
+		"all")
+				selected="t"
+			;;
+
+		"finished")
+				if [ -f "$entry/finished" ]
+				then
+					selected="t"
+				fi
+			;;
+
+		"success")
+				if [ -f "$entry/success" ]
+				then
+					selected="t"
+				fi
+			;;
+
+		"crashed")
+				if [ -f "$entry/finished" -a ! -f "$entry/success" ]
+				then
+					selected="t"
+				fi
+			;;
+
+		"unsubmitted")
+				# TODO: this could possibly use the presence of out and err files
+				# which are created at the moment of submission, unlike the "submitted" file
+				# which is only created when job executed
+				if [ ! -f "$entry/submitted" ]
+				then
+					selected="t"
+				fi
+			;;
+
+		"unfinished")
+				if [ -f "$entry/submitted" -a ! -f "$entry/finished" ]
+				then
+					selected="t"
+				fi
+			;;
+
+		"failed")
+				if [ -f "$entry/submitted" -a ! -f "$entry/success" ]
+				then
+					selected="t"
+				fi
+			;;
+	esac
+
+	# skip not selected
+	if [ "$selected" != "t" ]
+	then
+		continue
+	fi
+
+	# execute command
+	case "$comm" in
+		"print")
+				echo "$entry"
+			;;
+
+		"clean")
+				echo "cleaning: $entry"
+				CleanDirectory "$entry"
+			;;
+
+		"remove")
+				echo "removing: $entry"
+				rm -rf "$entry"
+			;;
+
+		"submit" | "resubmit")
+				echo "resubmitting: $entry"
+				CleanDirectory "$entry"
+
+				(
+					echo ""
+					echo "dir=$entry"
+					echo "queue"
+				) >> "$condor_file"
+			;;
+	esac
+done
+
+# finalisations
+if [ "$comm" == "resubmit" ]
+then
+	condor_submit "$condor_file"
+fi
+
+if [ "$comm" == "remove" ]
+then
+	find "$work_dir" -type d -empty | while read d; do rm -rf "$d"; done
+fi
